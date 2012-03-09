@@ -4,7 +4,7 @@
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that let's you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
 
 
-### Usage 
+### Basic Usage 
 
 To convert an input into an autocomplete field, simply call `geocomplete` plugin:
 
@@ -50,12 +50,24 @@ $("#my_input").geocomplete({
 
 ### Events
 
-* `"geocode:result"` - geocode was successful
-* `"geocode:error"` - geocode throws an error
-* `"geocode:multiple"` - multiple results found
-* `"geocode:dragged"` - marker position was modified manually
+You can subscribe to events of the geocode plugin by using the default jQuery syntax:
 
-### API
+````javascript
+$("#geocomplete")
+  .geocomplete()
+  .bind("geocode:result", function(event, result){
+    console.log(result);
+  });
+```
+
+The following events are supported:
+
+* `"geocode:result"` - Geocode was successful. Passes the original result as described [here](http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingResults).
+* `"geocode:error"` - Fired when the geocode returns an error. Passes the current status as listed [here](http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingStatusCodes).
+* `"geocode:multiple"` - Firedimmediately after the "result" event if multiple results were found. Passes an array of all results.
+* `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
+
+### Methods and Properties
 
 You can access all properties and methods of the plugin from outside. Simply add a string as the first argument to the `.geocomplete` method after you initialized the plugin.
 
