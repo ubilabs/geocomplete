@@ -6,7 +6,7 @@ An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://c
 
 ### Usage 
 
-To convert an input into a autocomplete field, simply call `geocomplete` plugin:
+To convert an input into an autocomplete field, simply call `geocomplete` plugin:
 
 ```javascript
 $("input").geocomplete();  // Option 1: Call on element.
@@ -48,13 +48,30 @@ $("#my_input").geocomplete({
 * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
 * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here].(http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests)
 
-
 ### Events
 
 * `"geocode:result"` - geocode was successful
 * `"geocode:error"` - geocode throws an error
 * `"geocode:multiple"` - multiple results found
 * `"geocode:dragged"` - marker position was modified manually
+
+### API
+
+You can access all properties and methods of the plugin from outside. Simply add a string as the first argument to the `.geocomplete` method after you initialized the plugin.
+
+Example:
+
+````javascript
+// Initialize the plugin.
+$("#geocomplete").geocomplete({ map: ".map_canvas" });
+
+// Call the find method with the paramenter "NYC".
+$("#geocomplete").geocomplete("find", "NYC");
+
+// Get the map and set a new zoom level. 
+var map = $("#geocomplete").geocomplete("map");
+map.setZoom(3);
+```
 
 ### Address and Places Specific Component Types
 
