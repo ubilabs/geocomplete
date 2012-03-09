@@ -6,7 +6,7 @@ An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://c
 
 ### Basic Usage 
 
-To convert an input into an autocomplete field, simply call `geocomplete` plugin:
+To convert an input into an autocomplete field, simply call the Geocomplete plugin:
 
 ```javascript
 $("input").geocomplete();  // Option 1: Call on element.
@@ -21,6 +21,19 @@ Make sure you include the Google Maps API with the Places Library before loading
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 <script src="jquery.geocomplete.js"></script>
 ``` 
+
+### Trigger Request
+
+To trigger a geocoding request from outside (eg. when hitting the "find" button), simply trigger the "geocode" event on the element.
+
+````javascript
+$("input").geocomplete();
+
+// Trigger geocoding request.
+$("button.find").click(function(){
+  $("input").trigger("geocode");
+});
+```
 
 ### Adding a Map Preview
 
