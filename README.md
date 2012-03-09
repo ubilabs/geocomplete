@@ -22,7 +22,58 @@ Make sure you include the Google Maps API with the Places Library before loading
 <script src="jquery.geocomplete.js"></script>
 ``` 
 
-### Options
+### Adding a Map Preview
+
+To link the geocode results with an interactive map, you can pass `map` as an option to the plugin.
+
+```javascript
+$("#my_input").geocomplete({
+  map: "#my_map"
+});
+```
+
+The `map` option might be a selector, an jQuery object or a DOM element.
+
+### Populate Form Data
+
+You can pass `details` as an option to specify a cointainer that will be populated when a geocoding request was successfull. 
+
+By default the plugin analyses the `name` attribute of the containers child nodes and replaces the content. You can override the `detailsAttribute` to use another attribute such as `data-geo`.
+
+If the element is an input, the value will be replaced otherwise the plugin overrides the current text.
+
+Simple Example:
+
+```html
+<form>
+  Latitude:   <input name="lat" type="text" value="">
+  Longitude:  <input name="lng" type="text" value="">
+  Address:    <input name="formatted_address" type="text" value="">
+</form>
+```
+
+```javascript
+$("input").geocomplete({ details: "form" });
+```
+
+Advanced Example:
+
+```html
+<div class="details">
+  Latitude:   <span data-geo="lat" />
+  Longitude:  <span data-geo="lng" />
+  Address:    <span data-geo="formatted_address" />
+</form>
+```
+
+```javascript
+$("input").geocomplete({
+  details: ".details",
+  detailsAttribute: "data-geo"
+});
+```
+
+### List of Options
 
 The following options might be passed to the plugin call. If you omit them, they fall back to the default.
 
@@ -31,6 +82,12 @@ Example:
 ```javascript
 $("#my_input").geocomplete({
   map: "#my_map",
+  mapOptions: {
+    zoom: 10
+  },
+  markerOptions: {
+    draggable: true
+  },
   details: "#my_form"
 });
 ```
@@ -53,7 +110,7 @@ $("#my_input").geocomplete({
 You can subscribe to events of the geocode plugin by using the default jQuery syntax:
 
 ````javascript
-$("#geocomplete")
+$("input")
   .geocomplete()
   .bind("geocode:result", function(event, result){
     console.log(result);
@@ -75,13 +132,13 @@ Example:
 
 ````javascript
 // Initialize the plugin.
-$("#geocomplete").geocomplete({ map: ".map_canvas" });
+$("input").geocomplete({ map: ".map_canvas" });
 
 // Call the find method with the paramenter "NYC".
-$("#geocomplete").geocomplete("find", "NYC");
+$("input").geocomplete("find", "NYC");
 
 // Get the map and set a new zoom level. 
-var map = $("#geocomplete").geocomplete("map");
+var map = $("input").geocomplete("map");
 map.setZoom(3);
 ```
 
