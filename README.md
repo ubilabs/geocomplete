@@ -31,4 +31,12 @@ $.fn.geocomplete("input"); // Option 2: Pass element as argument.
 * `"geocode:result"` - geocode was successful
 * `"geocode:error"` - geocode throws an error
 * `"geocode:multiple"` - multiple results found
-* `"geocode:dragged"` - Marker position was changed manually
+* `"geocode:dragged"` - marker position was modified manually
+
+### Address Component Types
+
+`street_address`, `route`, `intersection`, `political`, `country`, `administrative_area_level_1`, `administrative_area_level_2`, `administrative_area_level_3`, `colloquial_area`, `locality`, `sublocality`, `neighborhood`, `premise`, `subpremise`, `postal_code`, `natural_feature`, `airport`, `park`, `point_of_interest`, `post_box`, `street_number`, `floor`, `room`, `lat`, `lng`, `viewport`, `location`, `formatted_address`, `location_type`, `bounds`
+
+### Places Specific Details
+
+`id`, `url`, `website`, `vicinity`, `reference`, `rating`, `international_phone_number`, `icon`, `formatted_phone_number`
