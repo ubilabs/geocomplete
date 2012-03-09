@@ -42,6 +42,8 @@ By default the plugin analyses the `name` attribute of the containers child node
 
 If the element is an input, the value will be replaced otherwise the plugin overrides the current text.
 
+**Note**: Some address compontents such as "country" return an additional `short_name`. You can access them by simply adding `_short` at the end of the type.
+
 Simple Example:
 
 ```html
@@ -60,9 +62,10 @@ Advanced Example:
 
 ```html
 <div class="details">
-  Latitude:   <span data-geo="lat" />
-  Longitude:  <span data-geo="lng" />
-  Address:    <span data-geo="formatted_address" />
+  Latitude:     <span data-geo="lat" />
+  Longitude:    <span data-geo="lng" />
+  Address:      <span data-geo="formatted_address" />
+  Country Code: <span data-geo="country_short" />
 </form>
 ```
 
@@ -121,7 +124,7 @@ The following events are supported:
 
 * `"geocode:result"` - Geocode was successful. Passes the original result as described [here](http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingResults).
 * `"geocode:error"` - Fired when the geocode returns an error. Passes the current status as listed [here](http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingStatusCodes).
-* `"geocode:multiple"` - Firedimmediately after the "result" event if multiple results were found. Passes an array of all results.
+* `"geocode:multiple"` - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.
 * `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
 
 ### Methods and Properties
