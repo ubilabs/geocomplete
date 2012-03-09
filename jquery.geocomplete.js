@@ -1,35 +1,40 @@
 ;(function($, window, document, undefined){
 
-  var pluginName = 'geocomplete',
-    defaults = {
-      // Whether to snap geocode search to map bounds.
-      bindToMap: true,
-      
-      // Might be a selector (eg "#map_canvas"), 
-      // an jQuery object (eg $("#map_canvas"))
-      // or a DOM element (eg document.getElementById("map_canvas");)
-      map: false,
-      
-      details: false,
-      
-      detailsAttribute: "name",
-      
-      mapOptions: {
-        zoom: 14,
-        scrollwheel: false,
-        mapTypeId: "roadmap"
-      },
-      
-      markerOptions: {
-        draggable: false
-      },
-      
-      maxZoom: 16,
-      
-      // Places types to search for.
-      types: ['geocode']
-    };
+  // The default options for this plugin.
+  //
+  // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
+  // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
+  // * `bindToMap` - Whether to snap geocode search to map bounds. Default: `true`
+  // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
+  // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
+  // * `mapOptions.zoom` - The inital zoom level. Default: `14`
+  // * `mapOptions.scrollwheel` - Whether to enable the scrollwheel to zoom the map. Default: `false`
+  // * `mapOptions.mapTypeId` - The map type. Default: `"roadmap"`
+  // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
+  // * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
+  // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
+  // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here].(http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests)
+  var defaults = {
+    bindToMap: true,
+    map: false,
+    details: false,
+    detailsAttribute: "name",
+    
+    mapOptions: {
+      zoom: 14,
+      scrollwheel: false,
+      mapTypeId: "roadmap"
+    },
+    
+    markerOptions: {
+      draggable: false
+    },
+    
+    maxZoom: 16,
+    types: ['geocode']
+  };
   
+  // 
   // See: http://code.google.com/apis/maps/documentation/geocoding/#Types
   var componentTypes = ("street_address route intersection political " +
     "country administrative_area_level_1 administrative_area_level_2 " +
@@ -51,7 +56,7 @@
     this.$input = $(input);
     
     this._defaults = defaults;
-    this._name = pluginName;
+    this._name = 'geocomplete';
 
     this.init();
   }
@@ -284,9 +289,9 @@
     }
   });
 
-  $.fn[pluginName] = function(options) {
+  $.fn.geocomplete = function(options) {
     
-    var attribute = 'plugin_' + pluginName;
+    var attribute = 'plugin_geocomplete';
     
     if (typeof options == "string"){
       
