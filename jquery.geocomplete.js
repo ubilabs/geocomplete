@@ -21,8 +21,7 @@
       },
       
       markerOptions: {
-        draggable: false,
-        animation: null
+        draggable: false
       },
       
       maxZoom: 16,
