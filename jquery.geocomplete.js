@@ -1,5 +1,12 @@
 ;(function($, window, document, undefined){
 
+  // # $.geocomplete()
+  // ## jQuery Geocoding and Places Autocomplete Plugin
+  //
+  // * Version: 1.1
+  // * https://github.com/ubilabs/geocomplete/
+  // * by Martin Kleppe <kleppe@ubilabs.net>
+
   // The default options for this plugin.
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
@@ -47,7 +54,7 @@
   var placesDetails = ("id url website vicinity reference rating " +
     "international_phone_number icon formatted_phone_number").split(" ");
 
-  // The actual plugin constructor
+  // The actual plugin constructor. 
   function GeoComplete(input, options) {
 
     this.options = $.extend(true, {}, defaults, options);
