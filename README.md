@@ -24,6 +24,17 @@ Make sure you include the Google Maps API with the Places Library before loading
 
 ### Options
 
+The following options might be passed to the plugin call. If you omit them, they fall back to the default.
+
+Example:
+
+```javascript
+$("#my_input").geocomplete({
+  map: "#my_map",
+  details: "#my_form"
+});
+```
+
 * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
 * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
 * `bindToMap` - Whether to snap geocode search to map bounds. Default: `true`
