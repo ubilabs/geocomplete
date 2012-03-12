@@ -4,7 +4,7 @@
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that lets you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
 
 
-## Basic Usage 
+## Basic Usage
 
 To convert an input into an autocomplete field, simply call the Geocomplete plugin:
 
@@ -31,7 +31,7 @@ Make sure you include the Google Maps API with the Places Library before loading
 ````html
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 <script src="jquery.geocomplete.js"></script>
-``` 
+```
 
 ## Trigger Request
 
@@ -60,7 +60,7 @@ The `map` option might be a selector, a jQuery object or a DOM element.
 
 ## Populate Form Data
 
-You can pass `details` as an option to specify a cointainer that will be populated when a geocoding request was successfull. 
+You can pass `details` as an option to specify a cointainer that will be populated when a geocoding request was successfull.
 
 By default the plugin analyses the `name` attribute of the containers child nodes and replaces the content. You can override the `detailsAttribute` to use another attribute such as `data-geo`.
 
@@ -121,7 +121,7 @@ $("#my_input").geocomplete({
 
 * `map` - Might be a selector, a jQuery object or a DOM element. Default is `false` which shows no map.
 * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
-* `bindToMap` - Whether to snap geocode search to map bounds. Default: `true`
+* `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
 * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
 * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
 * `mapOptions.zoom` - The inital zoom level. Default: `14`
@@ -164,7 +164,7 @@ $("input").geocomplete({ map: ".map_canvas" });
 // Call the find method with the paramenter "NYC".
 $("input").geocomplete("find", "NYC");
 
-// Get the map and set a new zoom level. 
+// Get the map and set a new zoom level.
 var map = $("input").geocomplete("map");
 map.setZoom(3);
 ```
