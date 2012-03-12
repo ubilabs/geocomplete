@@ -4,7 +4,7 @@
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that let's you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
 
 
-### Basic Usage 
+## Basic Usage 
 
 To convert an input into an autocomplete field, simply call the Geocomplete plugin:
 
@@ -13,7 +13,18 @@ $("input").geocomplete();  // Option 1: Call on element.
 $.fn.geocomplete("input"); // Option 2: Pass element as argument.
 ```
 
-### Requirements
+## Examples
+
+Here is a list of basic usages:
+
+* [Simple](http://ubilabs.github.com/geocomplete/examples/simple.html) - Single input with an event logger.
+* [Map](http://ubilabs.github.com/geocomplete/examples/map.html) - Adding a map.
+* [Form](http://ubilabs.github.com/geocomplete/examples/form.html) - Populate form fields.
+* [Attribute](http://ubilabs.github.com/geocomplete/examples/custom_attribute.html) - Using custom attributes to populate data.
+* [Multiple results](http://ubilabs.github.com/geocomplete/examples/multiple_results.html) - Handling multiple results from the geocoder.
+* [Draggable](http://ubilabs.github.com/geocomplete/examples/draggable.html) -  A draggable marker to redifine the position.
+
+## Requirements
 
 Make sure you include the Google Maps API with the Places Library before loading this plugin the as described [here](http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library).
 
@@ -22,7 +33,7 @@ Make sure you include the Google Maps API with the Places Library before loading
 <script src="jquery.geocomplete.js"></script>
 ``` 
 
-### Trigger Request
+## Trigger Request
 
 To trigger a geocoding request from outside (eg. when hitting the "find" button), simply trigger the "geocode" event on the element.
 
@@ -35,7 +46,7 @@ $("button.find").click(function(){
 });
 ```
 
-### Adding a Map Preview
+## Adding a Map Preview
 
 To link the geocode results with an interactive map, you can pass `map` as an option to the plugin.
 
@@ -47,7 +58,7 @@ $("#my_input").geocomplete({
 
 The `map` option might be a selector, an jQuery object or a DOM element.
 
-### Populate Form Data
+## Populate Form Data
 
 You can pass `details` as an option to specify a cointainer that will be populated when a geocoding request was successfull. 
 
@@ -89,7 +100,7 @@ $("input").geocomplete({
 });
 ```
 
-### List of Options
+## List of Options
 
 The following options might be passed to the plugin call. If you omit them, they fall back to the default.
 
@@ -121,7 +132,7 @@ $("#my_input").geocomplete({
 * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
 * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
 
-### Events
+## Events
 
 You can subscribe to events of the geocode plugin by using the default jQuery syntax:
 
@@ -140,7 +151,7 @@ The following events are supported:
 * `"geocode:multiple"` - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.
 * `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
 
-### Methods and Properties
+## Methods and Properties
 
 You can access all properties and methods of the plugin from outside. Simply add a string as the first argument to the `.geocomplete` method after you initialized the plugin.
 
@@ -158,7 +169,7 @@ var map = $("input").geocomplete("map");
 map.setZoom(3);
 ```
 
-### Address and Places Specific Component Types
+## Address and Places Specific Component Types
 
 The following types are supported by the geocoder and will be passed to the provided form or container:
 
@@ -174,6 +185,6 @@ Additionally the following details are passed when the Places API was requested:
 More information can be found here: http://code.google.com/apis/maps/documentation/javascript/places.html#place_details_responses
 
 
-### About
+## About
 
 Developed by [Martin Kleppe](http://twitter.com/aemkei) at [Ubilabs](http://ubilabs.net).
