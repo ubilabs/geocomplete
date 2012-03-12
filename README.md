@@ -15,7 +15,7 @@ $.fn.geocomplete("input"); // Option 2: Pass element as argument.
 
 ## Examples
 
-Here is a list of basic usages:
+Here is a list of basic uses:
 
 * [Simple](http://ubilabs.github.com/geocomplete/examples/simple.html) - Single input with an event logger.
 * [Map](http://ubilabs.github.com/geocomplete/examples/map.html) - Adding a map.
@@ -26,7 +26,7 @@ Here is a list of basic usages:
 
 ## Requirements
 
-Make sure you include the Google Maps API with the Places Library before loading this plugin the as described [here](http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library).
+Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library).
 
 ````html
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
@@ -56,7 +56,7 @@ $("#my_input").geocomplete({
 });
 ```
 
-The `map` option might be a selector, an jQuery object or a DOM element.
+The `map` option might be a selector, a jQuery object or a DOM element.
 
 ## Populate Form Data
 
@@ -119,7 +119,7 @@ $("#my_input").geocomplete({
 });
 ```
 
-* `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
+* `map` - Might be a selector, a jQuery object or a DOM element. Default is `false` which shows no map.
 * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
 * `bindToMap` - Whether to snap geocode search to map bounds. Default: `true`
 * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
@@ -129,7 +129,7 @@ $("#my_input").geocomplete({
 * `mapOptions.mapTypeId` - The map type. Default: `"roadmap"`
 * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
 * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
-* `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
+* `maxZoom` - The maximum zoom level to zoom in after a geocoding response. Default: `16`
 * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
 
 ## Events
