@@ -1,3 +1,11 @@
+/**
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.1
+ *
+ * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
+ * @author Ubilabs http://ubilabs.net, 2012
+ * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
+ */
+
 ;(function($, window, document, undefined){
 
   // # $.geocomplete()
