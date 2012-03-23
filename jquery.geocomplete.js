@@ -19,7 +19,7 @@
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
-  // * `location` - Full address or latitude, longitude array to initialize on.
+  // * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
@@ -178,16 +178,25 @@
 
     initAddress: function() {
 
-      var location = this.options.location;
+      var location = this.options.location, latLng;
 
-      if (location) {
-        if (typeof location == 'string') {
-          this.find(location);
-        } else if (location instanceof Array) {
-          this.geoocode({ 
-            latLng: new google.maps.LatLng(location[0], location[1]) 
-          });
-        }
+      if (!location) { return; }
+
+      if (typeof location == 'string') {
+        this.find(location);
+        return;
+      } 
+
+      if (location instanceof Array) {
+        latLng = new google.maps.LatLng(location[0], location[1]);
+      } 
+
+      if (location instanceof google.maps.LatLng){
+        latLng = location;
+      }
+
+      if (latLng){ 
+        this.geoocode({ latLng: latLng });
       }
     },
     
