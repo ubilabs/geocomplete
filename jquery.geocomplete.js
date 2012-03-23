@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.1
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.2
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -19,8 +19,8 @@
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
-  // * `clickOnMap` - Bind click event to map
-  // * `initAddress` - full address or latitude, longitude array to initialize on
+  // * `clickOnMap` - Bind click event to map.
+  // * `location` - Full address or latitude, longitude array to initialize on.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
@@ -36,8 +36,8 @@
     map: false,
     details: false,
     detailsAttribute: "name",
-    clickOnMap: true,
-    initAddress: '',
+    clickOnMap: false,
+    location: false,
     
     mapOptions: {
       zoom: 14,
@@ -120,12 +120,11 @@
       // Create a geocoder to fallback when the autocomplete 
       // does not return any value.
       this.geocoder = new google.maps.Geocoder();
-      
 
       var options = {
         types: this.options.types,
         bounds: this.options.bounds === true ? null : this.options.bounds
-      }
+      };
 
       this.autocomplete = new google.maps.places.Autocomplete(
         this.input, options
@@ -136,16 +135,14 @@
       if (this.map && this.options.bounds === true){
         this.autocomplete.bindTo('bounds', this.map);
       }
-	
-      if(this.map && this.options.clickOnMap) {
+  
+      if (this.map && this.options.clickOnMap) {
         google.maps.event.addListener(
           this.map, 
           'click', 
           $.proxy(this.click, this)
         );
-			
       }
-		
       
       // Watch `place_changed` events on the autocomplete input field.
       google.maps.event.addListener(
@@ -189,16 +186,20 @@
       this.details = details;
     },
 
-	initAddress: function() {
-      if(this.options.initAddress != '') {
-        if(typeof this.options.initAddress == 'string') {
-          this.find(this.options.initAddress);
-        }
-        else if(this.options.initAddress instanceof Array) {
-          this.findByLatLng({ latLng: new google.maps.LatLng(this.options.initAddress[0], this.options.initAddress[1]) });
+    initAddress: function() {
+
+      var location = this.options.location;
+
+      if (location) {
+        if (typeof location == 'string') {
+          this.find(location);
+        } else if (location instanceof Array) {
+          this.geoocode({ 
+            latLng: new google.maps.LatLng(location[0], location[1]) 
+          });
         }
       }
-	},
+    },
     
     find: function(address){
       var options = { 
@@ -215,11 +216,11 @@
         }
       }
 
-      this.geocoder.geocode(options, $.proxy(this.handleGeocode, this));
+      this.geocode(options);
     },
 
-	findByLatLng: function(latLng){
-      this.geocoder.geocode(latLng, $.proxy(this.handleGeocode, this));
+    geocode: function(options){
+      this.geocoder.geocode(options, $.proxy(this.handleGeocode, this));
     },
     
     handleGeocode: function(results, status){      
@@ -332,8 +333,8 @@
       this.setDetail(this.details.lng, this.data.location.lng());
     },
 
-	click: function(event){
-      this.findByLatLng({ latLng: event.latLng });
+    click: function(event){
+      this.geocode({ latLng: event.latLng });
     },
     
     placeChanged: function(){
