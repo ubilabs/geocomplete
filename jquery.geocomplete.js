@@ -9,7 +9,7 @@
 ;(function($, window, document, undefined){
 
   // # $.geocomplete()
-  // ## jQuery Geocoding and Places Autocomplete Plugin
+  // ## jQuery Geocoding and Places Autocomplete Plugin - V 1.2
   //
   // * https://github.com/ubilabs/geocomplete/
   // * by Martin Kleppe <kleppe@ubilabs.net>
@@ -19,7 +19,7 @@
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
   // * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
-  // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
+  // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom `LatLngBounds object.
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
   // * `mapOptions.zoom` - The inital zoom level. Default: `14`
@@ -77,29 +77,36 @@
     this.init();
   }
   
+  // Initialize all parts of the plugin.
   $.extend(GeoComplete.prototype, {
     init: function(){
       this.initMap();
       this.initMarker();
       this.initGeocoder();
       this.initDetails();
-      this.initAddress();
+      this.initLocation();
     },
     
+    // Initialize the map but only if the option `map` was set.
+    // This will create a `map` within the given container 
+    // using the provided `mapOptions` or link to the existing map instance.  
     initMap: function(){
-      var container;
-      
       if (!this.options.map){ return; }
 
       if (typeof this.options.map.setCenter == "function"){
         this.map = this.options.map;
         return;
-      } 
-      
-      container = $(this.options.map)[0];
-      this.map = new google.maps.Map(container, this.options.mapOptions);
+      }
+
+      this.map = new google.maps.Map(
+        $(this.options.map)[0], 
+        this.options.mapOptions
+      );
     },
     
+    // Add a marker with the provided `markerOptions` but only 
+    // if the option was set. Additionally it listens for the `dragend` event 
+    // to notify the plugin about changes.
     initMarker: function(){
       if (!this.map){ return; }
       var options = $.extend(this.options.markerOptions, { map: this.map });
@@ -112,11 +119,9 @@
       );
     },
     
+    // Associate the input with the autocompleter and create a geocoder 
+    // to fall back when the autocompleter does not return a value.
     initGeocoder: function(){
-      
-      // Create a geocoder to fallback when the autocomplete 
-      // does not return any value.
-      this.geocoder = new google.maps.Geocoder();
 
       var options = {
         types: this.options.types,
@@ -126,6 +131,8 @@
       this.autocomplete = new google.maps.places.Autocomplete(
         this.input, options
       );
+
+      this.geocoder = new google.maps.Geocoder();
       
       // Bind autocomplete to map bounds but only if there is a map
       // and `options.bindToMap` is set to true.
@@ -151,6 +158,9 @@
       }, this));
     },
     
+    // Prepare a given DOM structure to be populated when we got some data.
+    // This will cycle through the list of component types and map the
+    // corresponding elements.
     initDetails: function(){
       if (!this.options.details){ return; }
       
@@ -175,7 +185,9 @@
       this.details = details;
     },
 
-    initAddress: function() {
+    // Set the initial location of the plugin if the `location` options was set.
+    // This method will care about converting the value into the right format. 
+    initLocation: function() {
 
       var location = this.options.location, latLng;
 
@@ -199,29 +211,31 @@
       }
     },
     
+    // Look up a given address. If no `address` was specified it uses
+    // the current value of the input.
     find: function(address){
-      var options = { 
+      this.geocode({ 
         address: address || this.$input.val()
-      };
-        
-      // Bind geocode requests to map bounds but only if there is a map
-      // and `options.bounds` is set to true.
-      if (this.options.bounds){
+      });
+    },
+
+    // Requests details about a given location. 
+    // Additionally it will bias the requests to the provided bounds.
+    geocode: function(request){
+      if (this.options.bounds && !request.bounds){
         if (this.options.bounds === true){
-          options.bounds = this.map && this.map.getBounds();
+          request.bounds = this.map && this.map.getBounds();
         } else {
-          options.bounds = this.options.bounds;
+          request.bounds = this.options.bounds;
         }
       }
-
-      this.geocode(options);
-    },
-
-    geocode: function(options){
-      this.geocoder.geocode(options, $.proxy(this.handleGeocode, this));
+      this.geocoder.geocode(request, $.proxy(this.handleGeocode, this));
     },
     
-    handleGeocode: function(results, status){      
+    // Handles the geocode response. If more than one results was found
+    // it triggers the "geocode:multiple" events. If there was an error
+    // the "geocode:error" event is fired.
+    handleGeocode: function(results, status){
       if (status === google.maps.GeocoderStatus.OK) {
         var result = results[0];
         this.$input.val(result.formatted_address);
@@ -236,10 +250,14 @@
       }
     },
     
+    // Triggers a given `event` with optional `arguments` on the input.
     trigger: function(event, argument){
       this.$input.trigger(event, [argument]);
     },
     
+    // Set the map to a new center by passing a `geometry`.
+    // If the geometry has a viewport, the map zooms out to fit the bounds.
+    // Additionally it updates the marker position.
     center: function(geometry){
       
       if (geometry.viewport){
@@ -258,6 +276,8 @@
       }
     },
     
+    // Update the elements based on a single places or geoocoding response 
+    // and trigger the "geocode:result" event on the input.
     update: function(result){
 
       if (this.map){
@@ -271,6 +291,9 @@
       this.trigger("geocode:result", result);
     },
     
+    // Populate the provided elements with new `result` data.
+    // This will lookup all elements that has an attribute with the given
+    // component type.
     fillDetails: function(result){
       
       var data = {},
@@ -278,16 +301,19 @@
         viewport = geometry.viewport,
         bounds = geometry.bounds;
       
+      // Create a simplified version of the address components.
       $.each(result.address_components, function(index, object){
         var name = object.types[0];
         data[name] = object.long_name;
         data[name + "_short"] = object.short_name;
       });
       
+      // Add properties of the places details. 
       $.each(placesDetails, function(index, key){
         data[key] = result[key];
       });
       
+      // Add infos about the address and geometry.
       $.extend(data, {
         formatted_address: result.formatted_address,
         location_type: geometry.location_type || "PLACES",
@@ -298,6 +324,7 @@
         lng: geometry.location.lng()
       });
 
+      // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
         var value = data[key];
         this.setDetail($detail, value);
@@ -306,7 +333,10 @@
       this.data = data;
     },
     
-    setDetail: function($detail, value){
+    // Assign a given `value` to a single `$element`.
+    // If the element is an input, the value is set, otherwise it updates 
+    // the text content.
+    setDetail: function($element, value){
       
       if (value === undefined){
         value = "";
@@ -314,23 +344,27 @@
         value = value.toUrlValue();
       }
       
-      if ($detail.is(":input")){
-        $detail.val(value);
+      if ($element.is(":input")){
+        $element.val(value);
       } else {
-        $detail.text(value);
+        $element.text(value);
       }
     },
     
+    // Fire the "geocode:dragged" event and pass the new position.
     markerDragged: function(event){
       this.trigger("geocode:dragged", event.latLng);
     },
     
+    // Restore the old position of the marker to the last now location.
     resetMarker: function(){
       this.marker.setPosition(this.data.location);
       this.setDetail(this.details.lat, this.data.location.lat());
       this.setDetail(this.details.lng, this.data.location.lng());
     },
     
+    // Update the plugin after the user has selected an autocomplete entry.
+    // If the place has no geometry it passes it to the geocoder.
     placeChanged: function(){
       var place = this.autocomplete.getPlace();
       
@@ -342,10 +376,16 @@
     }
   });
 
+  // A plugin wrapper around the constructor. 
+  // Pass `options` with all settings that are different from the default.
+  // The attribute is used to prevent multiple instantiations of the plugin.
   $.fn.geocomplete = function(options) {
     
     var attribute = 'plugin_geocomplete';
     
+    // If you call `.geocomplete()` with a string as the first paramenter
+    // it returns the corresponding property or calls the method with the
+    // following arguments.
     if (typeof options == "string"){
       
       var instance = $(this).data(attribute),
@@ -360,9 +400,12 @@
         return prop;
       }
     } else {
-      return this.each(function () {
-        if (!$.data(this, attribute)) {
-          $.data(this, attribute, new GeoComplete( this, options ));
+      return this.each(function() {
+        // Prevent against multiple instantiations.
+        var instance = $.data(this, attribute);
+        if (!instance) {
+          instance = new GeoComplete( this, options )
+          $.data(this, attribute, instance);
         }
       });
     }
