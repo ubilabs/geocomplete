@@ -19,7 +19,6 @@
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
-  // * `clickOnMap` - Bind click event to map.
   // * `location` - Full address or latitude, longitude array to initialize on.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
@@ -36,7 +35,6 @@
     map: false,
     details: false,
     detailsAttribute: "name",
-    clickOnMap: false,
     location: false,
     
     mapOptions: {
@@ -136,14 +134,6 @@
         this.autocomplete.bindTo('bounds', this.map);
       }
   
-      if (this.map && this.options.clickOnMap) {
-        google.maps.event.addListener(
-          this.map, 
-          'click', 
-          $.proxy(this.click, this)
-        );
-      }
-      
       // Watch `place_changed` events on the autocomplete input field.
       google.maps.event.addListener(
         this.autocomplete, 
@@ -331,10 +321,6 @@
       this.marker.setPosition(this.data.location);
       this.setDetail(this.details.lat, this.data.location.lat());
       this.setDetail(this.details.lng, this.data.location.lng());
-    },
-
-    click: function(event){
-      this.geocode({ latLng: event.latLng });
     },
     
     placeChanged: function(){
