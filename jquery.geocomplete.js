@@ -19,9 +19,9 @@
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
-  // * `bindToMap` - Whether to snap geocode search to map bounds. Default: `true`
   // * `clickOnMap` - Bind click event to map
   // * `initAddress` - full address or latitude, longitude array to initialize on
+  // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
   // * `mapOptions.zoom` - The inital zoom level. Default: `14`
@@ -32,7 +32,7 @@
   // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
   // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here].(http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests)
   var defaults = {
-    bindToMap: true,
+    bounds: true,
     map: false,
     details: false,
     detailsAttribute: "name",
@@ -121,14 +121,19 @@
       // does not return any value.
       this.geocoder = new google.maps.Geocoder();
       
+
+      var options = {
+        types: this.options.types,
+        bounds: this.options.bounds === true ? null : this.options.bounds
+      }
+
       this.autocomplete = new google.maps.places.Autocomplete(
-        this.input, 
-        { types: this.options.types }
+        this.input, options
       );
       
       // Bind autocomplete to map bounds but only if there is a map
       // and `options.bindToMap` is set to true.
-      if (this.map && this.options.bindToMap){
+      if (this.map && this.options.bounds === true){
         this.autocomplete.bindTo('bounds', this.map);
       }
 	
@@ -201,9 +206,13 @@
       };
         
       // Bind geocode requests to map bounds but only if there is a map
-      // and `options.bindToMap` is set to true.
-      if (this.map && this.options.bindToMap){
-        options.bounds = this.map.getBounds();
+      // and `options.bounds` is set to true.
+      if (this.options.bounds){
+        if (this.options.bounds === true){
+          options.bounds = this.map && this.map.getBounds();
+        } else {
+          options.bounds = this.options.bounds;
+        }
       }
 
       this.geocoder.geocode(options, $.proxy(this.handleGeocode, this));
