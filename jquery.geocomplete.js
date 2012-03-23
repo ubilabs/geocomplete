@@ -6,14 +6,15 @@
  * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
  */
 
+// # $.geocomplete()
+// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.2
+//
+// * https://github.com/ubilabs/geocomplete/
+// * by Martin Kleppe <kleppe@ubilabs.net>
+
 ;(function($, window, document, undefined){
 
-  // # $.geocomplete()
-  // ## jQuery Geocoding and Places Autocomplete Plugin - V 1.2
-  //
-  // * https://github.com/ubilabs/geocomplete/
-  // * by Martin Kleppe <kleppe@ubilabs.net>
-
+  // ## Options
   // The default options for this plugin.
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
@@ -28,7 +29,8 @@
   // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
   // * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
   // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
-  // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here].(http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests)
+  // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
+
   var defaults = {
     bounds: true,
     map: false,
@@ -50,8 +52,8 @@
     types: ['geocode']
   };
   
-  // 
-  // See: http://code.google.com/apis/maps/documentation/geocoding/#Types
+  // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
+  // on Google Developers.
   var componentTypes = ("street_address route intersection political " +
     "country administrative_area_level_1 administrative_area_level_2 " +
     "administrative_area_level_3 colloquial_area locality sublocality " +
@@ -60,6 +62,8 @@
     "lat lng viewport location " +
     "formatted_address location_type bounds").split(" ");
 
+  // See: [Places Details Responses](https://developers.google.com/maps/documentation/javascript/places#place_details_responses)
+  // on Google Developers.
   var placesDetails = ("id url website vicinity reference rating " +
     "international_phone_number icon formatted_phone_number").split(" ");
 

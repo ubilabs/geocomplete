@@ -184,7 +184,7 @@ Additionally the following details are passed when the Places API was requested:
 
 `id`, `url`, `website`, `vicinity`, `reference`, `rating`, `international_phone_number`, `icon`, `formatted_phone_number`
 
-More information can be found here: http://code.google.com/apis/maps/documentation/javascript/places.html#place_details_responses
+More information can be found here: https://developers.google.com/maps/documentation/javascript/places#place_details_responses
 
 
 ## About
