@@ -11,7 +11,6 @@
   // # $.geocomplete()
   // ## jQuery Geocoding and Places Autocomplete Plugin
   //
-  // * Version: 1.1
   // * https://github.com/ubilabs/geocomplete/
   // * by Martin Kleppe <kleppe@ubilabs.net>
 

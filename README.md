@@ -1,4 +1,4 @@
-# $.geocomplete() - Version 1.1
+# $.geocomplete() - Version 1.2
 ## jQuery Geocoding and Places Autocomplete Plugin
 
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that lets you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
@@ -19,6 +19,7 @@ Here is a list of basic uses:
 
 * [Simple](http://ubilabs.github.com/geocomplete/examples/simple.html) - Single input with an event logger.
 * [Map](http://ubilabs.github.com/geocomplete/examples/map.html) - Adding a map.
+* [Location](http://ubilabs.github.com/geocomplete/examples/location.html) - Adding a default location.
 * [Form](http://ubilabs.github.com/geocomplete/examples/form.html) - Populate form fields.
 * [Attribute](http://ubilabs.github.com/geocomplete/examples/custom_attribute.html) - Using custom attributes to populate data.
 * [Multiple results](http://ubilabs.github.com/geocomplete/examples/multiple_results.html) - Handling multiple results from the geocoder.
@@ -121,6 +122,7 @@ $("#my_input").geocomplete({
 
 * `map` - Might be a selector, a jQuery object or a DOM element. Default is `false` which shows no map.
 * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
+* `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
 * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
 * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
 * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).

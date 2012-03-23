@@ -1,0 +1,15 @@
+# Changelog - $.geocomplete()
+
+Version 1.2
+
+* Add "bounds" option to search within
+* Add "location" options to set default location.
+
+Version 1.1
+
+* Add API to access methods and properties from outside 
+* Add events for draggable marker
+
+Version 1.0
+
+* Initial version
