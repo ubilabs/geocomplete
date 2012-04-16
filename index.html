@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geocomplete : jQuery Geocoding and Places Autocomplete Plugin" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Geocomplete</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ubilabs/geocomplete">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Geocomplete</h1>
+          <h2 id="project_tagline">jQuery Geocoding and Places Autocomplete Plugin</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/ubilabs/geocomplete/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/ubilabs/geocomplete/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>$.geocomplete() - Version 1.2</h1>
+
+<h2>jQuery Geocoding and Places Autocomplete Plugin</h2>
+
+<p>An advanced jQuery plugin that wraps the Google Maps API's <a href="https://code.google.com/apis/maps/documentation/javascript/geocoding.html">Geocoding</a> and <a href="https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete">Places Autocomplete</a> services. You simply provide an input that lets you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.</p>
+
+<p>View the <a href="http://ubilabs.github.com/geocomplete/docs/">annotated source</a>.</p>
+
+<h2>Basic Usage</h2>
+
+<p>To convert an input into an autocomplete field, simply call the Geocomplete plugin:</p>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">();</span>  <span class="c1">// Option 1: Call on element.</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">geocomplete</span><span class="p">(</span><span class="s2">"input"</span><span class="p">);</span> <span class="c1">// Option 2: Pass element as argument.</span>
+</pre>
+</div>
+
+
+<h2>Examples</h2>
+
+<p>Here is a list of basic uses:</p>
+
+<ul>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/simple.html">Simple</a> - Single input with an event logger.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/map.html">Map</a> - Adding a map.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/location.html">Location</a> - Adding a default location.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/form.html">Form</a> - Populate form fields.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/custom_attribute.html">Attribute</a> - Using custom attributes to populate data.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/multiple_results.html">Multiple results</a> - Handling multiple results from the geocoder.</li>
+<li>
+<a href="http://ubilabs.github.com/geocomplete/examples/draggable.html">Draggable</a> -  A draggable marker to redifine the position.</li>
+</ul><h2>Requirements</h2>
+
+<p>Make sure you include the Google Maps API with the Places Library before loading this plugin as described <a href="http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library">here</a>.</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"<a href="http://maps.googleapis.com/maps/api/js?sensor=false&amp;amp;libraries=places">http://maps.googleapis.com/maps/api/js?sensor=false&amp;amp;libraries=places</a>"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.geocomplete.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
+
+
+<h2>Trigger Request</h2>
+
+<p>To trigger a geocoding request from outside (eg. when hitting the "find" button), simply trigger the "geocode" event on the element.</p>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">();</span>
+
+<span class="c1">// Trigger geocoding request.</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"button.find"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">"geocode"</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<h2>Adding a Map Preview</h2>
+
+<p>To link the geocode results with an interactive map, you can pass <code>map</code> as an option to the plugin.</p>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#my_input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span>
+  <span class="nx">map</span><span class="o">:</span> <span class="s2">"#my_map"</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<p>The <code>map</code> option might be a selector, a jQuery object or a DOM element.</p>
+
+<h2>Populate Form Data</h2>
+
+<p>You can pass <code>details</code> as an option to specify a cointainer that will be populated when a geocoding request was successfull.</p>
+
+<p>By default the plugin analyses the <code>name</code> attribute of the containers child nodes and replaces the content. You can override the <code>detailsAttribute</code> to use another attribute such as <code>data-geo</code>.</p>
+
+<p>If the element is an input, the value will be replaced otherwise the plugin overrides the current text.</p>
+
+<p><strong>Note</strong>: Some address compontents such as "country" return an additional <code>short_name</code>. You can access them by simply adding <code>_short</code> at the end of the type.</p>
+
+<p>Simple Example:</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;form&gt;</span>
+  Latitude:   <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"lat"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+  Longitude:  <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"lng"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+  Address:    <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"formatted_address"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span> <span class="nx">details</span><span class="o">:</span> <span class="s2">"form"</span> <span class="p">});</span>
+</pre>
+</div>
+
+
+<p>Advanced Example:</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"details"</span><span class="nt">&gt;</span>
+  Latitude:     <span class="nt">&lt;span</span> <span class="na">data-geo=</span><span class="s">"lat"</span> <span class="nt">/&gt;</span>
+  Longitude:    <span class="nt">&lt;span</span> <span class="na">data-geo=</span><span class="s">"lng"</span> <span class="nt">/&gt;</span>
+  Address:      <span class="nt">&lt;span</span> <span class="na">data-geo=</span><span class="s">"formatted_address"</span> <span class="nt">/&gt;</span>
+  Country Code: <span class="nt">&lt;span</span> <span class="na">data-geo=</span><span class="s">"country_short"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span>
+  <span class="nx">details</span><span class="o">:</span> <span class="s2">".details"</span><span class="p">,</span>
+  <span class="nx">detailsAttribute</span><span class="o">:</span> <span class="s2">"data-geo"</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<h2>List of Options</h2>
+
+<p>The following options might be passed to the plugin call. If you omit them, they fall back to the default.</p>
+
+<p>Example:</p>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#my_input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span>
+  <span class="nx">map</span><span class="o">:</span> <span class="s2">"#my_map"</span><span class="p">,</span>
+  <span class="nx">mapOptions</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">zoom</span><span class="o">:</span> <span class="mi">10</span>
+  <span class="p">},</span>
+  <span class="nx">markerOptions</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">draggable</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">details</span><span class="o">:</span> <span class="s2">"#my_form"</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<code>map</code> - Might be a selector, a jQuery object or a DOM element. Default is <code>false</code> which shows no map.</li>
+<li>
+<code>details</code> - The container that should be populated with data. Defaults to <code>false</code> which ignores the setting.</li>
+<li>
+<code>location</code> - Location to initialize the map on. Might be an address <code>string</code> or an <code>array</code> with [latitude, longitude] or a <code>google.maps.LatLng</code>object. Default is <code>false</code> which shows a blank map.</li>
+<li>
+<code>bounds</code> - Whether to snap geocode search to map bounds. Default: <code>true</code> if false search globally. Alternatively pass a custom LatLngBounds object</li>
+<li>
+<code>detailsAttribute</code> - The attribute's name to use as an indicator. Default: <code>"name"</code>
+</li>
+<li>
+<code>mapOptions</code> - Options to pass to the <code>google.maps.Map</code> constructor. See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions">here</a>.</li>
+<li>
+<code>mapOptions.zoom</code> - The inital zoom level. Default: <code>14</code>
+</li>
+<li>
+<code>mapOptions.scrollwheel</code> - Whether to enable the scrollwheel to zoom the map. Default: <code>false</code>
+</li>
+<li>
+<code>mapOptions.mapTypeId</code> - The map type. Default: <code>"roadmap"</code>
+</li>
+<li>
+<code>markerOptions</code> - The options to pass to the <code>google.maps.Marker</code> constructor. See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions">here</a>.</li>
+<li>
+<code>markerOptions.draggable</code> - If the marker is draggable. Default: <code>false</code>. Set to true to enable dragging.</li>
+<li>
+<code>maxZoom</code> - The maximum zoom level to zoom in after a geocoding response. Default: <code>16</code>
+</li>
+<li>
+<code>types</code> - An array containing one or more of the supported types for the places request. Default: <code>['geocode']</code> See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests">here</a>.</li>
+</ul><h2>Events</h2>
+
+<p>You can subscribe to events of the geocode plugin by using the default jQuery syntax:</p>
+
+<div class="highlight">
+<pre><span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">geocomplete</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">"geocode:result"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">result</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+  <span class="p">});</span>
+</pre>
+</div>
+
+
+<p>The following events are supported:</p>
+
+<ul>
+<li>
+<code>"geocode:result"</code> - Geocode was successful. Passes the original result as described <a href="http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingResults">here</a>.</li>
+<li>
+<code>"geocode:error"</code> - Fired when the geocode returns an error. Passes the current status as listed <a href="http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingStatusCodes">here</a>.</li>
+<li>
+<code>"geocode:multiple"</code> - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.</li>
+<li>
+<code>"geocode:dragged"</code> - Fired when the marker's position was modified manually. Passes the updated location.</li>
+</ul><h2>Methods and Properties</h2>
+
+<p>You can access all properties and methods of the plugin from outside. Simply add a string as the first argument to the <code>.geocomplete</code> method after you initialized the plugin.</p>
+
+<p>Example:</p>
+
+<div class="highlight">
+<pre><span class="c1">// Initialize the plugin.</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span> <span class="nx">map</span><span class="o">:</span> <span class="s2">".map_canvas"</span> <span class="p">});</span>
+
+<span class="c1">// Call the find method with the paramenter "NYC".</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">(</span><span class="s2">"find"</span><span class="p">,</span> <span class="s2">"NYC"</span><span class="p">);</span>
+
+<span class="c1">// Get the map and set a new zoom level.</span>
+<span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">(</span><span class="s2">"map"</span><span class="p">);</span>
+<span class="nx">map</span><span class="p">.</span><span class="nx">setZoom</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h2>Address and Places Specific Component Types</h2>
+
+<p>The following types are supported by the geocoder and will be passed to the provided form or container:</p>
+
+<p><code>street_address</code>, <code>route</code>, <code>intersection</code>, <code>political</code>, <code>country</code>, <code>administrative_area_level_1</code>, <code>administrative_area_level_2</code>, <code>administrative_area_level_3</code>, <code>colloquial_area</code>, <code>locality</code>, <code>sublocality</code>, <code>neighborhood</code>, <code>premise</code>, <code>subpremise</code>, <code>postal_code</code>, <code>natural_feature</code>, <code>airport</code>, <code>park</code>, <code>point_of_interest</code>, <code>post_box</code>, <code>street_number</code>, <code>floor</code>, <code>room</code>, <code>lat</code>, <code>lng</code>, <code>viewport</code>, <code>location</code>, <code>formatted_address</code>, <code>location_type</code>, <code>bounds</code></p>
+
+<p>For more information about address components visit <a href="http://code.google.com/apis/maps/documentation/geocoding/#Types">http://code.google.com/apis/maps/documentation/geocoding/#Types</a></p>
+
+<p>Additionally the following details are passed when the Places API was requested:</p>
+
+<p><code>id</code>, <code>url</code>, <code>website</code>, <code>vicinity</code>, <code>reference</code>, <code>rating</code>, <code>international_phone_number</code>, <code>icon</code>, <code>formatted_phone_number</code></p>
+
+<p>More information can be found here: <a href="https://developers.google.com/maps/documentation/javascript/places#place_details_responses">https://developers.google.com/maps/documentation/javascript/places#place_details_responses</a></p>
+
+<h2>About</h2>
+
+<p>Developed by <a href="http://twitter.com/aemkei">Martin Kleppe</a> at <a href="http://ubilabs.net">Ubilabs</a>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Geocomplete maintained by <a href="https://github.com/ubilabs">ubilabs</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-57649-7");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
