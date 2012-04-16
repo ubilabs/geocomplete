@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>$.geocomplete()</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geocomplete : jQuery Geocoding and Places Autocomplete Plugin" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+    <title>Geocomplete - Examples</title>
   </head>
+
   <body>
 
-    <form>
-      <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
-      <input id="find" type="button" value="find" />
-    </form>
-    
-    <div id="examples">
-      Examples:
-      <a href="#">Hamburg, Germany</a>
-      <a href="#">3rr0r</a>
-      <a href="#">Hauptstraße</a>
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title">Geocomplete</h1>
+          <h2 id="project_tagline">Example: Simple (No Map)</h2>
+        </header>
     </div>
-    
-    <pre id="logger">Log:</pre>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+        <a href="../" class="back">Back to Documentation</a>
+        
+        <form>
+          <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
+          <input id="find" type="button" value="find" />
+        </form>
+
+        <div id="examples">
+          Examples:
+          <a href="#">Hamburg, Germany</a>
+          <a href="#">3rr0r</a>
+          <a href="#">Hauptstraße</a>
+        </div>
+
+        <pre id="logger">Log:</pre>
+        
+      </section>
+    </div>
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="../jquery.geocomplete.js"></script>
+    <script src="logger.js"></script>
     
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -53,6 +77,19 @@
         
       });
     </script>
+    
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-57649-7");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+
   </body>
 </html>
 

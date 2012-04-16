@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>$.geocomplete()</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geocomplete : jQuery Geocoding and Places Autocomplete Plugin" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
     <style type="text/css" media="screen">
-      form { width: 300px; float: left; }
-      fieldset { width: 320px; margin-top: 20px}
-      fieldset strong { display: block; margin: 0.5em 0 0em; }
-      fieldset input { width: 95%; }
-      
       ul span { color: #999; }
     </style>
+    <title>Geocomplete - Examples</title>
   </head>
-  <body>
-    
-    <div class="map_canvas"></div>
-    
-    <form>
-      <input id="geocomplete" type="text" placeholder="Type in an address" value="Empire State Bldg" />
-      <input id="find" type="button" value="find" />
-      
-      <ul>
-        <li>Location: <span data-geo="location"></span></li>
-        <li>Route: <span data-geo="route"></span></li>
-        <li>Street Number: <span data-geo="street_number"></span></li>
-        <li>Postal Code: <span data-geo="postal_code"></span></li>
-        <li>Locality: <span data-geo="locality"></span></li>
-        <li>Country Code: <span data-geo="country_short"></span></li>
-        <li>State: <span data-geo="administrative_area_level_1"></span></li>
-      </ul>
 
-    </form>
+  <body>
+
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title">Geocomplete</h1>
+          <h2 id="project_tagline">Example: Custom HTML Attribute</h2>
+        </header>
+    </div>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+        <a href="../" class="back">Back to Documentation</a>
+        
+
+        <form>
+          <input id="geocomplete" type="text" placeholder="Type in an address" value="Empire State Bldg" />
+          <input id="find" type="button" value="find" />
+
+          <div class="map_canvas"></div>
+
+          <ul>
+            <li>Location: <span data-geo="location"></span></li>
+            <li>Route: <span data-geo="route"></span></li>
+            <li>Street Number: <span data-geo="street_number"></span></li>
+            <li>Postal Code: <span data-geo="postal_code"></span></li>
+            <li>Locality: <span data-geo="locality"></span></li>
+            <li>Country Code: <span data-geo="country_short"></span></li>
+            <li>State: <span data-geo="administrative_area_level_1"></span></li>
+          </ul>
+
+        </form>
+        
+      </section>
+    </div>
 
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    
+
     <script src="../jquery.geocomplete.js"></script>
+    <script src="logger.js"></script>
     
     <script>
       $(function(){
@@ -51,7 +66,19 @@
         });
       });
     </script>
-    
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-57649-7");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+
   </body>
 </html>
+
 

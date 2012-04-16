@@ -1,47 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>$.geocomplete()</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geocomplete : jQuery Geocoding and Places Autocomplete Plugin" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+    <title>Geocomplete - Examples</title>
   </head>
+
   <body>
 
-    <form>
-      <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
-      <input id="find" type="button" value="find" />
-    </form>
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title">Geocomplete</h1>
+          <h2 id="project_tagline">Example: Bounds Biasing</h2>
+        </header>
+    </div>
 
-    <div class="map_canvas"></div>
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+        <a href="../" class="back">Back to Documentation</a>
+        
+        <form>
+          <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
+          <input id="find" type="button" value="find" />
+        </form>
 
-    <p>Try searching for "Google". Results should be biased within Sydney. <br />For further details on result biasing: <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete">http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete</a></p>
+        <div class="map_canvas"></div>
 
+        <p>Try searching for "Pizza". Results should be biased within Sydney. <br />For further details on result biasing: <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete">http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete</a></p>
+        
+        
+      </section>
+    </div>
 
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <script src="../jquery.geocomplete.js"></script>
     <script src="logger.js"></script>
+    
+     <script>
+        $(function(){
+          var center = new google.maps.LatLng(30, 0),
+            defaultBounds = new google.maps.LatLngBounds(
+              new google.maps.LatLng(-33.8902, 151.1759),
+              new google.maps.LatLng(-33.8474, 151.2631)
+            );
 
-    <script>
-      $(function(){
-        var center = new google.maps.LatLng(-33.873651,151.20689),
-          defaultBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(-33.8902, 151.1759),
-          new google.maps.LatLng(-33.8474, 151.2631)
-        );
+          $("#geocomplete").geocomplete({
+            map: ".map_canvas",
+            types: ['establishment'],
+            bounds: defaultBounds
+          });
 
-        $("#geocomplete").geocomplete({
-          map: ".map_canvas",
-          types: ['establishment'],
-          bounds: defaultBounds
+          var map =  $("#geocomplete").geocomplete("map")
+
+          map.setCenter(center);
+          map.setZoom(1);
         });
+      </script>
 
-        var map =  $("#geocomplete").geocomplete("map")
 
-        map.setCenter(center);
-        map.setZoom(11);
-      });
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-57649-7");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+
   </body>
 </html>
+
+
+    
+
+
+   

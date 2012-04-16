@@ -13,7 +13,7 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
           <h1 id="project_title">Geocomplete</h1>
-          <h2 id="project_tagline">Example: Draggable Marker</h2>
+          <h2 id="project_tagline">Example</h2>
         </header>
     </div>
 
@@ -22,25 +22,6 @@
         
         <a href="../" class="back">Back to Documentation</a>
         
-        <form>
-          <input id="geocomplete" type="text" placeholder="Type in an address" value="111 Broadway, New York, NY" />
-          <input id="find" type="button" value="find" />
-
-          <div class="map_canvas"></div>
-
-          <fieldset>
-            <label>Latitude</label>
-            <input name="lat" type="text" value="">
-
-            <label>Longitude</label>
-            <input name="lng" type="text" value="">
-
-            <label>Formatted Address</label>
-            <input name="formatted_address" type="text" value="">
-          </fieldset>
-
-          <a id="reset" href="#" style="display:none;">Reset Marker</a>
-        </form>
         
       </section>
     </div>
@@ -52,34 +33,6 @@
     <script src="logger.js"></script>
     
     
-    <script>
-      $(function(){
-        $("#geocomplete").geocomplete({
-          map: ".map_canvas",
-          details: "form ",
-          markerOptions: {
-            draggable: true
-          }
-        });
-        
-        $("#geocomplete").bind("geocode:dragged", function(event, latLng){
-          $("input[name=lat]").val(latLng.lat());
-          $("input[name=lng]").val(latLng.lng());
-          $("#reset").show();
-        });
-        
-        
-        $("#reset").click(function(){
-          $("#geocomplete").geocomplete("resetMarker");
-          $("#reset").hide();
-          return false;
-        });
-        
-        $("#find").click(function(){
-          $("#geocomplete").trigger("geocode");
-        }).click();
-      });
-    </script>
 
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -94,11 +47,3 @@
 
   </body>
 </html>
-
-    
-
-
-  
-
-    
-

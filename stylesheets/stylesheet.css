@@ -55,15 +55,27 @@ a:focus {
 Theme Styles
 *******************************************************************************/
 
+html, body { 
+  height: 100%;
+}
+
+#main_content_wrap {
+  min-height: 100%;
+}
+
 body {
   box-sizing: border-box;
   color:#373737;
   background: #212121;
+}
+
+body, input, button {
   font-size: 16px;
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+
 
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
@@ -143,7 +155,7 @@ strong {
   font-weight: bold;
 }
 
-img {
+img.show {
   position: relative;
   margin: 0 auto;
   max-width: 739px;
@@ -254,13 +266,9 @@ td {
 
 form {
   background: #f2f2f2;
-  padding: 20px;
+  padding: 20px 0;
 }
 
-img {
-  width: 100%;
-  max-width: 100%;
-}
 
 /*******************************************************************************
 Full-Width Styles
@@ -374,6 +382,49 @@ Full-Width Styles
   background: #212121;
 }
 
+fieldset input, fieldset label { width: 100%; display: block; }
+fieldset input { margin-bottom: 1em; }
+
+#examples a {
+  border-right: 1px solid #007EDF;
+  display: inline-block;
+  padding: 0 0.5em;
+}
+
+#examples a:last-child {
+  border-right: none;
+}
+
+#geocomplete { width: 300px; }
+
+#examples {
+  margin-bottom: 0.5em;
+}
+
+.map_canvas { 
+  width: 100%; 
+  height: 400px; 
+  margin: 10px 20px 10px 0;
+  border: 10px solid #FFF;
+}
+
+.map_canvas:after{
+  content: "Type in an address in the input above.";
+  padding-top: 170px;
+  display: block;
+  text-align: center;
+  font-size: 2em;
+  color: #999;
+}
+
+#multiple li { 
+  cursor: pointer; 
+  text-decoration: underline; 
+}
+
+a.back:before {
+  content:" ← ";
+}
 
 
 /*******************************************************************************
