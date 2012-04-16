@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>$.geocomplete()</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+
+    <form>
+      <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
+      <input id="find" type="button" value="find" />
+    </form>
+
+    <div class="map_canvas"></div>
+
+    <p>Try searching for "Google". Results should be biased within Sydney. <br />For further details on result biasing: <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete">http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete</a></p>
+
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="../jquery.geocomplete.js"></script>
+    <script src="logger.js"></script>
+
+    <script>
+      $(function(){
+        var center = new google.maps.LatLng(-33.873651,151.20689),
+          defaultBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-33.8902, 151.1759),
+          new google.maps.LatLng(-33.8474, 151.2631)
+        );
+
+        $("#geocomplete").geocomplete({
+          map: ".map_canvas",
+          types: ['establishment'],
+          bounds: defaultBounds
+        });
+
+        var map =  $("#geocomplete").geocomplete("map")
+
+        map.setCenter(center);
+        map.setZoom(11);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>$.geocomplete()</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+
+    <div class="map_canvas"></div>
+
+    <form>
+      <input id="geocomplete" type="text" placeholder="Type in an address" size="90" value="Hauptstraße"/>
+      <input id="find" type="button" value="find" />
+    </form>
+
+    <ul id="multiple"></ul>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="../jquery.geocomplete.js"></script>
+    <script src="logger.js"></script>
+    
+    <script>
+      $(function(){
+        
+        var $geocomplete = $("#geocomplete"),
+          $multiple = $("#multiple");
+        
+        $geocomplete
+          .geocomplete({ map: ".map_canvas" })
+          .bind("geocode:multiple", function(event, results){
+            $.each(results, function(){
+              var result = this;
+              $("<li>")
+                .html(result.formatted_address)
+                .appendTo($multiple)
+                .click(function(){
+                  $geocomplete.geocomplete("update", result)
+                });
+            });
+          });
+        
+        $("#find").click(function(){
+          $("#geocomplete").trigger("geocode");
+        });
+        
+      });
+    </script>
+  </body>
+</html>
+

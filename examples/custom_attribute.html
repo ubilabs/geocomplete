@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>$.geocomplete()</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style type="text/css" media="screen">
+      form { width: 300px; float: left; }
+      fieldset { width: 320px; margin-top: 20px}
+      fieldset strong { display: block; margin: 0.5em 0 0em; }
+      fieldset input { width: 95%; }
+      
+      ul span { color: #999; }
+    </style>
+  </head>
+  <body>
+    
+    <div class="map_canvas"></div>
+    
+    <form>
+      <input id="geocomplete" type="text" placeholder="Type in an address" value="Empire State Bldg" />
+      <input id="find" type="button" value="find" />
+      
+      <ul>
+        <li>Location: <span data-geo="location"></span></li>
+        <li>Route: <span data-geo="route"></span></li>
+        <li>Street Number: <span data-geo="street_number"></span></li>
+        <li>Postal Code: <span data-geo="postal_code"></span></li>
+        <li>Locality: <span data-geo="locality"></span></li>
+        <li>Country Code: <span data-geo="country_short"></span></li>
+        <li>State: <span data-geo="administrative_area_level_1"></span></li>
+      </ul>
+
+    </form>
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    <script src="../jquery.geocomplete.js"></script>
+    
+    <script>
+      $(function(){
+        $("#geocomplete").geocomplete({
+          map: ".map_canvas",
+          details: "form ul",
+          detailsAttribute: "data-geo"
+        });
+        
+        $("#find").click(function(){
+          $("#geocomplete").trigger("geocode");
+        });
+      });
+    </script>
+    
+  </body>
+</html>
+
