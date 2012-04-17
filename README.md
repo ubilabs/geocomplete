@@ -24,7 +24,7 @@ Here is a list of basic uses:
 * [Form](http://ubilabs.github.com/geocomplete/examples/form.html) - Populate form fields.
 * [Attribute](http://ubilabs.github.com/geocomplete/examples/custom_attribute.html) - Using custom attributes to populate data.
 * [Multiple results](http://ubilabs.github.com/geocomplete/examples/multiple_results.html) - Handling multiple results from the geocoder.
-* [Draggable](http://ubilabs.github.com/geocomplete/examples/draggable.html) -  A draggable marker to redifine the position.
+* [Draggable](http://ubilabs.github.com/geocomplete/examples/draggable.html) -  A draggable marker to redefine the position.
 
 ## Requirements
 
