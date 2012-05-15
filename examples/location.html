@@ -28,6 +28,14 @@
 
         <div class="map_canvas"></div>
         
+        <h3>Source:</h3>
+        <pre>
+$("#geocomplete").geocomplete({
+  map: ".map_canvas",
+  location: "NYC"
+});
+</pre>
+        
       </section>
     </div>
 
@@ -39,14 +47,10 @@
     
     <script>
       $(function(){
-        
-        var options = {
+        $("#geocomplete").geocomplete({
           map: ".map_canvas",
           location: "NYC"
-        };
-        
-        $("#geocomplete").geocomplete(options);
-        
+        });
       });
     </script>
 

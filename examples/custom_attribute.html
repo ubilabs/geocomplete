@@ -44,6 +44,23 @@
 
         </form>
         
+        <h3>Source:</h3>
+        <pre>
+// HTML
+&lt;ul&gt;
+  &lt;li&gt;Location: &lt;span data-geo="location"&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;Country Code: &lt;span data-geo="country_short"&gt;&lt;/span&gt;&lt;/li&gt;
+  ...
+&lt;/ul&gt;
+
+// JavaScript
+$("#geocomplete").geocomplete({
+  map: ".map_canvas",
+  details: "ul",
+  detailsAttribute: "data-geo"
+});
+</pre>
+        
       </section>
     </div>
 

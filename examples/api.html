@@ -32,6 +32,19 @@
         <button id="search">.geocomplete("find", "NYC")</button>
         <button id="center">.geocomplete("map").setCenter()</button>
 
+        <h3>Source:</h3>
+        <pre>
+// find
+$("#geocomplete").geocomplete("find", "NYC");
+
+// center
+var map = $("#geocomplete").geocomplete("map"),
+  center = new google.maps.LatLng(10, 0);
+
+map.setCenter(center);
+map.setZoom(3);
+</pre>
+
       </section>
     </div>
 

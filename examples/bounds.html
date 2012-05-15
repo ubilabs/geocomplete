@@ -31,7 +31,19 @@
 
         <p>Try searching for "Pizza". Results should be biased within Sydney. <br />For further details on result biasing: <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete">http://code.google.com/apis/maps/documentation/javascript/places.html#adding_autocomplete</a></p>
         
-        
+        <h3>Source:</h3>
+        <pre>
+var bounds = new google.maps.LatLngBounds(
+  new google.maps.LatLng(-33.8902, 151.1759),
+  new google.maps.LatLng(-33.8474, 151.2631)
+);
+
+$("#geocomplete").geocomplete({
+  map: ".map_canvas",
+  types: ['establishment'],
+  bounds: bounds
+});
+</pre>
       </section>
     </div>
 

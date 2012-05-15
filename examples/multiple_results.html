@@ -32,6 +32,16 @@
 
         <ul id="multiple"></ul>
         
+        <h3>Source:</h3>
+        <pre>
+$("#geocomplete")
+  .geocomplete({ map: ".map_canvas" })
+  .bind("geocode:multiple", function(event, results){
+    $.each(results, function(){
+      $("&lt;li&gt;").html(this.formatted_address).appendTo($("#multiple"));
+    });
+  });</pre>
+        
       </section>
     </div>
 
@@ -62,7 +72,7 @@
           });
         
         $("#find").click(function(){
-          $("#geocomplete").trigger("geocode");
+          $geocomplete.trigger("geocode");
         });
         
       });
