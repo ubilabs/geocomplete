@@ -35,6 +35,8 @@ Make sure you include the Google Maps API with the Places Library before loading
 <script src="jquery.geocomplete.js"></script>
 ```
 
+If you use the plugin without showing a map you must display the "[powered by Google](https://developers.google.com/maps/documentation/javascript/places#autocomplete_no_map)" logo under the text field.
+
 ## Trigger Request
 
 To trigger a geocoding request from outside (eg. when hitting the "find" button), simply trigger the "geocode" event on the element.
