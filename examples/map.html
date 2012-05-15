@@ -41,16 +41,9 @@
           
           <h3>Source:</h3>
           <pre>
-$("#geocomplete").geocomplete(options)
-  .bind("geocode:result", function(event, result){
-    log("Result", result.formatted_address);
-  })
-  .bind("geocode:error", function(event, status){
-    log("ERROR", status);
-  })
-  .bind("geocode:multiple", function(event, results){
-    log("Multiple", results.length, "results found");
-  });</pre>
+$("#geocomplete").geocomplete({
+  map: ".map_canvas"
+})</pre>
       </section>
     </div>
 
