@@ -135,6 +135,7 @@ $("#my_input").geocomplete({
 * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
 * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
 * `maxZoom` - The maximum zoom level to zoom in after a geocoding response. Default: `16`
+* `componentRestrictions` - Option for Google Places Autocomplete to restrict results by country. See the [docs](https://developers.google.com/maps/documentation/javascript/places#places_autocomplete)
 * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
 
 ## Events
