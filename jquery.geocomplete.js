@@ -217,7 +217,7 @@
       }
 
       if (latLng){
-        this.geoocode({ latLng: latLng });
+        this.geocode({ latLng: latLng });
       }
     },
 
