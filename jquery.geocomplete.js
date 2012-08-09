@@ -28,6 +28,7 @@
   // * `mapOptions.mapTypeId` - The map type. Default: `"roadmap"`
   // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
   // * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
+  // * `markerOptions.disabled` - Do not show marker. Default: `false`. Set to true to disable marker.
   // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
   // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
 
@@ -115,6 +116,9 @@
     initMarker: function(){
       if (!this.map){ return; }
       var options = $.extend(this.options.markerOptions, { map: this.map });
+
+      if (options.disabled){ return; }
+
       this.marker = new google.maps.Marker(options);
 
       google.maps.event.addListener(
