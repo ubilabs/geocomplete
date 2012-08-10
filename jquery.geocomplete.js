@@ -221,7 +221,7 @@
       }
 
       if (latLng){
-        this.geocode({ latLng: latLng });
+        if (this.map){ this.map.setCenter(latLng); }
       }
     },
 
