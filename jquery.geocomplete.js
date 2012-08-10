@@ -402,16 +402,17 @@
 
     var attribute = 'plugin_geocomplete';
 
-    // If you call `.geocomplete()` with a string as the first paramenter
+    // If you call `.geocomplete()` with a string as the first parameter
     // it returns the corresponding property or calls the method with the
     // following arguments.
     if (typeof options == "string"){
 
-      var instance = $(this).data(attribute),
+      var instance = $(this).data(attribute) || $(this).geocomplete().data(attribute),
         prop = instance[options];
 
       if (typeof prop == "function"){
-        return prop.apply(instance, Array.prototype.slice.call(arguments, 1));
+        prop.apply(instance, Array.prototype.slice.call(arguments, 1));
+        return $(this);
       } else {
         if (arguments.length == 2){
           prop = arguments[1];
