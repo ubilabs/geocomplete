@@ -1,16 +1,16 @@
 <!DOCTYPE html>  <html> <head>   <title>jquery.geocomplete.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               jquery.geocomplete.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/**</span>
-<span class="cm"> * jQuery Geocoding and Places Autocomplete Plugin - V 1.2</span>
+<span class="cm"> * jQuery Geocoding and Places Autocomplete Plugin - V 1.4</span>
 <span class="cm"> *</span>
 <span class="cm"> * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2012</span>
 <span class="cm"> * @author Ubilabs http://ubilabs.net, 2012</span>
 <span class="cm"> * @license MIT License &lt;http://www.opensource.org/licenses/mit-license.php&gt;</span>
 <span class="cm"> */</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>$.geocomplete()</h1>
 
-<h2>jQuery Geocoding and Places Autocomplete Plugin - V 1.2</h2>
+<h2>jQuery Geocoding and Places Autocomplete Plugin - V 1.4</h2>
 
 <ul>
 <li>https://github.com/ubilabs/geocomplete/</li>
-<li>by Martin Kleppe <a href="&#x6D;&#97;&#105;&#108;t&#x6F;:&#107;&#108;&#101;&#112;&#x70;&#x65;&#64;&#x75;b&#x69;&#108;a&#x62;&#115;&#x2E;&#110;&#101;&#x74;">&#107;&#108;&#101;&#112;&#x70;&#x65;&#64;&#x75;b&#x69;&#108;a&#x62;&#115;&#x2E;&#110;&#101;&#x74;</a></li>
+<li>by Martin Kleppe <a href="&#x6D;&#x61;&#105;&#x6C;&#116;&#x6F;:&#x6B;&#108;&#x65;&#x70;&#112;&#101;&#64;&#x75;&#98;&#x69;&#x6C;&#x61;&#98;s&#x2E;&#x6E;&#x65;&#116;">&#x6B;&#108;&#x65;&#x70;&#112;&#101;&#64;&#x75;&#98;&#x69;&#x6C;&#x61;&#98;s&#x2E;&#x6E;&#x65;&#116;</a></li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>Options</h2>
 
 <p>The default options for this plugin.</p>
@@ -27,29 +27,30 @@
 <li><code>mapOptions.mapTypeId</code> - The map type. Default: <code>"roadmap"</code></li>
 <li><code>markerOptions</code> - The options to pass to the <code>google.maps.Marker</code> constructor. See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions">here</a>.</li>
 <li><code>markerOptions.draggable</code> - If the marker is draggable. Default: <code>false</code>. Set to true to enable dragging.</li>
+<li><code>markerOptions.disabled</code> - Do not show marker. Default: <code>false</code>. Set to true to disable marker.</li>
 <li><code>maxZoom</code> - The maximum zoom level too zoom in after a geocoding response. Default: <code>16</code></li>
 <li><code>types</code> - An array containing one or more of the supported types for the places request. Default: <code>['geocode']</code> See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests">here</a>.</li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">bounds</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">country</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="nx">map</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nx">details</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nx">detailsAttribute</span><span class="o">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
     <span class="nx">location</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    
+
     <span class="nx">mapOptions</span><span class="o">:</span> <span class="p">{</span>
       <span class="nx">zoom</span><span class="o">:</span> <span class="mi">14</span><span class="p">,</span>
       <span class="nx">scrollwheel</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="nx">mapTypeId</span><span class="o">:</span> <span class="s2">&quot;roadmap&quot;</span>  
+      <span class="nx">mapTypeId</span><span class="o">:</span> <span class="s2">&quot;roadmap&quot;</span>
     <span class="p">},</span>
-    
+
     <span class="nx">markerOptions</span><span class="o">:</span> <span class="p">{</span>
       <span class="nx">draggable</span><span class="o">:</span> <span class="kc">false</span>
     <span class="p">},</span>
-    
+
     <span class="nx">maxZoom</span><span class="o">:</span> <span class="mi">16</span><span class="p">,</span>
     <span class="nx">types</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;geocode&#39;</span><span class="p">]</span>
-  <span class="p">};</span>
-  </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>See: <a href="https://developers.google.com/maps/documentation/geocoding/#Types">Geocoding Types</a>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>See: <a href="https://developers.google.com/maps/documentation/geocoding/#Types">Geocoding Types</a>
 on Google Developers.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">componentTypes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;street_address route intersection political &quot;</span> <span class="o">+</span>
     <span class="s2">&quot;country administrative_area_level_1 administrative_area_level_2 &quot;</span> <span class="o">+</span>
     <span class="s2">&quot;administrative_area_level_3 colloquial_area locality sublocality &quot;</span> <span class="o">+</span>
@@ -57,30 +58,28 @@ on Google Developers.</p>             </td>             <td class="code">       
     <span class="s2">&quot;park point_of_interest post_box street_number floor room &quot;</span> <span class="o">+</span>
     <span class="s2">&quot;lat lng viewport location &quot;</span> <span class="o">+</span>
     <span class="s2">&quot;formatted_address location_type bounds&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>See: <a href="https://developers.google.com/maps/documentation/javascript/places#place_details_responses">Places Details Responses</a>
-on Google Developers.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">placesDetails</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id url website vicinity reference rating &quot;</span> <span class="o">+</span>
-    <span class="s2">&quot;international_phone_number icon formatted_phone_number&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>The actual plugin constructor. </p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">function</span> <span class="nx">GeoComplete</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+on Google Developers.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">placesDetails</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id url website vicinity reference name rating &quot;</span> <span class="o">+</span>
+    <span class="s2">&quot;international_phone_number icon formatted_phone_number&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>The actual plugin constructor.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">function</span> <span class="nx">GeoComplete</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">$input</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
-    
+
     <span class="k">this</span><span class="p">.</span><span class="nx">_defaults</span> <span class="o">=</span> <span class="nx">defaults</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_name</span> <span class="o">=</span> <span class="s1">&#39;geocomplete&#39;</span><span class="p">;</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-  <span class="p">}</span>
-  </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Initialize all parts of the plugin.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">GeoComplete</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Initialize all parts of the plugin.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">GeoComplete</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
     <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">initMap</span><span class="p">();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">initMarker</span><span class="p">();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">initGeocoder</span><span class="p">();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">initDetails</span><span class="p">();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">initLocation</span><span class="p">();</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Initialize the map but only if the option <code>map</code> was set.
-This will create a <code>map</code> within the given container 
-using the provided <code>mapOptions</code> or link to the existing map instance.  </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initMap</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Initialize the map but only if the option <code>map</code> was set.
+This will create a <code>map</code> within the given container
+using the provided <code>mapOptions</code> or link to the existing map instance.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initMap</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">map</span><span class="p">){</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">setCenter</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">){</span>
@@ -89,78 +88,79 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
       <span class="p">}</span>
 
       <span class="k">this</span><span class="p">.</span><span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span>
-        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">map</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> 
+        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">map</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">mapOptions</span>
       <span class="p">);</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Add a marker with the provided <code>markerOptions</code> but only 
-if the option was set. Additionally it listens for the <code>dragend</code> event 
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Add a marker with the provided <code>markerOptions</code> but only
+if the option was set. Additionally it listens for the <code>dragend</code> event
 to notify the plugin about changes.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initMarker</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">){</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
       <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">markerOptions</span><span class="p">,</span> <span class="p">{</span> <span class="nx">map</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span> <span class="p">});</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">disabled</span><span class="p">){</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+
       <span class="k">this</span><span class="p">.</span><span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
-      
+
       <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">,</span> 
-        <span class="s1">&#39;dragend&#39;</span><span class="p">,</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">,</span>
+        <span class="s1">&#39;dragend&#39;</span><span class="p">,</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">markerDragged</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
       <span class="p">);</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Associate the input with the autocompleter and create a geocoder 
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Associate the input with the autocompleter and create a geocoder
 to fall back when the autocompleter does not return a value.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initGeocoder</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
 
       <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
         <span class="nx">types</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">types</span><span class="p">,</span>
-        <span class="nx">bounds</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">?</span> <span class="kc">null</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span>
+        <span class="nx">bounds</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">?</span> <span class="kc">null</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span><span class="p">,</span>
+        <span class="nx">componentRestrictions</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">componentRestrictions</span>
       <span class="p">};</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">country</span><span class="p">){</span>
+        <span class="nx">options</span><span class="p">.</span><span class="nx">componentRestrictions</span> <span class="o">=</span> <span class="p">{</span><span class="nx">country</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">country</span><span class="p">}</span>
+      <span class="p">}</span>
 
       <span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">places</span><span class="p">.</span><span class="nx">Autocomplete</span><span class="p">(</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">input</span><span class="p">,</span> <span class="nx">options</span>
       <span class="p">);</span>
 
-      <span class="k">this</span><span class="p">.</span><span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Bind autocomplete to map bounds but only if there is a map
+      <span class="k">this</span><span class="p">.</span><span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Bind autocomplete to map bounds but only if there is a map
 and <code>options.bindToMap</code> is set to true.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span><span class="p">.</span><span class="nx">bindTo</span><span class="p">(</span><span class="s1">&#39;bounds&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">);</span>
-      <span class="p">}</span>
-  </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Watch <code>place_changed</code> events on the autocomplete input field.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span><span class="p">,</span> 
-        <span class="s1">&#39;place_changed&#39;</span><span class="p">,</span> 
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Watch <code>place_changed</code> events on the autocomplete input field.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span><span class="p">,</span>
+        <span class="s1">&#39;place_changed&#39;</span><span class="p">,</span>
         <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">placeChanged</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
-      <span class="p">);</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Prevent parent form from being submitted if user hit enter.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">keypress</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+      <span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Prevent parent form from being submitted if user hit enter.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">keypress</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">13</span><span class="p">){</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">}</span>
-      <span class="p">});</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Listen for "geocode" events and trigger find action.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;geocode&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Listen for "geocode" events and trigger find action.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;geocode&quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
       <span class="p">},</span> <span class="k">this</span><span class="p">));</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Prepare a given DOM structure to be populated when we got some data.
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Prepare a given DOM structure to be populated when we got some data.
 This will cycle through the list of component types and map the
 corresponding elements.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initDetails</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">details</span><span class="p">){</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-      
+
       <span class="kd">var</span> <span class="nx">$details</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">details</span><span class="p">),</span>
         <span class="nx">attribute</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">detailsAttribute</span><span class="p">,</span>
         <span class="nx">details</span> <span class="o">=</span> <span class="p">{};</span>
-        
+
       <span class="kd">function</span> <span class="nx">setDetail</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
         <span class="nx">details</span><span class="p">[</span><span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">$details</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;[&quot;</span> <span class="o">+</span>  <span class="nx">attribute</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">);</span>
       <span class="p">}</span>
-      
+
       <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">componentTypes</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">key</span><span class="p">){</span>
         <span class="nx">setDetail</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
         <span class="nx">setDetail</span><span class="p">(</span><span class="nx">key</span> <span class="o">+</span> <span class="s2">&quot;_short&quot;</span><span class="p">);</span>
       <span class="p">});</span>
-      
+
       <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">placesDetails</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">key</span><span class="p">){</span>
         <span class="nx">setDetail</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
       <span class="p">});</span>
-      
+
       <span class="k">this</span><span class="p">.</span><span class="nx">$details</span> <span class="o">=</span> <span class="nx">$details</span><span class="p">;</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">details</span> <span class="o">=</span> <span class="nx">details</span><span class="p">;</span>
     <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Set the initial location of the plugin if the <code>location</code> options was set.
-This method will care about converting the value into the right format. </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initLocation</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+This method will care about converting the value into the right format.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">initLocation</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
       <span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">location</span><span class="p">,</span> <span class="nx">latLng</span><span class="p">;</span>
 
@@ -169,26 +169,25 @@ This method will care about converting the value into the right format. </p>    
       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">location</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">location</span><span class="p">);</span>
         <span class="k">return</span><span class="p">;</span>
-      <span class="p">}</span> 
+      <span class="p">}</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="nx">location</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">latLng</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="nx">location</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">location</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-      <span class="p">}</span> 
+      <span class="p">}</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="nx">location</span> <span class="k">instanceof</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">){</span>
         <span class="nx">latLng</span> <span class="o">=</span> <span class="nx">location</span><span class="p">;</span>
       <span class="p">}</span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="nx">latLng</span><span class="p">){</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">geoocode</span><span class="p">({</span> <span class="nx">latLng</span><span class="o">:</span> <span class="nx">latLng</span> <span class="p">});</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">latLng</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">){</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">setCenter</span><span class="p">(</span><span class="nx">latLng</span><span class="p">);</span> <span class="p">}</span>
       <span class="p">}</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Look up a given address. If no <code>address</code> was specified it uses
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Look up a given address. If no <code>address</code> was specified it uses
 the current value of the input.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">find</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">address</span><span class="p">){</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">geocode</span><span class="p">({</span> 
+      <span class="k">this</span><span class="p">.</span><span class="nx">geocode</span><span class="p">({</span>
         <span class="nx">address</span><span class="o">:</span> <span class="nx">address</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span>
       <span class="p">});</span>
-    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Requests details about a given location. 
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Requests details about a given location.
 Additionally it will bias the requests to the provided bounds.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">geocode</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">){</span>
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">request</span><span class="p">.</span><span class="nx">bounds</span><span class="p">){</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">===</span> <span class="kc">true</span><span class="p">){</span>
@@ -197,31 +196,33 @@ Additionally it will bias the requests to the provided bounds.</p>             <
           <span class="nx">request</span><span class="p">.</span><span class="nx">bounds</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bounds</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">}</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">country</span><span class="p">){</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">region</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">country</span><span class="p">;</span>
+      <span class="p">}</span>
+
       <span class="k">this</span><span class="p">.</span><span class="nx">geocoder</span><span class="p">.</span><span class="nx">geocode</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">handleGeocode</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Handles the geocode response. If more than one results was found
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Handles the geocode response. If more than one results was found
 it triggers the "geocode:multiple" events. If there was an error
 the "geocode:error" event is fired.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">handleGeocode</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">status</span><span class="p">){</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">===</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">GeocoderStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">formatted_address</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-        
+
         <span class="k">if</span> <span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">){</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;geocode:multiple&quot;</span><span class="p">,</span> <span class="nx">results</span><span class="p">);</span>
         <span class="p">}</span>
-        
+
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;geocode:error&quot;</span><span class="p">,</span> <span class="nx">status</span><span class="p">);</span>
       <span class="p">}</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Triggers a given <code>event</code> with optional <code>arguments</code> on the input.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">trigger</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">argument</span><span class="p">){</span>
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Triggers a given <code>event</code> with optional <code>arguments</code> on the input.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">trigger</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">argument</span><span class="p">){</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">$input</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="p">[</span><span class="nx">argument</span><span class="p">]);</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Set the map to a new center by passing a <code>geometry</code>.
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Set the map to a new center by passing a <code>geometry</code>.
 If the geometry has a viewport, the map zooms out to fit the bounds.
 Additionally it updates the marker position.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">center</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">geometry</span><span class="p">){</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">viewport</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">fitBounds</span><span class="p">(</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">viewport</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">getZoom</span><span class="p">()</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">maxZoom</span><span class="p">){</span>
@@ -231,42 +232,37 @@ Additionally it updates the marker position.</p>             </td>             <
         <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">setZoom</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">maxZoom</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">setCenter</span><span class="p">(</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">);</span>
       <span class="p">}</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">.</span><span class="nx">setPosition</span><span class="p">(</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">.</span><span class="nx">setAnimation</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">markerOptions</span><span class="p">.</span><span class="nx">animation</span><span class="p">);</span>
       <span class="p">}</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Update the elements based on a single places or geoocoding response 
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Update the elements based on a single places or geoocoding response
 and trigger the "geocode:result" event on the input.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">update</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">center</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">geometry</span><span class="p">);</span>
       <span class="p">}</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$details</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">fillDetails</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
       <span class="p">}</span>
-      
+
       <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;geocode:result&quot;</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Populate the provided elements with new <code>result</code> data.
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Populate the provided elements with new <code>result</code> data.
 This will lookup all elements that has an attribute with the given
 component type.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">fillDetails</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
-      
+
       <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{},</span>
         <span class="nx">geometry</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">geometry</span><span class="p">,</span>
         <span class="nx">viewport</span> <span class="o">=</span> <span class="nx">geometry</span><span class="p">.</span><span class="nx">viewport</span><span class="p">,</span>
-        <span class="nx">bounds</span> <span class="o">=</span> <span class="nx">geometry</span><span class="p">.</span><span class="nx">bounds</span><span class="p">;</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Create a simplified version of the address components.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">address_components</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">object</span><span class="p">){</span>
+        <span class="nx">bounds</span> <span class="o">=</span> <span class="nx">geometry</span><span class="p">.</span><span class="nx">bounds</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Create a simplified version of the address components.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">address_components</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">object</span><span class="p">){</span>
         <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">types</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
         <span class="nx">data</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">long_name</span><span class="p">;</span>
         <span class="nx">data</span><span class="p">[</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;_short&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">short_name</span><span class="p">;</span>
-      <span class="p">});</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Add properties of the places details. </p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">placesDetails</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">key</span><span class="p">){</span>
+      <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Add properties of the places details.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">placesDetails</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">key</span><span class="p">){</span>
         <span class="nx">data</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">result</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-      <span class="p">});</span>
-      </pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Add infos about the address and geometry.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="p">{</span>
+      <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Add infos about the address and geometry.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="p">{</span>
         <span class="nx">formatted_address</span><span class="o">:</span> <span class="nx">result</span><span class="p">.</span><span class="nx">formatted_address</span><span class="p">,</span>
         <span class="nx">location_type</span><span class="o">:</span> <span class="nx">geometry</span><span class="p">.</span><span class="nx">location_type</span> <span class="o">||</span> <span class="s2">&quot;PLACES&quot;</span><span class="p">,</span>
         <span class="nx">viewport</span><span class="o">:</span> <span class="nx">viewport</span><span class="p">,</span>
@@ -278,57 +274,53 @@ component type.</p>             </td>             <td class="code">             
         <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">setDetail</span><span class="p">(</span><span class="nx">$detail</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
       <span class="p">},</span> <span class="k">this</span><span class="p">));</span>
-      
+
       <span class="k">this</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Assign a given <code>value</code> to a single <code>$element</code>.
-If the element is an input, the value is set, otherwise it updates 
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Assign a given <code>value</code> to a single <code>$element</code>.
+If the element is an input, the value is set, otherwise it updates
 the text content.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">setDetail</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$element</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">){</span>
         <span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
       <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span><span class="p">.</span><span class="nx">toUrlValue</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">){</span>
         <span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">toUrlValue</span><span class="p">();</span>
       <span class="p">}</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="nx">$element</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;:input&quot;</span><span class="p">)){</span>
         <span class="nx">$element</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="nx">$element</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
       <span class="p">}</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Fire the "geocode:dragged" event and pass the new position.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">markerDragged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Fire the "geocode:dragged" event and pass the new position.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">markerDragged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;geocode:dragged&quot;</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">latLng</span><span class="p">);</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Restore the old position of the marker to the last now location.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">resetMarker</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Restore the old position of the marker to the last now location.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">resetMarker</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">marker</span><span class="p">.</span><span class="nx">setPosition</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">location</span><span class="p">);</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">setDetail</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">details</span><span class="p">.</span><span class="nx">lat</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lat</span><span class="p">());</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">setDetail</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">details</span><span class="p">.</span><span class="nx">lng</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lng</span><span class="p">());</span>
-    <span class="p">},</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Update the plugin after the user has selected an autocomplete entry.
+    <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Update the plugin after the user has selected an autocomplete entry.
 If the place has no geometry it passes it to the geocoder.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">placeChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
       <span class="kd">var</span> <span class="nx">place</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span><span class="p">.</span><span class="nx">getPlace</span><span class="p">();</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">place</span><span class="p">.</span><span class="nx">geometry</span><span class="p">){</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">place</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">place</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">}</span>
-  <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>A plugin wrapper around the constructor. 
+  <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>A plugin wrapper around the constructor.
 Pass <code>options</code> with all settings that are different from the default.
 The attribute is used to prevent multiple instantiations of the plugin.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">geocomplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    
-    <span class="kd">var</span> <span class="nx">attribute</span> <span class="o">=</span> <span class="s1">&#39;plugin_geocomplete&#39;</span><span class="p">;</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>If you call <code>.geocomplete()</code> with a string as the first paramenter
+
+    <span class="kd">var</span> <span class="nx">attribute</span> <span class="o">=</span> <span class="s1">&#39;plugin_geocomplete&#39;</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>If you call <code>.geocomplete()</code> with a string as the first parameter
 it returns the corresponding property or calls the method with the
 following arguments.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">options</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">){</span>
-      
-      <span class="kd">var</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">attribute</span><span class="p">),</span>
+
+      <span class="kd">var</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">attribute</span><span class="p">)</span> <span class="o">||</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">().</span><span class="nx">data</span><span class="p">(</span><span class="nx">attribute</span><span class="p">),</span>
         <span class="nx">prop</span> <span class="o">=</span> <span class="nx">instance</span><span class="p">[</span><span class="nx">options</span><span class="p">];</span>
-      
+
       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">prop</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">prop</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">instance</span><span class="p">,</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="nx">prop</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">instance</span><span class="p">,</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">2</span><span class="p">){</span>
           <span class="nx">prop</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>

@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.3
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.4
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -7,7 +7,7 @@
  */
 
 // # $.geocomplete()
-// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.3
+// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.4
 //
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
@@ -28,6 +28,7 @@
   // * `mapOptions.mapTypeId` - The map type. Default: `"roadmap"`
   // * `markerOptions` - The options to pass to the `google.maps.Marker` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MarkerOptions).
   // * `markerOptions.draggable` - If the marker is draggable. Default: `false`. Set to true to enable dragging.
+  // * `markerOptions.disabled` - Do not show marker. Default: `false`. Set to true to disable marker.
   // * `maxZoom` - The maximum zoom level too zoom in after a geocoding response. Default: `16`
   // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
 
@@ -115,6 +116,9 @@
     initMarker: function(){
       if (!this.map){ return; }
       var options = $.extend(this.options.markerOptions, { map: this.map });
+
+      if (options.disabled){ return; }
+
       this.marker = new google.maps.Marker(options);
 
       google.maps.event.addListener(
@@ -130,7 +134,8 @@
 
       var options = {
         types: this.options.types,
-        bounds: this.options.bounds === true ? null : this.options.bounds
+        bounds: this.options.bounds === true ? null : this.options.bounds,
+        componentRestrictions: this.options.componentRestrictions
       };
 
       if (this.options.country){
@@ -216,7 +221,7 @@
       }
 
       if (latLng){
-        this.geoocode({ latLng: latLng });
+        if (this.map){ this.map.setCenter(latLng); }
       }
     },
 
@@ -397,16 +402,17 @@
 
     var attribute = 'plugin_geocomplete';
 
-    // If you call `.geocomplete()` with a string as the first paramenter
+    // If you call `.geocomplete()` with a string as the first parameter
     // it returns the corresponding property or calls the method with the
     // following arguments.
     if (typeof options == "string"){
 
-      var instance = $(this).data(attribute),
+      var instance = $(this).data(attribute) || $(this).geocomplete().data(attribute),
         prop = instance[options];
 
       if (typeof prop == "function"){
-        return prop.apply(instance, Array.prototype.slice.call(arguments, 1));
+        prop.apply(instance, Array.prototype.slice.call(arguments, 1));
+        return $(this);
       } else {
         if (arguments.length == 2){
           prop = arguments[1];
