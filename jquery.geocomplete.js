@@ -108,6 +108,13 @@
         $(this.options.map)[0],
         this.options.mapOptions
       );
+
+      // add click event listener on the map
+      google.maps.event.addListener(
+        this.map,
+        'click',
+        $.proxy(this.mapClicked, this)
+      );
     },
 
     // Add a marker with the provided `markerOptions` but only
@@ -373,6 +380,10 @@
     // Fire the "geocode:dragged" event and pass the new position.
     markerDragged: function(event){
       this.trigger("geocode:dragged", event.latLng);
+    },
+
+    mapClicked: function(event) {
+        this.trigger("geocode:click", event.latLng);
     },
 
     // Restore the old position of the marker to the last now location.
