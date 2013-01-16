@@ -94,7 +94,7 @@ Advanced Example:
   Longitude:    <span data-geo="lng" />
   Address:      <span data-geo="formatted_address" />
   Country Code: <span data-geo="country_short" />
-</form>
+</div>
 ```
 
 ```javascript
