@@ -28,7 +28,7 @@ Here is a list of basic uses:
 
 ## Requirements
 
-Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library).
+Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](https://developers.google.com/maps/documentation/javascript/places#loading_the_library).
 
 ````html
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
