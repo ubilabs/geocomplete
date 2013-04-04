@@ -28,7 +28,7 @@ Here is a list of basic uses:
 
 ## Requirements
 
-Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](http://code.google.com/intl/de-DE/apis/maps/documentation/javascript/places.html#loading_the_library).
+Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](https://developers.google.com/maps/documentation/javascript/places#loading_the_library).
 
 ````html
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
@@ -94,7 +94,7 @@ Advanced Example:
   Longitude:    <span data-geo="lng" />
   Address:      <span data-geo="formatted_address" />
   Country Code: <span data-geo="country_short" />
-</form>
+</div>
 ```
 
 ```javascript
@@ -157,6 +157,7 @@ The following events are supported:
 * `"geocode:error"` - Fired when the geocode returns an error. Passes the current status as listed [here](http://code.google.com/apis/maps/documentation/javascript/geocoding.html#GeocodingStatusCodes).
 * `"geocode:multiple"` - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.
 * `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
+* `"geocode:click"` - Fired when 'click' event occurs on the map. Passes the location where the click had place.
 
 ## Methods and Properties
 
