@@ -51,7 +51,8 @@
     },
 
     maxZoom: 16,
-    types: ['geocode']
+    types: ['geocode'],
+    blur: false
   };
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
@@ -177,6 +178,15 @@
       this.$input.bind("geocode", $.proxy(function(){
         this.find();
       }, this));
+
+      // Trigger find action when input element is blured out.
+      // (Usefull for typing partial location and tabing to the next field
+      // or clicking somewhere else.)
+      if (this.options.blur === true){
+        this.$input.blur($.proxy(function(){
+          this.find();
+        }, this));
+      }
     },
 
     // Prepare a given DOM structure to be populated when we got some data.
