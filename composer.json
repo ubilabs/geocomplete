@@ -1,0 +1,9 @@
+{
+    "name": "ubilabs/geocomplete",
+    "type": "jquery-plugin",
+    "description": "jQuery Geocoding and Places Autocomplete Plugin",
+    "keywords": ["jquery", "geocomplete", "google", "map"],
+    "homepage": "https://github.com/ubilabs/geocomplete",
+    "license": "MIT",
+    "target-dir": "ubilabs/geocomplete"
+}
