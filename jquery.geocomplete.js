@@ -57,7 +57,7 @@
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
   // on Google Developers.
-  var componentTypes = ("street_address route intersection political " +
+  var componentTypes = ("street_number route street_address intersection political " +
     "country administrative_area_level_1 administrative_area_level_2 " +
     "administrative_area_level_3 colloquial_area locality sublocality " +
     "neighborhood premise subpremise postal_code natural_feature airport " +
@@ -363,7 +363,7 @@
 
       // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
-        var value = data[key];
+        var value = (key !== "street_address") ? data[key] : data["street_number"] + " " + data["route"];
         this.setDetail($detail, value);
       }, this));
 
@@ -371,7 +371,9 @@
     },
 
     // Assign a given `value` to a single `$element`.
-    // If the element is an input, the value is set, otherwise it updates
+    // If the element is an input, the value is set, if the element is a 
+    // select, it checks the value and text fields of its options and 
+    // selects the matching option if it exists, otherwise it updates
     // the text content.
     setDetail: function($element, value){
 
@@ -383,6 +385,10 @@
 
       if ($element.is(":input")){
         $element.val(value);
+      } else if ($element.is("select")){
+        $element.find("option").filter(function(){
+          return ( ($(this).val() == value) || ($(this).text() == value) )
+        }).prop('selected', true);
       } else {
         $element.text(value);
       }
