@@ -57,7 +57,7 @@
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
   // on Google Developers.
-  var componentTypes = ("street_number route street_address intersection political " +
+  var componentTypes = ("street_address route street_address_only intersection political " +
     "country administrative_area_level_1 administrative_area_level_2 " +
     "administrative_area_level_3 colloquial_area locality sublocality " +
     "neighborhood premise subpremise postal_code natural_feature airport " +
@@ -363,7 +363,7 @@
 
       // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
-        var value = (key !== "street_address") ? data[key] : data["street_number"] + " " + data["route"];
+        var value = (key !== "street_address_only") ? data[key] : data["street_number"] + " " + data["route"];
         this.setDetail($detail, value);
       }, this));
 
