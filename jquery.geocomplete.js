@@ -384,12 +384,14 @@
       }
 
       if ($element.is(":input")){
-        $element.val(value);
-      } else if ($element.is("select")){
-        $element.find("option").filter(function(){
-          return ( ($(this).val() == value) || ($(this).text() == value) )
-        }).prop('selected', true);
-      } else {
+        if($element.is("select")){
+          $element.find("option").filter(function(){
+            return ( ($(this).val() == value) || ($(this).text() == value) )
+          }).prop('selected', true);
+        }
+        else
+          $element.val(value);
+      }  else {
         $element.text(value);
       }
     },
