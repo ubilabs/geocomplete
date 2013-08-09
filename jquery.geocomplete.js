@@ -397,7 +397,7 @@
       } else if (typeof value.toUrlValue == "function"){
         value = value.toUrlValue();
       }
-console.log("setDetail: "+value);
+
       if ($element.is(":input")){
         if($element.is("select")){
           $element.find("option").filter(function(){
