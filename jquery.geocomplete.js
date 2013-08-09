@@ -361,6 +361,7 @@
         lng: geometry.location.lng()
       });
 
+      // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
         // use the selector to get the element and then fill the value
 
