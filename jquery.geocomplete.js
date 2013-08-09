@@ -363,8 +363,8 @@
 
       // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
-        // use the selector to get the element and then fill the value
         $detail = $detail.first();
+        
         // build the value for single or mutliple address component types
         var value;
         var count = 0;
