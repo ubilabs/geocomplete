@@ -1,9 +1,14 @@
-# $.geocomplete() - Version 1.4
+# $.geocomplete() - Version 1.4 forked
 ## jQuery Geocoding and Places Autocomplete Plugin
 
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that lets you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
+### ATENTION!!!
+ 
+This fork has been modified to include the ability to apply multiple address components to a single input, the ability to set the selected option of a select box, support for pre-existing markers and whether to set the marker position on initialization.
 
-View the [annotated source](http://ubilabs.github.com/geocomplete/docs/).
+View the original repository [annotated source](https://github.com/ubilabs/geocomplete)
+
+View the [annotated source](https://github.com/climbak/geocomplete/blob/master/jquery.geocomplete.js).
 
 ## Basic Usage
 
@@ -90,10 +95,11 @@ Advanced Example:
 
 ```html
 <div class="details">
-  Latitude:     <span data-geo="lat" />
-  Longitude:    <span data-geo="lng" />
-  Address:      <span data-geo="formatted_address" />
-  Country Code: <span data-geo="country_short" />
+  Latitude:       <span data-geo="lat" />
+  Longitude:      <span data-geo="lng" />
+  Full Address:   <span data-geo="formatted_address" />
+  Street Address: <span data-geo="street_number route" />
+  Country Code:   <span data-geo="country_short" />
 </div>
 ```
 
@@ -124,6 +130,8 @@ $("#my_input").geocomplete({
 ```
 
 * `map` - Might be a selector, a jQuery object or a DOM element. Default is `false` which shows no map.
+* `marker` - Might be a selector, a jQuery object or a DOM element. Default is `false` which creates a new basic marker.
+* `initMarker` - Whether to set the position of the marker on map initialization. Default: `true`
 * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
 * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
 * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom LatLngBounds object
