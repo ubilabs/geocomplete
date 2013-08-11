@@ -36,6 +36,8 @@
     bounds: true,
     country: null,
     map: false,
+    marker: false,
+    initMarker: true,
     details: false,
     detailsAttribute: "name",
     location: false,
@@ -119,10 +121,16 @@
     },
 
     // Add a marker with the provided `markerOptions` but only
-    // if the option was set. Additionally it listens for the `dragend` event
-    // to notify the plugin about changes.
+    // if the option was set or link to an existing marker instance.
+    // Additionally it listens for the `dragend` event to notify
+    // the plugin about changes.
     initMarker: function(){
       if (!this.map){ return; }
+      if(typeof this.options.marker.setPosition == "function"){
+        this.marker = this.options.marker;
+        return;
+      }
+
       var options = $.extend(this.options.markerOptions, { map: this.map });
 
       if (options.disabled){ return; }
@@ -239,7 +247,7 @@
 
       if (latLng){
         if (this.map){ this.map.setCenter(latLng); }
-        if (this.marker){ this.marker.setPosition(latLng); }
+        if (this.marker && this.options.initMarker){ this.marker.setPosition(latLng); }
       }
     },
 
@@ -364,7 +372,7 @@
       // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
         $detail = $detail.first();
-        
+
         // build the value for single or mutliple address component types
         var value;
         var count = 0;
