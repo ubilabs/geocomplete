@@ -174,6 +174,11 @@
         if (event.keyCode === 13){ return false; }
       });
 
+      // Keep result at text input after focusout.
+      this.$input.focusout(function(){
+        return false;
+      });
+
       // Listen for "geocode" events and trigger find action.
       this.$input.bind("geocode", $.proxy(function(){
         this.find();
