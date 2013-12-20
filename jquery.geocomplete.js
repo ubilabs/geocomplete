@@ -12,7 +12,7 @@
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
 
-;(function($, window, document, undefined){
+(function($, window, document, undefined){
 
   // ## Options
   // The default options for this plugin.
@@ -282,7 +282,7 @@
 
       // Get the first suggestion's text.
       var $span1 = $(".pac-container .pac-item" + selected + ":first span:nth-child(2)").text();
-      var $span2 = $(".pac-container .pac-item" + selected + ":first span:last").text();
+      var $span2 = $(".pac-container .pac-item" + selected + ":first span:nth-child(3)").text();
 
       // Adds the additional information, if available.
       var firstResult = $span1;
