@@ -198,5 +198,5 @@ More information can be found here: https://developers.google.com/maps/documenta
 
 Developed by [Martin Kleppe](http://twitter.com/aemkei) at [Ubilabs](http://ubilabs.net).
 
-[![Analytics](https://ga-beacon.appspot.com/UA-57649-14/your-repo/page-name)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-57649-14/geocomplete)](https://github.com/igrigorik/ga-beacon)
 
