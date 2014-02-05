@@ -36,6 +36,8 @@
     bounds: true,
     country: null,
     map: false,
+    marker: false,
+    initMarker: true,
     details: false,
     detailsAttribute: "name",
     location: false,
@@ -125,10 +127,16 @@
     },
 
     // Add a marker with the provided `markerOptions` but only
-    // if the option was set. Additionally it listens for the `dragend` event
-    // to notify the plugin about changes.
+    // if the option was set or link to an existing marker instance.
+    // Additionally it listens for the `dragend` event to notify
+    // the plugin about changes.
     initMarker: function(){
       if (!this.map){ return; }
+      if(typeof this.options.marker.setPosition == "function"){
+        this.marker = this.options.marker;
+        return;
+      }
+
       var options = $.extend(this.options.markerOptions, { map: this.map });
 
       if (options.disabled){ return; }
@@ -206,7 +214,7 @@
         details = {};
 
       function setDetail(value){
-        details[value] = $details.find("[" +  attribute + "=" + value + "]");
+        details[value] = $details.find("[" +  attribute + "^=" + value + "]");
       }
 
       $.each(componentTypes, function(index, key){
@@ -245,7 +253,7 @@
 
       if (latLng){
         if (this.map){ this.map.setCenter(latLng); }
-        if (this.marker){ this.marker.setPosition(latLng); }
+        if (this.marker && this.options.initMarker){ this.marker.setPosition(latLng); }
       }
     },
 
@@ -395,7 +403,25 @@
 
       // Set the values for all details.
       $.each(this.details, $.proxy(function(key, $detail){
-        var value = data[key];
+        $detail = $detail.first();
+
+        // build the value for single or mutliple address component types
+        var value;
+        var count = 0;
+        var comps = $detail.attr('data-geo');
+        if(comps !== undefined){
+          $.each(comps.replace(/\s+/g, ' ').split(" "), function(){
+            var current = data[this.toString()];
+            if(count++ === 0)
+              value = current;
+            else
+              value += " " + current;
+          });
+        }
+        else
+          value = data[key];
+
+      // Set the values for all details.
         this.setDetail($detail, value);
       }, this));
 
@@ -414,8 +440,14 @@
       }
 
       if ($element.is(":input")){
-        $element.val(value);
-      } else {
+        if($element.is("select")){
+          $element.find("option").filter(function(){
+            return ( ($(this).val() == value) || ($(this).text() == value) )
+          }).prop('selected', true);
+        }
+        else
+          $element.val(value);
+      }  else {
         $element.text(value);
       }
     },
