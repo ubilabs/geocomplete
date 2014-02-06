@@ -1,7 +1,7 @@
 # sh build.sh
 
 # minify script
-uglifyjs jquery.geocomplete.js > jquery.geocomplete.min.js
+uglifyjs --comments license jquery.geocomplete.js > jquery.geocomplete.min.js
 
 ## create documentation
 docco jquery.geocomplete.js
