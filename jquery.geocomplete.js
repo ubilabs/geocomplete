@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.4.1
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -7,7 +7,7 @@
  */
 
 // # $.geocomplete()
-// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.4.1
+// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
 //
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
