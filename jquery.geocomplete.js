@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.4
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -7,12 +7,12 @@
  */
 
 // # $.geocomplete()
-// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.4
+// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
 //
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
 
-;(function($, window, document, undefined){
+(function($, window, document, undefined){
 
   // ## Options
   // The default options for this plugin.
@@ -21,6 +21,7 @@
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
   // * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom `LatLngBounds object.
+  // * `autoselect` - Automatically selects the highlighted item or the first item from the suggestions list on Enter.
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
   // * `mapOptions.zoom` - The inital zoom level. Default: `14`
@@ -38,6 +39,7 @@
     map: false,
     details: false,
     detailsAttribute: "name",
+    autoselect: true,
     location: false,
 
     mapOptions: {
@@ -51,7 +53,8 @@
     },
 
     maxZoom: 16,
-    types: ['geocode']
+    types: ['geocode'],
+    blur: false
   };
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
@@ -107,6 +110,19 @@
       this.map = new google.maps.Map(
         $(this.options.map)[0],
         this.options.mapOptions
+      );
+
+      // add click event listener on the map
+      google.maps.event.addListener(
+        this.map,
+        'click',
+        $.proxy(this.mapClicked, this)
+      );
+
+      google.maps.event.addListener(
+        this.map,
+        'zoom_changed',
+        $.proxy(this.mapZoomed, this)
       );
     },
 
@@ -170,6 +186,15 @@
       this.$input.bind("geocode", $.proxy(function(){
         this.find();
       }, this));
+
+      // Trigger find action when input element is blured out.
+      // (Usefull for typing partial location and tabing to the next field
+      // or clicking somewhere else.)
+      if (this.options.blur === true){
+        this.$input.blur($.proxy(function(){
+          this.find();
+        }, this));
+      }
     },
 
     // Prepare a given DOM structure to be populated when we got some data.
@@ -222,6 +247,7 @@
 
       if (latLng){
         if (this.map){ this.map.setCenter(latLng); }
+        if (this.marker){ this.marker.setPosition(latLng); }
       }
     },
 
@@ -249,6 +275,32 @@
       }
 
       this.geocoder.geocode(request, $.proxy(this.handleGeocode, this));
+    },
+
+    // Get the selected result. If no result is selected on the list, then get
+    // the first result from the list.
+    selectFirstResult: function() {
+      //$(".pac-container").hide();
+
+      var selected = '';
+      // Check if any result is selected.
+      if ($(".pac-item-selected")['0']) {
+        selected = '-selected';
+      }
+
+      // Get the first suggestion's text.
+      var $span1 = $(".pac-container .pac-item" + selected + ":first span:nth-child(2)").text();
+      var $span2 = $(".pac-container .pac-item" + selected + ":first span:nth-child(3)").text();
+
+      // Adds the additional information, if available.
+      var firstResult = $span1;
+      if ($span2) {
+        firstResult += " - " + $span2;
+      }
+
+      this.$input.val(firstResult);
+
+      return firstResult;
     },
 
     // Handles the geocode response. If more than one results was found
@@ -375,6 +427,14 @@
       this.trigger("geocode:dragged", event.latLng);
     },
 
+    mapClicked: function(event) {
+        this.trigger("geocode:click", event.latLng);
+    },
+
+    mapZoomed: function(event) {
+      this.trigger("geocode:zoom", this.map.getZoom());
+    },
+
     // Restore the old position of the marker to the last now location.
     resetMarker: function(){
       this.marker.setPosition(this.data.location);
@@ -388,8 +448,14 @@
       var place = this.autocomplete.getPlace();
 
       if (!place.geometry){
-        this.find(place.name);
+        if (this.options.autoselect) {
+          // Automatically selects the highlighted item or the first item from the
+          // suggestions list.
+          var autoSelection = this.selectFirstResult();
+          this.find(autoSelection);
+        }
       } else {
+        // Use the input text if it already gives geometry.
         this.update(place);
       }
     }
