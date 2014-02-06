@@ -21,6 +21,7 @@
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
   // * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom `LatLngBounds object.
+  // * `autoselect` - Automatically selects the highlighted item or the first item from the suggestions list on Enter.
   // * `detailsAttribute` - The attribute's name to use as an indicator. Default: `"name"`
   // * `mapOptions` - Options to pass to the `google.maps.Map` constructor. See the full list [here](http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions).
   // * `mapOptions.zoom` - The inital zoom level. Default: `14`
@@ -38,6 +39,7 @@
     map: false,
     details: false,
     detailsAttribute: "name",
+    autoselect: true,
     location: false,
 
     mapOptions: {
@@ -446,10 +448,12 @@
       var place = this.autocomplete.getPlace();
 
       if (!place.geometry){
-        // Automatically selects the highlighted item or the first item from the
-        // suggestions list.
-        var autoSelection = this.selectFirstResult();
-        this.find(autoSelection);
+        if (this.options.autoselect) {
+          // Automatically selects the highlighted item or the first item from the
+          // suggestions list.
+          var autoSelection = this.selectFirstResult();
+          this.find(autoSelection);
+        }
       } else {
         // Use the input text if it already gives geometry.
         this.update(place);
