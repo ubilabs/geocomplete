@@ -31,7 +31,7 @@ Here is a list of basic uses:
 Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](https://developers.google.com/maps/documentation/javascript/places#loading_the_library).
 
 ````html
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 <script src="jquery.geocomplete.js"></script>
 ```
 
