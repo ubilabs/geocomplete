@@ -447,7 +447,7 @@
     placeChanged: function(){
       var place = this.autocomplete.getPlace();
 
-      if (!place.geometry){
+      if (!place || !place.geometry){
         if (this.options.autoselect) {
           // Automatically selects the highlighted item or the first item from the
           // suggestions list.
