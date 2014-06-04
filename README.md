@@ -64,13 +64,13 @@ The `map` option might be a selector, a jQuery object or a DOM element.
 
 ## Populate Form Data
 
-You can pass `details` as an option to specify a cointainer that will be populated when a geocoding request was successfull.
+You can pass `details` as an option to specify a container that will be populated when a geocoding request was successful.
 
 By default the plugin analyses the `name` attribute of the containers child nodes and replaces the content. You can override the `detailsAttribute` to use another attribute such as `data-geo`.
 
 If the element is an input, the value will be replaced otherwise the plugin overrides the current text.
 
-**Note**: Some address compontents such as "country" return an additional `short_name`. You can access them by simply adding `_short` at the end of the type.
+**Note**: Some address components such as "country" return an additional `short_name`. You can access them by simply adding `_short` at the end of the type.
 
 Simple Example:
 
@@ -170,7 +170,7 @@ Example:
 // Initialize the plugin.
 $("input").geocomplete({ map: ".map_canvas" });
 
-// Call the find method with the paramenter "NYC".
+// Call the find method with the parameter "NYC".
 $("input").geocomplete("find", "NYC");
 
 // Get the map and set a new zoom level.
