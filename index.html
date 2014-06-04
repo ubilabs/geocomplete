@@ -117,13 +117,13 @@
 
 <h2>Populate Form Data</h2>
 
-<p>You can pass <code>details</code> as an option to specify a cointainer that will be populated when a geocoding request was successfull.</p>
+<p>You can pass <code>details</code> as an option to specify a container that will be populated when a geocoding request was successful.</p>
 
 <p>By default the plugin analyses the <code>name</code> attribute of the containers child nodes and replaces the content. You can override the <code>detailsAttribute</code> to use another attribute such as <code>data-geo</code>.</p>
 
 <p>If the element is an input, the value will be replaced otherwise the plugin overrides the current text.</p>
 
-<p><strong>Note</strong>: Some address compontents such as "country" return an additional <code>short_name</code>. You can access them by simply adding <code>_short</code> at the end of the type.</p>
+<p><strong>Note</strong>: Some address components such as "country" return an additional <code>short_name</code>. You can access them by simply adding <code>_short</code> at the end of the type.</p>
 
 <p>Simple Example:</p>
 
@@ -201,7 +201,7 @@
 <li>
 <code>mapOptions</code> - Options to pass to the <code>google.maps.Map</code> constructor. See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions">here</a>.</li>
 <li>
-<code>mapOptions.zoom</code> - The inital zoom level. Default: <code>14</code>
+<code>mapOptions.zoom</code> - The initial zoom level. Default: <code>14</code>
 </li>
 <li>
 <code>mapOptions.scrollwheel</code> - Whether to enable the scrollwheel to zoom the map. Default: <code>false</code>
@@ -253,7 +253,7 @@
 <pre><span class="c1">// Initialize the plugin.</span>
 <span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">({</span> <span class="nx">map</span><span class="o">:</span> <span class="s2">".map_canvas"</span> <span class="p">});</span>
 
-<span class="c1">// Call the find method with the paramenter "NYC".</span>
+<span class="c1">// Call the find method with the parameter "NYC".</span>
 <span class="nx">$</span><span class="p">(</span><span class="s2">"input"</span><span class="p">).</span><span class="nx">geocomplete</span><span class="p">(</span><span class="s2">"find"</span><span class="p">,</span> <span class="s2">"NYC"</span><span class="p">);</span>
 
 <span class="c1">// Get the map and set a new zoom level.</span>
