@@ -155,7 +155,7 @@
       };
 
       if (this.options.country){
-        options.componentRestrictions = {country: this.options.country}
+        options.componentRestrictions = {country: this.options.country};
       }
 
       this.autocomplete = new google.maps.places.Autocomplete(
@@ -490,7 +490,7 @@
         // Prevent against multiple instantiations.
         var instance = $.data(this, attribute);
         if (!instance) {
-          instance = new GeoComplete( this, options )
+          instance = new GeoComplete( this, options );
           $.data(this, attribute, instance);
         }
       });
