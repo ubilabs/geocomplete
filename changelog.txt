@@ -7,7 +7,7 @@ Version 1.2
 
 Version 1.1
 
-* Add API to access methods and properties from outside 
+* Add API to access methods and properties from outside
 * Add events for draggable marker
 
 Version 1.0
