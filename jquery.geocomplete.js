@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -7,7 +7,7 @@
  */
 
 // # $.geocomplete()
-// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
+// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
 //
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
@@ -69,7 +69,7 @@
 
   // See: [Places Details Responses](https://developers.google.com/maps/documentation/javascript/places#place_details_responses)
   // on Google Developers.
-  var placesDetails = ("id url website vicinity reference name rating " +
+  var placesDetails = ("id place_id url website vicinity reference name rating " +
     "international_phone_number icon formatted_phone_number").split(" ");
 
   // The actual plugin constructor.
@@ -155,7 +155,7 @@
       };
 
       if (this.options.country){
-        options.componentRestrictions = {country: this.options.country}
+        options.componentRestrictions = {country: this.options.country};
       }
 
       this.autocomplete = new google.maps.places.Autocomplete(
@@ -447,7 +447,7 @@
     placeChanged: function(){
       var place = this.autocomplete.getPlace();
 
-      if (!place.geometry){
+      if (!place || !place.geometry){
         if (this.options.autoselect) {
           // Automatically selects the highlighted item or the first item from the
           // suggestions list.
@@ -490,7 +490,7 @@
         // Prevent against multiple instantiations.
         var instance = $.data(this, attribute);
         if (!instance) {
-          instance = new GeoComplete( this, options )
+          instance = new GeoComplete( this, options );
           $.data(this, attribute, instance);
         }
       });

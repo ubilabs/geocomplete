@@ -19,9 +19,9 @@
 
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        
+
         <a href="../" class="back">Back to Documentation</a>
-        
+
         <form>
           <input id="geocomplete" type="text" placeholder="Type in an address" value="Empire State Bldg" />
           <input id="find" type="button" value="find" />
@@ -76,8 +76,14 @@
             <label>State</label>
             <input name="administrative_area_level_1" type="text" value="">
 
+            <label>Place ID</label>
+            <input name="place_id" type="text" value="">
+
             <label>ID</label>
             <input name="id" type="text" value="">
+
+            <label>Reference</label>
+            <input name="reference" type="text" value="">
 
             <label>URL</label>
             <input name="url" type="text" value="">
@@ -86,7 +92,7 @@
             <input name="website" type="text" value="">
           </fieldset>
         </form>
-        
+
         <h3>Source:</h3>
         <pre>
 $("#geocomplete").geocomplete({
@@ -102,7 +108,7 @@ $("#geocomplete").geocomplete({
 
     <script src="../jquery.geocomplete.js"></script>
     <script src="logger.js"></script>
-    
+
     <script>
       $(function(){
         $("#geocomplete").geocomplete({
@@ -110,7 +116,7 @@ $("#geocomplete").geocomplete({
           details: "form",
           types: ["geocode", "establishment"]
         });
-        
+
         $("#find").click(function(){
           $("#geocomplete").trigger("geocode");
         });

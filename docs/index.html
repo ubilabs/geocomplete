@@ -30,8 +30,8 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="comment">/**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
  *
  * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2012
  * @author Ubilabs http://ubilabs.net, 2012
@@ -44,19 +44,20 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap for-h1">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h1>$.geocomplete()</h1>
-<h2>jQuery Geocoding and Places Autocomplete Plugin - V 1.5.0</h2>
+              <h1 id="-geocomplete-">$.geocomplete()</h1>
+<h2 id="jquery-geocoding-and-places-autocomplete-plugin-v-1-6-0">jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0</h2>
 <ul>
 <li><a href="https://github.com/ubilabs/geocomplete/">https://github.com/ubilabs/geocomplete/</a></li>
-<li>by Martin Kleppe <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#107;&#x6c;&#101;&#112;&#x70;&#101;&#64;&#x75;&#x62;&#105;&#108;&#97;&#98;&#x73;&#x2e;&#x6e;&#x65;&#x74;">&#107;&#x6c;&#101;&#112;&#x70;&#101;&#64;&#x75;&#x62;&#105;&#108;&#97;&#98;&#x73;&#x2e;&#x6e;&#x65;&#x74;</a></li>
+<li>by Martin Kleppe <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#107;&#x6c;&#x65;&#x70;&#x70;&#101;&#64;&#117;&#98;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#x74;">&#107;&#x6c;&#x65;&#x70;&#x70;&#101;&#64;&#117;&#98;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#x74;</a></li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>(<span class="keyword">function</span>($, window, document, <span class="literal">undefined</span>){</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($, window, document, undefined)</span></span>{</pre></div></div>
             
         </li>
         
@@ -64,10 +65,10 @@
         <li id="section-3">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <h2>Options</h2>
+              <h2 id="options">Options</h2>
 <p>The default options for this plugin.</p>
 <ul>
 <li><code>map</code> - Might be a selector, an jQuery object or a DOM element. Default is <code>false</code> which shows no map.</li>
@@ -75,7 +76,7 @@
 <li><code>location</code> - Location to initialize the map on. Might be an address <code>string</code> or an <code>array</code> with [latitude, longitude] or a <code>google.maps.LatLng</code>object. Default is <code>false</code> which shows a blank map.</li>
 <li><code>bounds</code> - Whether to snap geocode search to map bounds. Default: <code>true</code> if false search globally. Alternatively pass a custom `LatLngBounds object.</li>
 <li><code>autoselect</code> - Automatically selects the highlighted item or the first item from the suggestions list on Enter.</li>
-<li><code>detailsAttribute</code> - The attribute&#39;s name to use as an indicator. Default: <code>&quot;name&quot;</code></li>
+<li><code>detailsAttribute</code> - The attribute’s name to use as an indicator. Default: <code>&quot;name&quot;</code></li>
 <li><code>mapOptions</code> - Options to pass to the <code>google.maps.Map</code> constructor. See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions">here</a>.</li>
 <li><code>mapOptions.zoom</code> - The inital zoom level. Default: <code>14</code></li>
 <li><code>mapOptions.scrollwheel</code> - Whether to enable the scrollwheel to zoom the map. Default: <code>false</code></li>
@@ -89,28 +90,29 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> defaults = {
-    bounds: <span class="literal">true</span>,
-    country: <span class="literal">null</span>,
-    map: <span class="literal">false</span>,
-    details: <span class="literal">false</span>,
-    detailsAttribute: <span class="string">"name"</span>,
-    autoselect: <span class="literal">true</span>,
-    location: <span class="literal">false</span>,
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-keyword">var</span> defaults = {
+    bounds: <span class="hljs-literal">true</span>,
+    country: <span class="hljs-literal">null</span>,
+    map: <span class="hljs-literal">false</span>,
+    details: <span class="hljs-literal">false</span>,
+    detailsAttribute: <span class="hljs-string">"name"</span>,
+    autoselect: <span class="hljs-literal">true</span>,
+    location: <span class="hljs-literal">false</span>,
 
     mapOptions: {
-      zoom: <span class="number">14</span>,
-      scrollwheel: <span class="literal">false</span>,
-      mapTypeId: <span class="string">"roadmap"</span>
+      zoom: <span class="hljs-number">14</span>,
+      scrollwheel: <span class="hljs-literal">false</span>,
+      mapTypeId: <span class="hljs-string">"roadmap"</span>
     },
 
     markerOptions: {
-      draggable: <span class="literal">false</span>
+      draggable: <span class="hljs-literal">false</span>
     },
 
-    maxZoom: <span class="number">16</span>,
-    types: [<span class="string">'geocode'</span>],
-    blur: <span class="literal">false</span>
+    maxZoom: <span class="hljs-number">16</span>,
+    types: [<span class="hljs-string">'geocode'</span>],
+    blur: <span class="hljs-literal">false</span>
   };</pre></div></div>
             
         </li>
@@ -127,13 +129,13 @@ on Google Developers.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> componentTypes = (<span class="string">"street_address route intersection political "</span> +
-    <span class="string">"country administrative_area_level_1 administrative_area_level_2 "</span> +
-    <span class="string">"administrative_area_level_3 colloquial_area locality sublocality "</span> +
-    <span class="string">"neighborhood premise subpremise postal_code natural_feature airport "</span> +
-    <span class="string">"park point_of_interest post_box street_number floor room "</span> +
-    <span class="string">"lat lng viewport location "</span> +
-    <span class="string">"formatted_address location_type bounds"</span>).split(<span class="string">" "</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> componentTypes = (<span class="hljs-string">"street_address route intersection political "</span> +
+    <span class="hljs-string">"country administrative_area_level_1 administrative_area_level_2 "</span> +
+    <span class="hljs-string">"administrative_area_level_3 colloquial_area locality sublocality "</span> +
+    <span class="hljs-string">"neighborhood premise subpremise postal_code natural_feature airport "</span> +
+    <span class="hljs-string">"park point_of_interest post_box street_number floor room "</span> +
+    <span class="hljs-string">"lat lng viewport location "</span> +
+    <span class="hljs-string">"formatted_address location_type bounds"</span>).split(<span class="hljs-string">" "</span>);</pre></div></div>
             
         </li>
         
@@ -149,8 +151,8 @@ on Google Developers.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> placesDetails = (<span class="string">"id url website vicinity reference name rating "</span> +
-    <span class="string">"international_phone_number icon formatted_phone_number"</span>).split(<span class="string">" "</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> placesDetails = (<span class="hljs-string">"id place_id url website vicinity reference name rating "</span> +
+    <span class="hljs-string">"international_phone_number icon formatted_phone_number"</span>).split(<span class="hljs-string">" "</span>);</pre></div></div>
             
         </li>
         
@@ -165,17 +167,17 @@ on Google Developers.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">GeoComplete</span><span class="params">(input, options)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GeoComplete</span><span class="hljs-params">(input, options)</span> </span>{
 
-    <span class="keyword">this</span>.options = $.extend(<span class="literal">true</span>, {}, defaults, options);
+    <span class="hljs-keyword">this</span>.options = $.extend(<span class="hljs-literal">true</span>, {}, defaults, options);
 
-    <span class="keyword">this</span>.input = input;
-    <span class="keyword">this</span>.$input = $(input);
+    <span class="hljs-keyword">this</span>.input = input;
+    <span class="hljs-keyword">this</span>.$input = $(input);
 
-    <span class="keyword">this</span>._defaults = defaults;
-    <span class="keyword">this</span>._name = <span class="string">'geocomplete'</span>;
+    <span class="hljs-keyword">this</span>._defaults = defaults;
+    <span class="hljs-keyword">this</span>._name = <span class="hljs-string">'geocomplete'</span>;
 
-    <span class="keyword">this</span>.init();
+    <span class="hljs-keyword">this</span>.init();
   }</pre></div></div>
             
         </li>
@@ -192,12 +194,12 @@ on Google Developers.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  $.extend(GeoComplete.prototype, {
-    init: <span class="keyword">function</span>(){
-      <span class="keyword">this</span>.initMap();
-      <span class="keyword">this</span>.initMarker();
-      <span class="keyword">this</span>.initGeocoder();
-      <span class="keyword">this</span>.initDetails();
-      <span class="keyword">this</span>.initLocation();
+    init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">this</span>.initMap();
+      <span class="hljs-keyword">this</span>.initMarker();
+      <span class="hljs-keyword">this</span>.initGeocoder();
+      <span class="hljs-keyword">this</span>.initDetails();
+      <span class="hljs-keyword">this</span>.initLocation();
     },</pre></div></div>
             
         </li>
@@ -215,17 +217,17 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initMap: <span class="keyword">function</span>(){
-      <span class="keyword">if</span> (!<span class="keyword">this</span>.options.map){ <span class="keyword">return</span>; }
+            <div class="content"><div class='highlight'><pre>    initMap: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.map){ <span class="hljs-keyword">return</span>; }
 
-      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.options.map.setCenter == <span class="string">"function"</span>){
-        <span class="keyword">this</span>.map = <span class="keyword">this</span>.options.map;
-        <span class="keyword">return</span>;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">this</span>.options.map.setCenter == <span class="hljs-string">"function"</span>){
+        <span class="hljs-keyword">this</span>.map = <span class="hljs-keyword">this</span>.options.map;
+        <span class="hljs-keyword">return</span>;
       }
 
-      <span class="keyword">this</span>.map = <span class="keyword">new</span> google.maps.Map(
-        $(<span class="keyword">this</span>.options.map)[<span class="number">0</span>],
-        <span class="keyword">this</span>.options.mapOptions
+      <span class="hljs-keyword">this</span>.map = <span class="hljs-keyword">new</span> google.maps.Map(
+        $(<span class="hljs-keyword">this</span>.options.map)[<span class="hljs-number">0</span>],
+        <span class="hljs-keyword">this</span>.options.mapOptions
       );</pre></div></div>
             
         </li>
@@ -242,15 +244,15 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
             </div>
             
             <div class="content"><div class='highlight'><pre>      google.maps.event.addListener(
-        <span class="keyword">this</span>.map,
-        <span class="string">'click'</span>,
-        $.proxy(<span class="keyword">this</span>.mapClicked, <span class="keyword">this</span>)
+        <span class="hljs-keyword">this</span>.map,
+        <span class="hljs-string">'click'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.mapClicked, <span class="hljs-keyword">this</span>)
       );
 
       google.maps.event.addListener(
-        <span class="keyword">this</span>.map,
-        <span class="string">'zoom_changed'</span>,
-        $.proxy(<span class="keyword">this</span>.mapZoomed, <span class="keyword">this</span>)
+        <span class="hljs-keyword">this</span>.map,
+        <span class="hljs-string">'zoom_changed'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.mapZoomed, <span class="hljs-keyword">this</span>)
       );
     },</pre></div></div>
             
@@ -269,18 +271,18 @@ to notify the plugin about changes.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initMarker: <span class="keyword">function</span>(){
-      <span class="keyword">if</span> (!<span class="keyword">this</span>.map){ <span class="keyword">return</span>; }
-      <span class="keyword">var</span> options = $.extend(<span class="keyword">this</span>.options.markerOptions, { map: <span class="keyword">this</span>.map });
+            <div class="content"><div class='highlight'><pre>    initMarker: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.map){ <span class="hljs-keyword">return</span>; }
+      <span class="hljs-keyword">var</span> options = $.extend(<span class="hljs-keyword">this</span>.options.markerOptions, { map: <span class="hljs-keyword">this</span>.map });
 
-      <span class="keyword">if</span> (options.disabled){ <span class="keyword">return</span>; }
+      <span class="hljs-keyword">if</span> (options.disabled){ <span class="hljs-keyword">return</span>; }
 
-      <span class="keyword">this</span>.marker = <span class="keyword">new</span> google.maps.Marker(options);
+      <span class="hljs-keyword">this</span>.marker = <span class="hljs-keyword">new</span> google.maps.Marker(options);
 
       google.maps.event.addListener(
-        <span class="keyword">this</span>.marker,
-        <span class="string">'dragend'</span>,
-        $.proxy(<span class="keyword">this</span>.markerDragged, <span class="keyword">this</span>)
+        <span class="hljs-keyword">this</span>.marker,
+        <span class="hljs-string">'dragend'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.markerDragged, <span class="hljs-keyword">this</span>)
       );
     },</pre></div></div>
             
@@ -298,23 +300,23 @@ to fall back when the autocompleter does not return a value.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initGeocoder: <span class="keyword">function</span>(){
+            <div class="content"><div class='highlight'><pre>    initGeocoder: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
 
-      <span class="keyword">var</span> options = {
-        types: <span class="keyword">this</span>.options.types,
-        bounds: <span class="keyword">this</span>.options.bounds === <span class="literal">true</span> ? <span class="literal">null</span> : <span class="keyword">this</span>.options.bounds,
-        componentRestrictions: <span class="keyword">this</span>.options.componentRestrictions
+      <span class="hljs-keyword">var</span> options = {
+        types: <span class="hljs-keyword">this</span>.options.types,
+        bounds: <span class="hljs-keyword">this</span>.options.bounds === <span class="hljs-literal">true</span> ? <span class="hljs-literal">null</span> : <span class="hljs-keyword">this</span>.options.bounds,
+        componentRestrictions: <span class="hljs-keyword">this</span>.options.componentRestrictions
       };
 
-      <span class="keyword">if</span> (<span class="keyword">this</span>.options.country){
-        options.componentRestrictions = {country: <span class="keyword">this</span>.options.country}
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.country){
+        options.componentRestrictions = {country: <span class="hljs-keyword">this</span>.options.country};
       }
 
-      <span class="keyword">this</span>.autocomplete = <span class="keyword">new</span> google.maps.places.Autocomplete(
-        <span class="keyword">this</span>.input, options
+      <span class="hljs-keyword">this</span>.autocomplete = <span class="hljs-keyword">new</span> google.maps.places.Autocomplete(
+        <span class="hljs-keyword">this</span>.input, options
       );
 
-      <span class="keyword">this</span>.geocoder = <span class="keyword">new</span> google.maps.Geocoder();</pre></div></div>
+      <span class="hljs-keyword">this</span>.geocoder = <span class="hljs-keyword">new</span> google.maps.Geocoder();</pre></div></div>
             
         </li>
         
@@ -330,8 +332,8 @@ and <code>options.bindToMap</code> is set to true.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (<span class="keyword">this</span>.map &amp;&amp; <span class="keyword">this</span>.options.bounds === <span class="literal">true</span>){
-        <span class="keyword">this</span>.autocomplete.bindTo(<span class="string">'bounds'</span>, <span class="keyword">this</span>.map);
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map &amp;&amp; <span class="hljs-keyword">this</span>.options.bounds === <span class="hljs-literal">true</span>){
+        <span class="hljs-keyword">this</span>.autocomplete.bindTo(<span class="hljs-string">'bounds'</span>, <span class="hljs-keyword">this</span>.map);
       }</pre></div></div>
             
         </li>
@@ -348,9 +350,9 @@ and <code>options.bindToMap</code> is set to true.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      google.maps.event.addListener(
-        <span class="keyword">this</span>.autocomplete,
-        <span class="string">'place_changed'</span>,
-        $.proxy(<span class="keyword">this</span>.placeChanged, <span class="keyword">this</span>)
+        <span class="hljs-keyword">this</span>.autocomplete,
+        <span class="hljs-string">'place_changed'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.placeChanged, <span class="hljs-keyword">this</span>)
       );</pre></div></div>
             
         </li>
@@ -366,8 +368,8 @@ and <code>options.bindToMap</code> is set to true.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>.$input.keypress(<span class="keyword">function</span>(event){
-        <span class="keyword">if</span> (event.keyCode === <span class="number">13</span>){ <span class="keyword">return</span> <span class="literal">false</span>; }
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.keypress(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span></span>{
+        <span class="hljs-keyword">if</span> (event.keyCode === <span class="hljs-number">13</span>){ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
       });</pre></div></div>
             
         </li>
@@ -379,13 +381,13 @@ and <code>options.bindToMap</code> is set to true.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Listen for &quot;geocode&quot; events and trigger find action.</p>
+              <p>Listen for “geocode” events and trigger find action.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>.$input.bind(<span class="string">"geocode"</span>, $.proxy(<span class="keyword">function</span>(){
-        <span class="keyword">this</span>.find();
-      }, <span class="keyword">this</span>));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.bind(<span class="hljs-string">"geocode"</span>, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">this</span>.find();
+      }, <span class="hljs-keyword">this</span>));</pre></div></div>
             
         </li>
         
@@ -402,10 +404,10 @@ or clicking somewhere else.)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (<span class="keyword">this</span>.options.blur === <span class="literal">true</span>){
-        <span class="keyword">this</span>.$input.blur($.proxy(<span class="keyword">function</span>(){
-          <span class="keyword">this</span>.find();
-        }, <span class="keyword">this</span>));
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.blur === <span class="hljs-literal">true</span>){
+        <span class="hljs-keyword">this</span>.$input.blur($.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+          <span class="hljs-keyword">this</span>.find();
+        }, <span class="hljs-keyword">this</span>));
       }
     },</pre></div></div>
             
@@ -424,28 +426,28 @@ corresponding elements.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initDetails: <span class="keyword">function</span>(){
-      <span class="keyword">if</span> (!<span class="keyword">this</span>.options.details){ <span class="keyword">return</span>; }
+            <div class="content"><div class='highlight'><pre>    initDetails: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.details){ <span class="hljs-keyword">return</span>; }
 
-      <span class="keyword">var</span> $details = $(<span class="keyword">this</span>.options.details),
-        attribute = <span class="keyword">this</span>.options.detailsAttribute,
+      <span class="hljs-keyword">var</span> $details = $(<span class="hljs-keyword">this</span>.options.details),
+        attribute = <span class="hljs-keyword">this</span>.options.detailsAttribute,
         details = {};
 
-      <span class="function"><span class="keyword">function</span> <span class="title">setDetail</span><span class="params">(value)</span>{</span>
-        details[value] = $details.find(<span class="string">"["</span> +  attribute + <span class="string">"="</span> + value + <span class="string">"]"</span>);
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setDetail</span><span class="hljs-params">(value)</span></span>{
+        details[value] = $details.find(<span class="hljs-string">"["</span> +  attribute + <span class="hljs-string">"="</span> + value + <span class="hljs-string">"]"</span>);
       }
 
-      $.each(componentTypes, <span class="keyword">function</span>(index, key){
+      $.each(componentTypes, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, key)</span></span>{
         setDetail(key);
-        setDetail(key + <span class="string">"_short"</span>);
+        setDetail(key + <span class="hljs-string">"_short"</span>);
       });
 
-      $.each(placesDetails, <span class="keyword">function</span>(index, key){
+      $.each(placesDetails, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, key)</span></span>{
         setDetail(key);
       });
 
-      <span class="keyword">this</span>.$details = $details;
-      <span class="keyword">this</span>.details = details;
+      <span class="hljs-keyword">this</span>.$details = $details;
+      <span class="hljs-keyword">this</span>.details = details;
     },</pre></div></div>
             
         </li>
@@ -462,28 +464,28 @@ This method will care about converting the value into the right format.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initLocation: <span class="keyword">function</span>() {
+            <div class="content"><div class='highlight'><pre>    initLocation: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
 
-      <span class="keyword">var</span> location = <span class="keyword">this</span>.options.location, latLng;
+      <span class="hljs-keyword">var</span> location = <span class="hljs-keyword">this</span>.options.location, latLng;
 
-      <span class="keyword">if</span> (!location) { <span class="keyword">return</span>; }
+      <span class="hljs-keyword">if</span> (!location) { <span class="hljs-keyword">return</span>; }
 
-      <span class="keyword">if</span> (<span class="keyword">typeof</span> location == <span class="string">'string'</span>) {
-        <span class="keyword">this</span>.find(location);
-        <span class="keyword">return</span>;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> location == <span class="hljs-string">'string'</span>) {
+        <span class="hljs-keyword">this</span>.find(location);
+        <span class="hljs-keyword">return</span>;
       }
 
-      <span class="keyword">if</span> (location <span class="keyword">instanceof</span> Array) {
-        latLng = <span class="keyword">new</span> google.maps.LatLng(location[<span class="number">0</span>], location[<span class="number">1</span>]);
+      <span class="hljs-keyword">if</span> (location <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) {
+        latLng = <span class="hljs-keyword">new</span> google.maps.LatLng(location[<span class="hljs-number">0</span>], location[<span class="hljs-number">1</span>]);
       }
 
-      <span class="keyword">if</span> (location <span class="keyword">instanceof</span> google.maps.LatLng){
+      <span class="hljs-keyword">if</span> (location <span class="hljs-keyword">instanceof</span> google.maps.LatLng){
         latLng = location;
       }
 
-      <span class="keyword">if</span> (latLng){
-        <span class="keyword">if</span> (<span class="keyword">this</span>.map){ <span class="keyword">this</span>.map.setCenter(latLng); }
-        <span class="keyword">if</span> (<span class="keyword">this</span>.marker){ <span class="keyword">this</span>.marker.setPosition(latLng); }
+      <span class="hljs-keyword">if</span> (latLng){
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map){ <span class="hljs-keyword">this</span>.map.setCenter(latLng); }
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.marker){ <span class="hljs-keyword">this</span>.marker.setPosition(latLng); }
       }
     },</pre></div></div>
             
@@ -501,9 +503,9 @@ the current value of the input.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    find: <span class="keyword">function</span>(address){
-      <span class="keyword">this</span>.geocode({
-        address: address || <span class="keyword">this</span>.$input.val()
+            <div class="content"><div class='highlight'><pre>    find: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(address)</span></span>{
+      <span class="hljs-keyword">this</span>.geocode({
+        address: address || <span class="hljs-keyword">this</span>.$input.val()
       });
     },</pre></div></div>
             
@@ -521,20 +523,20 @@ Additionally it will bias the requests to the provided bounds.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    geocode: <span class="keyword">function</span>(request){
-      <span class="keyword">if</span> (<span class="keyword">this</span>.options.bounds &amp;&amp; !request.bounds){
-        <span class="keyword">if</span> (<span class="keyword">this</span>.options.bounds === <span class="literal">true</span>){
-          request.bounds = <span class="keyword">this</span>.map &amp;&amp; <span class="keyword">this</span>.map.getBounds();
-        } <span class="keyword">else</span> {
-          request.bounds = <span class="keyword">this</span>.options.bounds;
+            <div class="content"><div class='highlight'><pre>    geocode: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request)</span></span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bounds &amp;&amp; !request.bounds){
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bounds === <span class="hljs-literal">true</span>){
+          request.bounds = <span class="hljs-keyword">this</span>.map &amp;&amp; <span class="hljs-keyword">this</span>.map.getBounds();
+        } <span class="hljs-keyword">else</span> {
+          request.bounds = <span class="hljs-keyword">this</span>.options.bounds;
         }
       }
 
-      <span class="keyword">if</span> (<span class="keyword">this</span>.options.country){
-        request.region = <span class="keyword">this</span>.options.country;
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.country){
+        request.region = <span class="hljs-keyword">this</span>.options.country;
       }
 
-      <span class="keyword">this</span>.geocoder.geocode(request, $.proxy(<span class="keyword">this</span>.handleGeocode, <span class="keyword">this</span>));
+      <span class="hljs-keyword">this</span>.geocoder.geocode(request, $.proxy(<span class="hljs-keyword">this</span>.handleGeocode, <span class="hljs-keyword">this</span>));
     },</pre></div></div>
             
         </li>
@@ -551,7 +553,7 @@ the first result from the list.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    selectFirstResult: <span class="keyword">function</span>() {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    selectFirstResult: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -562,11 +564,12 @@ the first result from the list.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>$(&quot;.pac-container&quot;).hide();</p>
+              <p>$(“.pac-container”).hide();</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> selected = <span class="string">''</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+      <span class="hljs-keyword">var</span> selected = <span class="hljs-string">''</span>;</pre></div></div>
             
         </li>
         
@@ -581,8 +584,8 @@ the first result from the list.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> ($(<span class="string">".pac-item-selected"</span>)[<span class="string">'0'</span>]) {
-        selected = <span class="string">'-selected'</span>;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> ($(<span class="hljs-string">".pac-item-selected"</span>)[<span class="hljs-string">'0'</span>]) {
+        selected = <span class="hljs-string">'-selected'</span>;
       }</pre></div></div>
             
         </li>
@@ -594,12 +597,12 @@ the first result from the list.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>Get the first suggestion&#39;s text.</p>
+              <p>Get the first suggestion’s text.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> $span1 = $(<span class="string">".pac-container .pac-item"</span> + selected + <span class="string">":first span:nth-child(2)"</span>).text();
-      <span class="keyword">var</span> $span2 = $(<span class="string">".pac-container .pac-item"</span> + selected + <span class="string">":first span:nth-child(3)"</span>).text();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> $span1 = $(<span class="hljs-string">".pac-container .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(2)"</span>).text();
+      <span class="hljs-keyword">var</span> $span2 = $(<span class="hljs-string">".pac-container .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(3)"</span>).text();</pre></div></div>
             
         </li>
         
@@ -614,14 +617,14 @@ the first result from the list.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="keyword">var</span> firstResult = $span1;
-      <span class="keyword">if</span> ($span2) {
-        firstResult += <span class="string">" - "</span> + $span2;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> firstResult = $span1;
+      <span class="hljs-keyword">if</span> ($span2) {
+        firstResult += <span class="hljs-string">" - "</span> + $span2;
       }
 
-      <span class="keyword">this</span>.$input.val(firstResult);
+      <span class="hljs-keyword">this</span>.$input.val(firstResult);
 
-      <span class="keyword">return</span> firstResult;
+      <span class="hljs-keyword">return</span> firstResult;
     },</pre></div></div>
             
         </li>
@@ -634,23 +637,23 @@ the first result from the list.</p>
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Handles the geocode response. If more than one results was found
-it triggers the &quot;geocode:multiple&quot; events. If there was an error
-the &quot;geocode:error&quot; event is fired.</p>
+it triggers the “geocode:multiple” events. If there was an error
+the “geocode:error” event is fired.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    handleGeocode: <span class="keyword">function</span>(results, status){
-      <span class="keyword">if</span> (status === google.maps.GeocoderStatus.OK) {
-        <span class="keyword">var</span> result = results[<span class="number">0</span>];
-        <span class="keyword">this</span>.$input.val(result.formatted_address);
-        <span class="keyword">this</span>.update(result);
+            <div class="content"><div class='highlight'><pre>    handleGeocode: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(results, status)</span></span>{
+      <span class="hljs-keyword">if</span> (status === google.maps.GeocoderStatus.OK) {
+        <span class="hljs-keyword">var</span> result = results[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">this</span>.$input.val(result.formatted_address);
+        <span class="hljs-keyword">this</span>.update(result);
 
-        <span class="keyword">if</span> (results.length &gt; <span class="number">1</span>){
-          <span class="keyword">this</span>.trigger(<span class="string">"geocode:multiple"</span>, results);
+        <span class="hljs-keyword">if</span> (results.length &gt; <span class="hljs-number">1</span>){
+          <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:multiple"</span>, results);
         }
 
-      } <span class="keyword">else</span> {
-        <span class="keyword">this</span>.trigger(<span class="string">"geocode:error"</span>, status);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:error"</span>, status);
       }
     },</pre></div></div>
             
@@ -667,8 +670,8 @@ the &quot;geocode:error&quot; event is fired.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    trigger: <span class="keyword">function</span>(event, argument){
-      <span class="keyword">this</span>.$input.trigger(event, [argument]);
+            <div class="content"><div class='highlight'><pre>    trigger: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event, argument)</span></span>{
+      <span class="hljs-keyword">this</span>.$input.trigger(event, [argument]);
     },</pre></div></div>
             
         </li>
@@ -686,21 +689,21 @@ Additionally it updates the marker position.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    center: <span class="keyword">function</span>(geometry){
+            <div class="content"><div class='highlight'><pre>    center: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(geometry)</span></span>{
 
-      <span class="keyword">if</span> (geometry.viewport){
-        <span class="keyword">this</span>.map.fitBounds(geometry.viewport);
-        <span class="keyword">if</span> (<span class="keyword">this</span>.map.getZoom() &gt; <span class="keyword">this</span>.options.maxZoom){
-          <span class="keyword">this</span>.map.setZoom(<span class="keyword">this</span>.options.maxZoom);
+      <span class="hljs-keyword">if</span> (geometry.viewport){
+        <span class="hljs-keyword">this</span>.map.fitBounds(geometry.viewport);
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map.getZoom() &gt; <span class="hljs-keyword">this</span>.options.maxZoom){
+          <span class="hljs-keyword">this</span>.map.setZoom(<span class="hljs-keyword">this</span>.options.maxZoom);
         }
-      } <span class="keyword">else</span> {
-        <span class="keyword">this</span>.map.setZoom(<span class="keyword">this</span>.options.maxZoom);
-        <span class="keyword">this</span>.map.setCenter(geometry.location);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.map.setZoom(<span class="hljs-keyword">this</span>.options.maxZoom);
+        <span class="hljs-keyword">this</span>.map.setCenter(geometry.location);
       }
 
-      <span class="keyword">if</span> (<span class="keyword">this</span>.marker){
-        <span class="keyword">this</span>.marker.setPosition(geometry.location);
-        <span class="keyword">this</span>.marker.setAnimation(<span class="keyword">this</span>.options.markerOptions.animation);
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.marker){
+        <span class="hljs-keyword">this</span>.marker.setPosition(geometry.location);
+        <span class="hljs-keyword">this</span>.marker.setAnimation(<span class="hljs-keyword">this</span>.options.markerOptions.animation);
       }
     },</pre></div></div>
             
@@ -714,21 +717,21 @@ Additionally it updates the marker position.</p>
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Update the elements based on a single places or geoocoding response
-and trigger the &quot;geocode:result&quot; event on the input.</p>
+and trigger the “geocode:result” event on the input.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    update: <span class="keyword">function</span>(result){
+            <div class="content"><div class='highlight'><pre>    update: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result)</span></span>{
 
-      <span class="keyword">if</span> (<span class="keyword">this</span>.map){
-        <span class="keyword">this</span>.center(result.geometry);
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map){
+        <span class="hljs-keyword">this</span>.center(result.geometry);
       }
 
-      <span class="keyword">if</span> (<span class="keyword">this</span>.$details){
-        <span class="keyword">this</span>.fillDetails(result);
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.$details){
+        <span class="hljs-keyword">this</span>.fillDetails(result);
       }
 
-      <span class="keyword">this</span>.trigger(<span class="string">"geocode:result"</span>, result);
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:result"</span>, result);
     },</pre></div></div>
             
         </li>
@@ -746,9 +749,9 @@ component type.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    fillDetails: <span class="keyword">function</span>(result){
+            <div class="content"><div class='highlight'><pre>    fillDetails: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result)</span></span>{
 
-      <span class="keyword">var</span> data = {},
+      <span class="hljs-keyword">var</span> data = {},
         geometry = result.geometry,
         viewport = geometry.viewport,
         bounds = geometry.bounds;</pre></div></div>
@@ -766,10 +769,10 @@ component type.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      $.each(result.address_components, <span class="keyword">function</span>(index, object){
-        <span class="keyword">var</span> name = object.types[<span class="number">0</span>];
+            <div class="content"><div class='highlight'><pre>      $.each(result.address_components, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, object)</span></span>{
+        <span class="hljs-keyword">var</span> name = object.types[<span class="hljs-number">0</span>];
         data[name] = object.long_name;
-        data[name + <span class="string">"_short"</span>] = object.short_name;
+        data[name + <span class="hljs-string">"_short"</span>] = object.short_name;
       });</pre></div></div>
             
         </li>
@@ -785,7 +788,7 @@ component type.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      $.each(placesDetails, <span class="keyword">function</span>(index, key){
+            <div class="content"><div class='highlight'><pre>      $.each(placesDetails, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, key)</span></span>{
         data[key] = result[key];
       });</pre></div></div>
             
@@ -804,7 +807,7 @@ component type.</p>
             
             <div class="content"><div class='highlight'><pre>      $.extend(data, {
         formatted_address: result.formatted_address,
-        location_type: geometry.location_type || <span class="string">"PLACES"</span>,
+        location_type: geometry.location_type || <span class="hljs-string">"PLACES"</span>,
         viewport: viewport,
         bounds: bounds,
         location: geometry.location,
@@ -825,12 +828,12 @@ component type.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      $.each(<span class="keyword">this</span>.details, $.proxy(<span class="keyword">function</span>(key, $detail){
-        <span class="keyword">var</span> value = data[key];
-        <span class="keyword">this</span>.setDetail($detail, value);
-      }, <span class="keyword">this</span>));
+            <div class="content"><div class='highlight'><pre>      $.each(<span class="hljs-keyword">this</span>.details, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key, $detail)</span></span>{
+        <span class="hljs-keyword">var</span> value = data[key];
+        <span class="hljs-keyword">this</span>.setDetail($detail, value);
+      }, <span class="hljs-keyword">this</span>));
 
-      <span class="keyword">this</span>.data = data;
+      <span class="hljs-keyword">this</span>.data = data;
     },</pre></div></div>
             
         </li>
@@ -848,17 +851,17 @@ the text content.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    setDetail: <span class="keyword">function</span>($element, value){
+            <div class="content"><div class='highlight'><pre>    setDetail: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($element, value)</span></span>{
 
-      <span class="keyword">if</span> (value === <span class="literal">undefined</span>){
-        value = <span class="string">""</span>;
-      } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> value.toUrlValue == <span class="string">"function"</span>){
+      <span class="hljs-keyword">if</span> (value === <span class="hljs-literal">undefined</span>){
+        value = <span class="hljs-string">""</span>;
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value.toUrlValue == <span class="hljs-string">"function"</span>){
         value = value.toUrlValue();
       }
 
-      <span class="keyword">if</span> ($element.is(<span class="string">":input"</span>)){
+      <span class="hljs-keyword">if</span> ($element.is(<span class="hljs-string">":input"</span>)){
         $element.val(value);
-      } <span class="keyword">else</span> {
+      } <span class="hljs-keyword">else</span> {
         $element.text(value);
       }
     },</pre></div></div>
@@ -872,20 +875,20 @@ the text content.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>Fire the &quot;geocode:dragged&quot; event and pass the new position.</p>
+              <p>Fire the “geocode:dragged” event and pass the new position.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    markerDragged: <span class="keyword">function</span>(event){
-      <span class="keyword">this</span>.trigger(<span class="string">"geocode:dragged"</span>, event.latLng);
+            <div class="content"><div class='highlight'><pre>    markerDragged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span></span>{
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:dragged"</span>, event.latLng);
     },
 
-    mapClicked: <span class="keyword">function</span>(event) {
-        <span class="keyword">this</span>.trigger(<span class="string">"geocode:click"</span>, event.latLng);
+    mapClicked: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+        <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:click"</span>, event.latLng);
     },
 
-    mapZoomed: <span class="keyword">function</span>(event) {
-      <span class="keyword">this</span>.trigger(<span class="string">"geocode:zoom"</span>, <span class="keyword">this</span>.map.getZoom());
+    mapZoomed: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:zoom"</span>, <span class="hljs-keyword">this</span>.map.getZoom());
     },</pre></div></div>
             
         </li>
@@ -901,10 +904,10 @@ the text content.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    resetMarker: <span class="keyword">function</span>(){
-      <span class="keyword">this</span>.marker.setPosition(<span class="keyword">this</span>.data.location);
-      <span class="keyword">this</span>.setDetail(<span class="keyword">this</span>.details.lat, <span class="keyword">this</span>.data.location.lat());
-      <span class="keyword">this</span>.setDetail(<span class="keyword">this</span>.details.lng, <span class="keyword">this</span>.data.location.lng());
+            <div class="content"><div class='highlight'><pre>    resetMarker: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">this</span>.marker.setPosition(<span class="hljs-keyword">this</span>.data.location);
+      <span class="hljs-keyword">this</span>.setDetail(<span class="hljs-keyword">this</span>.details.lat, <span class="hljs-keyword">this</span>.data.location.lat());
+      <span class="hljs-keyword">this</span>.setDetail(<span class="hljs-keyword">this</span>.details.lng, <span class="hljs-keyword">this</span>.data.location.lng());
     },</pre></div></div>
             
         </li>
@@ -921,11 +924,11 @@ If the place has no geometry it passes it to the geocoder.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    placeChanged: <span class="keyword">function</span>(){
-      <span class="keyword">var</span> place = <span class="keyword">this</span>.autocomplete.getPlace();
+            <div class="content"><div class='highlight'><pre>    placeChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">var</span> place = <span class="hljs-keyword">this</span>.autocomplete.getPlace();
 
-      <span class="keyword">if</span> (!place.geometry){
-        <span class="keyword">if</span> (<span class="keyword">this</span>.options.autoselect) {</pre></div></div>
+      <span class="hljs-keyword">if</span> (!place || !place.geometry){
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.autoselect) {</pre></div></div>
             
         </li>
         
@@ -941,10 +944,10 @@ suggestions list.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span> autoSelection = <span class="keyword">this</span>.selectFirstResult();
-          <span class="keyword">this</span>.find(autoSelection);
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">var</span> autoSelection = <span class="hljs-keyword">this</span>.selectFirstResult();
+          <span class="hljs-keyword">this</span>.find(autoSelection);
         }
-      } <span class="keyword">else</span> {</pre></div></div>
+      } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
         
@@ -959,7 +962,7 @@ suggestions list.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="keyword">this</span>.update(place);
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.update(place);
       }
     }
   });</pre></div></div>
@@ -979,9 +982,9 @@ The attribute is used to prevent multiple instantiations of the plugin.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  $.fn.geocomplete = <span class="keyword">function</span>(options) {
+            <div class="content"><div class='highlight'><pre>  $.fn.geocomplete = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
 
-    <span class="keyword">var</span> attribute = <span class="string">'plugin_geocomplete'</span>;</pre></div></div>
+    <span class="hljs-keyword">var</span> attribute = <span class="hljs-string">'plugin_geocomplete'</span>;</pre></div></div>
             
         </li>
         
@@ -998,22 +1001,22 @@ following arguments.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (<span class="keyword">typeof</span> options == <span class="string">"string"</span>){
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> options == <span class="hljs-string">"string"</span>){
 
-      <span class="keyword">var</span> instance = $(<span class="keyword">this</span>).data(attribute) || $(<span class="keyword">this</span>).geocomplete().data(attribute),
+      <span class="hljs-keyword">var</span> instance = $(<span class="hljs-keyword">this</span>).data(attribute) || $(<span class="hljs-keyword">this</span>).geocomplete().data(attribute),
         prop = instance[options];
 
-      <span class="keyword">if</span> (<span class="keyword">typeof</span> prop == <span class="string">"function"</span>){
-        prop.apply(instance, Array.prototype.slice.call(arguments, <span class="number">1</span>));
-        <span class="keyword">return</span> $(<span class="keyword">this</span>);
-      } <span class="keyword">else</span> {
-        <span class="keyword">if</span> (arguments.length == <span class="number">2</span>){
-          prop = arguments[<span class="number">1</span>];
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> prop == <span class="hljs-string">"function"</span>){
+        prop.apply(instance, <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>));
+        <span class="hljs-keyword">return</span> $(<span class="hljs-keyword">this</span>);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length == <span class="hljs-number">2</span>){
+          prop = <span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>];
         }
-        <span class="keyword">return</span> prop;
+        <span class="hljs-keyword">return</span> prop;
       }
-    } <span class="keyword">else</span> {
-      <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="keyword">function</span>() {</pre></div></div>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1028,16 +1031,16 @@ following arguments.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> instance = $.data(<span class="keyword">this</span>, attribute);
-        <span class="keyword">if</span> (!instance) {
-          instance = <span class="keyword">new</span> GeoComplete( <span class="keyword">this</span>, options )
-          $.data(<span class="keyword">this</span>, attribute, instance);
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> instance = $.data(<span class="hljs-keyword">this</span>, attribute);
+        <span class="hljs-keyword">if</span> (!instance) {
+          instance = <span class="hljs-keyword">new</span> GeoComplete( <span class="hljs-keyword">this</span>, options );
+          $.data(<span class="hljs-keyword">this</span>, attribute, instance);
         }
       });
     }
   };
 
-})( jQuery, window, document );</pre></div></div>
+})( jQuery, <span class="hljs-built_in">window</span>, <span class="hljs-built_in">document</span> );</pre></div></div>
             
         </li>
         
