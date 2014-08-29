@@ -1,0 +1,29 @@
+{
+  "name": "geocomplete",
+  "version": "1.6.0",
+  "homepage": "http://ubilabs.github.com/geocomplete/",
+  "authors": [
+    "Martin Kleppe <kleppe@ubilabs.net>"
+  ],
+  "description": "jQuery Geocoding and Places Autocomplete Plugin",
+  "main": "jquery.geocomplete.js",
+  "keywords": [
+    "geocoding",
+    "map",
+    "places",
+    "api",
+    "search",
+    "google"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
