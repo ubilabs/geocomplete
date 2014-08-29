@@ -31,10 +31,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.1
  *
- * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2012
- * @author Ubilabs http://ubilabs.net, 2012
+ * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2014
+ * @author Ubilabs http://ubilabs.net, 2014
  * @license MIT License &lt;http://www.opensource.org/licenses/mit-license.php&gt;
  */</span></pre></div></div>
             
@@ -48,10 +48,10 @@
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <h1 id="-geocomplete-">$.geocomplete()</h1>
-<h2 id="jquery-geocoding-and-places-autocomplete-plugin-v-1-6-0">jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0</h2>
+<h2 id="jquery-geocoding-and-places-autocomplete-plugin">jQuery Geocoding and Places Autocomplete Plugin</h2>
 <ul>
 <li><a href="https://github.com/ubilabs/geocomplete/">https://github.com/ubilabs/geocomplete/</a></li>
-<li>by Martin Kleppe <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#107;&#x6c;&#x65;&#x70;&#x70;&#101;&#64;&#117;&#98;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#x74;">&#107;&#x6c;&#x65;&#x70;&#x70;&#101;&#64;&#117;&#98;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#x74;</a></li>
+<li>by Martin Kleppe <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#107;&#x6c;&#x65;&#112;&#112;&#x65;&#x40;&#x75;&#x62;&#x69;&#x6c;&#x61;&#98;&#x73;&#46;&#110;&#101;&#x74;">&#107;&#x6c;&#x65;&#112;&#112;&#x65;&#x40;&#x75;&#x62;&#x69;&#x6c;&#x61;&#98;&#x73;&#46;&#110;&#101;&#x74;</a></li>
 </ul>
 
             </div>
@@ -771,8 +771,11 @@ component type.</p>
             
             <div class="content"><div class='highlight'><pre>      $.each(result.address_components, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, object)</span></span>{
         <span class="hljs-keyword">var</span> name = object.types[<span class="hljs-number">0</span>];
-        data[name] = object.long_name;
-        data[name + <span class="hljs-string">"_short"</span>] = object.short_name;
+
+        $.each(object.types, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(index, name)</span></span>{
+          data[name] = object.long_name;
+          data[name + <span class="hljs-string">"_short"</span>] = object.short_name;
+        });
       });</pre></div></div>
             
         </li>

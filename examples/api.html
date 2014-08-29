@@ -1,59 +1,30 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Geocomplete : jQuery Geocoding and Places Autocomplete Plugin" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
-    <title>Geocomplete - Examples</title>
+    <title>$.geocomplete()</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
-
   <body>
 
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <h1 id="project_title">Geocomplete</h1>
-          <h2 id="project_tagline">Example: Plugin API</h2>
-        </header>
-    </div>
-
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+    <form>
+      <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
+      <input id="find" type="button" value="find" />
+    </form>
         
-        <a href="../" class="back">Back to Documentation</a>
-        
-        <form>
-          <input id="geocomplete" type="text" placeholder="Type in an address" size="90" />
-          <input id="find" type="button" value="find" />
-        </form>
-
-        <div class="map_canvas"></div>
-
-        Call: 
-        <button id="search">.geocomplete("find", "NYC")</button>
-        <button id="center">.geocomplete("map").setCenter()</button>
-
-        <h3>Source:</h3>
-        <pre>
-// find
-$("#geocomplete").geocomplete("find", "NYC");
-
-// center
-var map = $("#geocomplete").geocomplete("map"),
-  center = new google.maps.LatLng(10, 0);
-
-map.setCenter(center);
-map.setZoom(3);
-</pre>
-
-      </section>
-    </div>
-
+    <div class="map_canvas"></div>
+    
+    Call: 
+    <button id="search">.geocomplete("find", "NYC")</button>
+    <button id="center">.geocomplete("map").setCenter()</button>
+    
+    
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <script src="../jquery.geocomplete.js"></script>
     <script src="logger.js"></script>
-    
+     
     <script>
       $(function(){
         $("#geocomplete").geocomplete({
@@ -73,19 +44,6 @@ map.setZoom(3);
         });
       });
     </script>
-
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      try {
-        var pageTracker = _gat._getTracker("UA-57649-7");
-        pageTracker._trackPageview();
-      } catch(err) {}
-    </script>
-
   </body>
 </html>
-
 

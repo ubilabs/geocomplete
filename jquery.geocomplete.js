@@ -1,13 +1,13 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.1
  *
- * @author Martin Kleppe <kleppe@ubilabs.net>, 2012
- * @author Ubilabs http://ubilabs.net, 2012
+ * @author Martin Kleppe <kleppe@ubilabs.net>, 2014
+ * @author Ubilabs http://ubilabs.net, 2014
  * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
  */
 
 // # $.geocomplete()
-// ## jQuery Geocoding and Places Autocomplete Plugin - V 1.6.0
+// ## jQuery Geocoding and Places Autocomplete Plugin
 //
 // * https://github.com/ubilabs/geocomplete/
 // * by Martin Kleppe <kleppe@ubilabs.net>
@@ -375,8 +375,11 @@
       // Create a simplified version of the address components.
       $.each(result.address_components, function(index, object){
         var name = object.types[0];
-        data[name] = object.long_name;
-        data[name + "_short"] = object.short_name;
+
+        $.each(object.types, function(index, name){
+          data[name] = object.long_name;
+          data[name + "_short"] = object.short_name;
+        });
       });
 
       // Add properties of the places details.
