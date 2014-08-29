@@ -284,7 +284,7 @@
 
       var selected = '';
       // Check if any result is selected.
-      if ($(".pac-item-selected")['0']) {
+      if ($(".pac-item-selected")[0]) {
         selected = '-selected';
       }
 
