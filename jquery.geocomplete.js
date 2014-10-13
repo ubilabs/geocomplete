@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.1
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.4
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2014
  * @author Ubilabs http://ubilabs.net, 2014
@@ -284,7 +284,7 @@
 
       var selected = '';
       // Check if any result is selected.
-      if ($(".pac-item-selected")['0']) {
+      if ($(".pac-item-selected")[0]) {
         selected = '-selected';
       }
 
