@@ -1,4 +1,30 @@
-# Changelog - $.geocomplete()
+Version 1.6
+
+* Cycle through subtypes in address components.
+* Add "place_id" to places details.
+* Avoid exception if getPlace() returns undefined
+
+Version 1.5
+
+* Added autoselect option.
+* Add zoom_changed event support.
+* Fixed blur autocomplete.
+* Keep result at text input after focusout.
+* Add blur boolean option.
+* Add marker to map on initialize.
+* Add geocode:click event on the map.
+
+Version 1.4
+
+* Use lat/lng location option to set initial map
+* Return element after calling methods via API.
+* Add option markerOptions.disabled.
+* Add support for Places API componentRestrictions option
+
+Version 1.3
+
+* Add "name" to places details.
+* Add reference field from Places Details call.
 
 Version 1.2
 
