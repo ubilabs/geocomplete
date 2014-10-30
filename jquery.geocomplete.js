@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.4
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.5
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2014
  * @author Ubilabs http://ubilabs.net, 2014
@@ -305,7 +305,8 @@
 
     // Handles the geocode response. If more than one results was found
     // it triggers the "geocode:multiple" events. If there was an error
-    // the "geocode:error" event is fired.
+    // the "geocode:error" event is fired. If no results are found, the
+    // "geocode:noresults" event is fired.
     handleGeocode: function(results, status){
       if (status === google.maps.GeocoderStatus.OK) {
         var result = results[0];
@@ -314,6 +315,8 @@
 
         if (results.length > 1){
           this.trigger("geocode:multiple", results);
+        } else {
+          this.trigger("geocode:noresults")
         }
 
       } else {
