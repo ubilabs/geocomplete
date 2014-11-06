@@ -1,4 +1,4 @@
-# $.geocomplete() - Version 1.6.5
+# $.geocomplete() - Version 1.6.4
 ## jQuery Geocoding and Places Autocomplete Plugin
 
 An advanced jQuery plugin that wraps the Google Maps API's [Geocoding](https://code.google.com/apis/maps/documentation/javascript/geocoding.html) and [Places Autocomplete](https://code.google.com/apis/maps/documentation/javascript/places.html#places_autocomplete) services. You simply provide an input that lets you search for locations with a nice autocomplete dropdown. Optionally add a container to show an interactive map and a form that will be populated with the address details.
@@ -159,7 +159,6 @@ The following events are supported:
 * `"geocode:multiple"` - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.
 * `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
 * `"geocode:click"` - Fired when 'click' event occurs on the map. Passes the location where the click had place.
-* `"geocode:noresults"` - Fired when no results are returned from the geocoder.
 
 ## Methods and Properties
 
