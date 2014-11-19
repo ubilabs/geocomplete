@@ -289,8 +289,8 @@
       }
 
       // Get the first suggestion's text.
-      var $span1 = $(".pac-container .pac-item" + selected + ":first span:nth-child(2)").text();
-      var $span2 = $(".pac-container .pac-item" + selected + ":first span:nth-child(3)").text();
+      var $span1 = $(".pac-container:last .pac-item" + selected + ":first span:nth-child(2)").text();
+      var $span2 = $(".pac-container:last .pac-item" + selected + ":first span:nth-child(3)").text();
 
       // Adds the additional information, if available.
       var firstResult = $span1;
