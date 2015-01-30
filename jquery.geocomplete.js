@@ -34,6 +34,7 @@
   // * `types` - An array containing one or more of the supported types for the places request. Default: `['geocode']` See the full list [here](http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests).
   // * `blur` - Trigger geocode when input loses focus.
   // * `geocodeAfterResult` - If blur is set to true, choose whether to geocode if user has explicitly selected a result before blur.
+  // * `restoreValueAfterBlur` - Restores the input's value upon blurring. Default is `false` which ignores the setting.
 
   var defaults = {
     bounds: true,
@@ -57,7 +58,8 @@
     maxZoom: 16,
     types: ['geocode'],
     blur: false,
-    geocodeAfterResult: false
+    geocodeAfterResult: false,
+    restoreValueAfterBlur: false
   };
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
@@ -203,14 +205,27 @@
         this.find();
       }, this));
 
+      this.$input.bind('geocode:result.' + this._name, $.proxy(function(){
+        this.lastInputVal = this.$input.val();
+      }, this));
+
       // Trigger find action when input element is blurred out and user has
       // not explicitly selected a result.
       // (Useful for typing partial location and tabbing to the next field
       // or clicking somewhere else.)
       if (this.options.blur === true){
-        this.$input.blur($.proxy(function(){
-          if (this.options.geocodeAfterResult === true && this.selected === true){ return; }
-          this.find();
+        this.$input.on('blur.' + this._name, $.proxy(function(){
+          if (this.options.geocodeAfterResult === true && this.selected === true) { return; }
+
+          if (this.options.restoreValueAfterBlur === true && this.selected === true) {
+            var _this = this;
+
+            setTimeout(function() {
+              _this.$input.val(_this.lastInputVal);
+            }, 0);
+          } else {
+            this.find();
+          }
         }, this));
       }
     },
