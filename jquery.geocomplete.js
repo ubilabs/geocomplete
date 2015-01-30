@@ -1,5 +1,5 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.4
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.4 forked
  *
  * @author Martin Kleppe <kleppe@ubilabs.net>, 2014
  * @author Ubilabs http://ubilabs.net, 2014
@@ -59,7 +59,8 @@
     maxZoom: 16,
     types: ['geocode'],
     blur: false,
-    geocodeAfterResult: false
+    geocodeAfterResult: false,
+    freezeInputAfterResult: false
   };
 
   // See: [Geocoding Types](https://developers.google.com/maps/documentation/geocoding/#Types)
@@ -192,14 +193,14 @@
       );
 
       // Prevent parent form from being submitted if user hit enter.
-      this.$input.keypress(function(event){
+      this.$input.on('keypress.' + this._name, function(event){
         if (event.keyCode === 13){ return false; }
       });
 
       // Assume that if user types anything after having selected a result,
       // the selected location is not valid any more.
       if (this.options.geocodeAfterResult === true){
-        this.$input.bind('keypress', $.proxy(function(){
+        this.$input.bind('keypress.' + this._name, $.proxy(function(){
           if (event.keyCode != 9 && this.selected === true){
               this.selected = false;
           }
@@ -207,8 +208,12 @@
       }
 
       // Listen for "geocode" events and trigger find action.
-      this.$input.bind("geocode", $.proxy(function(){
+      this.$input.bind('geocode.' + this._name, $.proxy(function(){
         this.find();
+      }, this));
+
+      this.$input.bind('geocode:result.' + this._name, $.proxy(function(){
+        this.lastInputVal = this.$input.val();
       }, this));
 
       // Trigger find action when input element is blurred out and user has
@@ -216,9 +221,18 @@
       // (Useful for typing partial location and tabbing to the next field
       // or clicking somewhere else.)
       if (this.options.blur === true){
-        this.$input.blur($.proxy(function(){
-          if (this.options.geocodeAfterResult === true && this.selected === true){ return; }
-          this.find();
+        this.$input.on('blur.' + this._name, $.proxy(function(){
+          if (this.options.geocodeAfterResult === true && this.selected === true) { return; }
+
+          if (this.options.freezeInputAfterResult === true && this.selected === true) {
+            var _this = this;
+
+            setTimeout(function() {
+              _this.$input.val(_this.lastInputVal);
+            }, 0);
+          } else {
+            this.find();
+          }
         }, this));
       }
     },
@@ -275,6 +289,20 @@
         if (this.map){ this.map.setCenter(latLng); }
         if (this.marker && this.options.initMarker){ this.marker.setPosition(latLng); }
       }
+    },
+
+    destroy: function(){
+      if (this.map) {
+        google.maps.event.clearInstanceListeners(this.map);
+        google.maps.event.clearInstanceListeners(this.marker);
+      }
+
+      this.autocomplete.unbindAll();
+      google.maps.event.clearInstanceListeners(this.autocomplete);
+      google.maps.event.clearInstanceListeners(this.input);
+      this.$input.removeData();
+      this.$input.off(this._name);
+      this.$input.unbind('.' + this._name);
     },
 
     // Look up a given address. If no `address` was specified it uses
@@ -395,7 +423,8 @@
       var data = {},
         geometry = result.geometry,
         viewport = geometry.viewport,
-        bounds = geometry.bounds;
+        bounds = geometry.bounds,
+        attribute = this.options.detailsAttribute;
 
       // Create a simplified version of the address components.
       $.each(result.address_components, function(index, object){
@@ -427,13 +456,14 @@
       $.each(this.details, $.proxy(function(key, $detail){
         $detail = $detail.first();
 
-        // build the value for single or mutliple address component types
+        // build the value for single or multiple address component types
         var value;
         var count = 0;
-        var comps = $detail.attr('data-geo');
+        var comps = $detail.attr(attribute);
         if(comps !== undefined){
           $.each(comps.replace(/\s+/g, ' ').split(" "), function(){
             var current = data[this.toString()];
+            if (current === undefined) { return true; }
             if(count++ === 0)
               value = current;
             else
@@ -443,7 +473,6 @@
         else
           value = data[key];
 
-      // Set the values for all details.
         this.setDetail($detail, value);
       }, this));
 
@@ -466,12 +495,13 @@
           $element.find("option").filter(function(){
             return ( ($(this).val() == value) || ($(this).text() == value) )
           }).prop('selected', true);
-        }
-        else
+        } else {
           $element.val(value);
-      }  else {
+        }
+      } else {
         $element.text(value);
       }
+      $element.trigger('change');
     },
 
     // Fire the "geocode:dragged" event and pass the new position.
@@ -551,3 +581,4 @@
   };
 
 })( jQuery, window, document );
+
