@@ -205,6 +205,7 @@
         this.find();
       }, this));
 
+      // Saves the previous input value
       this.$input.bind('geocode:result.' + this._name, $.proxy(function(){
         this.lastInputVal = this.$input.val();
       }, this));
@@ -218,11 +219,7 @@
           if (this.options.geocodeAfterResult === true && this.selected === true) { return; }
 
           if (this.options.restoreValueAfterBlur === true && this.selected === true) {
-            var _this = this;
-
-            setTimeout(function() {
-              _this.$input.val(_this.lastInputVal);
-            }, 0);
+            setTimeout($.proxy(this.restoreLastValue, this), 0);
           } else {
             this.find();
           }
@@ -334,6 +331,11 @@
       this.$input.val(firstResult);
 
       return firstResult;
+    },
+
+    // Restores the input value using the previous value if it exists
+    restoreLastValue: function() {
+      if (this.lastInputVal){ this.$input.val(this.lastInputVal); }
     },
 
     // Handles the geocode response. If more than one results was found
