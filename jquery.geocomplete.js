@@ -186,14 +186,14 @@
       );
 
       // Prevent parent form from being submitted if user hit enter.
-      this.$input.keypress(function(event){
+      this.$input.on('keypress.' + this._name, function(event){
         if (event.keyCode === 13){ return false; }
       });
 
       // Assume that if user types anything after having selected a result,
       // the selected location is not valid any more.
       if (this.options.geocodeAfterResult === true){
-        this.$input.bind('keypress', $.proxy(function(){
+        this.$input.bind('keypress.' + this._name, $.proxy(function(){
           if (event.keyCode != 9 && this.selected === true){
               this.selected = false;
           }
@@ -201,7 +201,7 @@
       }
 
       // Listen for "geocode" events and trigger find action.
-      this.$input.bind("geocode", $.proxy(function(){
+      this.$input.bind('geocode.' + this._name, $.proxy(function(){
         this.find();
       }, this));
 
@@ -279,6 +279,20 @@
         if (this.map){ this.map.setCenter(latLng); }
         if (this.marker){ this.marker.setPosition(latLng); }
       }
+    },
+
+    destroy: function(){
+      if (this.map) {
+        google.maps.event.clearInstanceListeners(this.map);
+        google.maps.event.clearInstanceListeners(this.marker);
+      }
+
+      this.autocomplete.unbindAll();
+      google.maps.event.clearInstanceListeners(this.autocomplete);
+      google.maps.event.clearInstanceListeners(this.input);
+      this.$input.removeData();
+      this.$input.off(this._name);
+      this.$input.unbind('.' + this._name);
     },
 
     // Look up a given address. If no `address` was specified it uses
