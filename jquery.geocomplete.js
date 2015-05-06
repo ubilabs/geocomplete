@@ -306,6 +306,10 @@
     // Requests details about a given location.
     // Additionally it will bias the requests to the provided bounds.
     geocode: function(request){
+      // Don't geocode if the requested address is empty
+      if (!request.address) {
+        return;
+      }
       if (this.options.bounds && !request.bounds){
         if (this.options.bounds === true){
           request.bounds = this.map && this.map.getBounds();
