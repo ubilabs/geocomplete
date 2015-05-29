@@ -159,6 +159,8 @@ The following events are supported:
 * `"geocode:multiple"` - Fired immediately after the "result" event if multiple results were found. Passes an array of all results.
 * `"geocode:dragged"` - Fired when the marker's position was modified manually. Passes the updated location.
 * `"geocode:click"` - Fired when 'click' event occurs on the map. Passes the location where the click had place.
+* `"geocode:mapdragged"` - Fired when the map bounds are modified by dragging manually. Passes the location of the current map center.
+* `"geocode:idle"` - Fired when the map becomes idle after panning or zooming. Passes the location of the current map center.
 
 ## Methods and Properties
 

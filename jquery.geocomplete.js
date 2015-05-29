@@ -123,6 +123,20 @@
         'click',
         $.proxy(this.mapClicked, this)
       );
+ 
+      // add dragend even listener on the map
+      google.maps.event.addListener(
+        this.map,
+        'dragend',
+        $.proxy(this.mapDragged, this)
+      );
+      
+      // add idle even listener on the map
+      google.maps.event.addListener(
+        this.map,
+        'idle',
+        $.proxy(this.mapIdle, this)
+      );
 
       google.maps.event.addListener(
         this.map,
@@ -485,12 +499,22 @@
     mapClicked: function(event) {
         this.trigger("geocode:click", event.latLng);
     },
+   
+    // Fire the "geocode:mapdragged" event and pass the current position of the map center.
+    mapDragged: function(event) {
+      this.trigger("geocode:mapdragged", this.map.getCenter());
+    },
+
+    // Fire the "geocode:idle" event and pass the current position of the map center.
+    mapIdle: function(event) {
+      this.trigger("geocode:idle", this.map.getCenter());
+    },
 
     mapZoomed: function(event) {
       this.trigger("geocode:zoom", this.map.getZoom());
     },
 
-    // Restore the old position of the marker to the last now location.
+    // Restore the old position of the marker to the last knwon location.
     resetMarker: function(){
       this.marker.setPosition(this.data.location);
       this.setDetail(this.details.lat, this.data.location.lat());
