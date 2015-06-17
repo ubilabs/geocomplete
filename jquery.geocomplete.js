@@ -19,6 +19,7 @@
   //
   // * `map` - Might be a selector, an jQuery object or a DOM element. Default is `false` which shows no map.
   // * `details` - The container that should be populated with data. Defaults to `false` which ignores the setting.
+  // * 'detailsScope' - Allows you to scope the 'details' container and have multiple geocomplete fields on one page. Must be a parent of the input. Default is 'null'
   // * `location` - Location to initialize the map on. Might be an address `string` or an `array` with [latitude, longitude] or a `google.maps.LatLng`object. Default is `false` which shows a blank map.
   // * `bounds` - Whether to snap geocode search to map bounds. Default: `true` if false search globally. Alternatively pass a custom `LatLngBounds object.
   // * `autoselect` - Automatically selects the highlighted item or the first item from the suggestions list on Enter.
@@ -42,6 +43,7 @@
     map: false,
     details: false,
     detailsAttribute: "name",
+    detailsScope: null,
     autoselect: true,
     location: false,
 
@@ -247,8 +249,13 @@
     initDetails: function(){
       if (!this.options.details){ return; }
 
-      var $details = $(this.options.details),
-        attribute = this.options.detailsAttribute,
+      if(this.options.detailsScope) {
+        var $details = $(this.input).parents(this.options.detailsScope).find(this.options.details);
+      } else {
+        var $details = $(this.options.details);
+      }
+
+      var attribute = this.options.detailsAttribute,
         details = {};
 
       function setDetail(value){

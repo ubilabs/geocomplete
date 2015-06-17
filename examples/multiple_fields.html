@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>$.geocomplete()</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <style type="text/css" media="screen">
+      form { width: 300px; float: left; }
+      fieldset { width: 320px; margin-top: 20px}
+      fieldset label { display: block; margin: 0.5em 0 0em; }
+      fieldset input { width: 95%; }
+      .location { margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+
+    <form>
+
+      <div class="location">
+        <input class="geocomplete" type="text" placeholder="Type in an address" value="Empire State Bldg" />
+        <input class="find" type="button" value="find" />
+
+        <fieldset class="details">
+          <h3>Address-Details</h3>
+
+
+          <label>Latitude</label>
+          <input name="lat" type="text" value="">
+
+          <label>Longitude</label>
+          <input name="lng" type="text" value="">
+
+
+        </fieldset>
+      </div>
+
+      <div class="location">
+        <input class="geocomplete" type="text" placeholder="Type in an address" value="Eiffel Tower" />
+        <input class="find" type="button" value="find" />
+
+        <fieldset class="details">
+          <h3>Address-Details</h3>
+
+          <label>Latitude</label>
+          <input name="lat" type="text" value="">
+
+          <label>Longitude</label>
+          <input name="lng" type="text" value="">
+
+
+        </fieldset>
+      </div>
+
+    </form>
+
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="../jquery.geocomplete.js"></script>
+
+    <script>
+      $(function(){
+        $(".geocomplete").geocomplete({
+          details: ".details",
+          detailsScope: '.location',
+          types: ["geocode", "establishment"],
+        });
+
+        $(".find").click(function(){
+          $(this).parents(".location").find(".geocomplete").trigger("geocode");
+        });
+      });
+    </script>
+
+  </body>
+</html>
+
