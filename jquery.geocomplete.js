@@ -125,14 +125,14 @@
         'click',
         $.proxy(this.mapClicked, this)
       );
- 
+
       // add dragend even listener on the map
       google.maps.event.addListener(
         this.map,
         'dragend',
         $.proxy(this.mapDragged, this)
       );
-      
+
       // add idle even listener on the map
       google.maps.event.addListener(
         this.map,
@@ -358,8 +358,8 @@
       }
 
       // Get the first suggestion's text.
-      var $span1 = $(".pac-container:last .pac-item" + selected + ":first span:nth-child(2)").text();
-      var $span2 = $(".pac-container:last .pac-item" + selected + ":first span:nth-child(3)").text();
+      var $span1 = $(".pac-container:visible .pac-item" + selected + ":first span:nth-child(2)").text();
+      var $span2 = $(".pac-container:visible .pac-item" + selected + ":first span:nth-child(3)").text();
 
       // Adds the additional information, if available.
       var firstResult = $span1;
@@ -506,7 +506,7 @@
     mapClicked: function(event) {
         this.trigger("geocode:click", event.latLng);
     },
-   
+
     // Fire the "geocode:mapdragged" event and pass the current position of the map center.
     mapDragged: function(event) {
       this.trigger("geocode:mapdragged", this.map.getCenter());
