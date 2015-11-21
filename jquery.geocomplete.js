@@ -84,6 +84,12 @@
 
     this.options = $.extend(true, {}, defaults, options);
 
+    // This is a fix to allow types:[] not to be overridden by defaults
+    // so search results includes everything
+    if (options.types) {
+      this.options.types = options.types;
+    }
+    
     this.input = input;
     this.$input = $(input);
 
