@@ -86,7 +86,7 @@
 
     // This is a fix to allow types:[] not to be overridden by defaults
     // so search results includes everything
-    if (options.types) {
+    if (options && options.types) {
       this.options.types = options.types;
     }
     
