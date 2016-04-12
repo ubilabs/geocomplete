@@ -31,10 +31,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.4
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.7.0
  *
- * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2014
- * @author Ubilabs http://ubilabs.net, 2014
+ * @author Martin Kleppe &lt;kleppe@ubilabs.net&gt;, 2016
+ * @author Ubilabs http://ubilabs.net, 2016
  * @license MIT License &lt;http://www.opensource.org/licenses/mit-license.php&gt;
  */</span></pre></div></div>
             
@@ -51,7 +51,7 @@
 <h2 id="jquery-geocoding-and-places-autocomplete-plugin">jQuery Geocoding and Places Autocomplete Plugin</h2>
 <ul>
 <li><a href="https://github.com/ubilabs/geocomplete/">https://github.com/ubilabs/geocomplete/</a></li>
-<li>by Martin Kleppe <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x6b;&#108;&#x65;&#x70;&#112;&#x65;&#64;&#117;&#x62;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#116;">&#x6b;&#108;&#x65;&#x70;&#112;&#x65;&#64;&#117;&#x62;&#x69;&#x6c;&#97;&#98;&#115;&#x2e;&#x6e;&#101;&#116;</a></li>
+<li>by Martin Kleppe <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x6b;&#x6c;&#101;&#x70;&#112;&#101;&#64;&#117;&#98;&#x69;&#108;&#x61;&#x62;&#x73;&#x2e;&#x6e;&#x65;&#116;">&#x6b;&#x6c;&#101;&#x70;&#112;&#101;&#64;&#117;&#98;&#x69;&#108;&#x61;&#x62;&#x73;&#x2e;&#x6e;&#x65;&#116;</a></li>
 </ul>
 
             </div>
@@ -73,6 +73,7 @@
 <ul>
 <li><code>map</code> - Might be a selector, an jQuery object or a DOM element. Default is <code>false</code> which shows no map.</li>
 <li><code>details</code> - The container that should be populated with data. Defaults to <code>false</code> which ignores the setting.</li>
+<li>‘detailsScope’ - Allows you to scope the ‘details’ container and have multiple geocomplete fields on one page. Must be a parent of the input. Default is ‘null’</li>
 <li><code>location</code> - Location to initialize the map on. Might be an address <code>string</code> or an <code>array</code> with [latitude, longitude] or a <code>google.maps.LatLng</code>object. Default is <code>false</code> which shows a blank map.</li>
 <li><code>bounds</code> - Whether to snap geocode search to map bounds. Default: <code>true</code> if false search globally. Alternatively pass a custom `LatLngBounds object.</li>
 <li><code>autoselect</code> - Automatically selects the highlighted item or the first item from the suggestions list on Enter.</li>
@@ -86,6 +87,9 @@
 <li><code>markerOptions.disabled</code> - Do not show marker. Default: <code>false</code>. Set to true to disable marker.</li>
 <li><code>maxZoom</code> - The maximum zoom level too zoom in after a geocoding response. Default: <code>16</code></li>
 <li><code>types</code> - An array containing one or more of the supported types for the places request. Default: <code>[&#39;geocode&#39;]</code> See the full list <a href="http://code.google.com/apis/maps/documentation/javascript/places.html#place_search_requests">here</a>.</li>
+<li><code>blur</code> - Trigger geocode when input loses focus.</li>
+<li><code>geocodeAfterResult</code> - If blur is set to true, choose whether to geocode if user has explicitly selected a result before blur.</li>
+<li><code>restoreValueAfterBlur</code> - Restores the input’s value upon blurring. Default is <code>false</code> which ignores the setting.</li>
 </ul>
 
             </div>
@@ -97,6 +101,7 @@
     map: <span class="hljs-literal">false</span>,
     details: <span class="hljs-literal">false</span>,
     detailsAttribute: <span class="hljs-string">"name"</span>,
+    detailsScope: <span class="hljs-literal">null</span>,
     autoselect: <span class="hljs-literal">true</span>,
     location: <span class="hljs-literal">false</span>,
 
@@ -112,7 +117,9 @@
 
     maxZoom: <span class="hljs-number">16</span>,
     types: [<span class="hljs-string">'geocode'</span>],
-    blur: <span class="hljs-literal">false</span>
+    blur: <span class="hljs-literal">false</span>,
+    geocodeAfterResult: <span class="hljs-literal">false</span>,
+    restoreValueAfterBlur: <span class="hljs-literal">false</span>
   };</pre></div></div>
             
         </li>
@@ -169,7 +176,25 @@ on Google Developers.</p>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GeoComplete</span><span class="hljs-params">(input, options)</span> </span>{
 
-    <span class="hljs-keyword">this</span>.options = $.extend(<span class="hljs-literal">true</span>, {}, defaults, options);
+    <span class="hljs-keyword">this</span>.options = $.extend(<span class="hljs-literal">true</span>, {}, defaults, options);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This is a fix to allow types:[] not to be overridden by defaults
+so search results includes everything</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (options &amp;&amp; options.types) {
+      <span class="hljs-keyword">this</span>.options.types = options.types;
+    }
 
     <span class="hljs-keyword">this</span>.input = input;
     <span class="hljs-keyword">this</span>.$input = $(input);
@@ -183,11 +208,11 @@ on Google Developers.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Initialize all parts of the plugin.</p>
 
@@ -205,11 +230,11 @@ on Google Developers.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Initialize the map but only if the option <code>map</code> was set.
 This will create a <code>map</code> within the given container
@@ -233,11 +258,11 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>add click event listener on the map</p>
 
@@ -247,6 +272,44 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
         <span class="hljs-keyword">this</span>.map,
         <span class="hljs-string">'click'</span>,
         $.proxy(<span class="hljs-keyword">this</span>.mapClicked, <span class="hljs-keyword">this</span>)
+      );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>add dragend even listener on the map</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      google.maps.event.addListener(
+        <span class="hljs-keyword">this</span>.map,
+        <span class="hljs-string">'dragend'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.mapDragged, <span class="hljs-keyword">this</span>)
+      );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>add idle even listener on the map</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      google.maps.event.addListener(
+        <span class="hljs-keyword">this</span>.map,
+        <span class="hljs-string">'idle'</span>,
+        $.proxy(<span class="hljs-keyword">this</span>.mapIdle, <span class="hljs-keyword">this</span>)
       );
 
       google.maps.event.addListener(
@@ -259,11 +322,11 @@ using the provided <code>mapOptions</code> or link to the existing map instance.
         </li>
         
         
-        <li id="section-10">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Add a marker with the provided <code>markerOptions</code> but only
 if the option was set. Additionally it listens for the <code>dragend</code> event
@@ -289,18 +352,33 @@ to notify the plugin about changes.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Associate the input with the autocompleter and create a geocoder
 to fall back when the autocompleter does not return a value.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    initGeocoder: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+            <div class="content"><div class='highlight'><pre>    initGeocoder: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Indicates is user did select a result from the dropdown.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> selected = <span class="hljs-literal">false</span>;
 
       <span class="hljs-keyword">var</span> options = {
         types: <span class="hljs-keyword">this</span>.options.types,
@@ -321,11 +399,11 @@ to fall back when the autocompleter does not return a value.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Bind autocomplete to map bounds but only if there is a map
 and <code>options.bindToMap</code> is set to true.</p>
@@ -339,11 +417,11 @@ and <code>options.bindToMap</code> is set to true.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Watch <code>place_changed</code> events on the autocomplete input field.</p>
 
@@ -358,55 +436,101 @@ and <code>options.bindToMap</code> is set to true.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Prevent parent form from being submitted if user hit enter.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.keypress(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span></span>{
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.on(<span class="hljs-string">'keypress.'</span> + <span class="hljs-keyword">this</span>._name, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span></span>{
         <span class="hljs-keyword">if</span> (event.keyCode === <span class="hljs-number">13</span>){ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
       });</pre></div></div>
             
         </li>
         
         
-        <li id="section-15">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Assume that if user types anything after having selected a result,
+the selected location is not valid any more.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.geocodeAfterResult === <span class="hljs-literal">true</span>){
+        <span class="hljs-keyword">this</span>.$input.bind(<span class="hljs-string">'keypress.'</span> + <span class="hljs-keyword">this</span>._name, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+          <span class="hljs-keyword">if</span> (event.keyCode != <span class="hljs-number">9</span> &amp;&amp; <span class="hljs-keyword">this</span>.selected === <span class="hljs-literal">true</span>){
+              <span class="hljs-keyword">this</span>.selected = <span class="hljs-literal">false</span>;
+          }
+        }, <span class="hljs-keyword">this</span>));
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Listen for “geocode” events and trigger find action.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.bind(<span class="hljs-string">"geocode"</span>, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.bind(<span class="hljs-string">'geocode.'</span> + <span class="hljs-keyword">this</span>._name, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
         <span class="hljs-keyword">this</span>.find();
       }, <span class="hljs-keyword">this</span>));</pre></div></div>
             
         </li>
         
         
-        <li id="section-16">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Trigger find action when input element is blured out.
-(Usefull for typing partial location and tabing to the next field
+              <p>Saves the previous input value</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">this</span>.$input.bind(<span class="hljs-string">'geocode:result.'</span> + <span class="hljs-keyword">this</span>._name, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">this</span>.lastInputVal = <span class="hljs-keyword">this</span>.$input.val();
+      }, <span class="hljs-keyword">this</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Trigger find action when input element is blurred out and user has
+not explicitly selected a result.
+(Useful for typing partial location and tabbing to the next field
 or clicking somewhere else.)</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.blur === <span class="hljs-literal">true</span>){
-        <span class="hljs-keyword">this</span>.$input.blur($.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-          <span class="hljs-keyword">this</span>.find();
+        <span class="hljs-keyword">this</span>.$input.on(<span class="hljs-string">'blur.'</span> + <span class="hljs-keyword">this</span>._name, $.proxy(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.geocodeAfterResult === <span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-keyword">this</span>.selected === <span class="hljs-literal">true</span>) { <span class="hljs-keyword">return</span>; }
+
+          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.restoreValueAfterBlur === <span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-keyword">this</span>.selected === <span class="hljs-literal">true</span>) {
+            setTimeout($.proxy(<span class="hljs-keyword">this</span>.restoreLastValue, <span class="hljs-keyword">this</span>), <span class="hljs-number">0</span>);
+          } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">this</span>.find();
+          }
         }, <span class="hljs-keyword">this</span>));
       }
     },</pre></div></div>
@@ -414,11 +538,11 @@ or clicking somewhere else.)</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Prepare a given DOM structure to be populated when we got some data.
 This will cycle through the list of component types and map the
@@ -429,8 +553,13 @@ corresponding elements.</p>
             <div class="content"><div class='highlight'><pre>    initDetails: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
       <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.details){ <span class="hljs-keyword">return</span>; }
 
-      <span class="hljs-keyword">var</span> $details = $(<span class="hljs-keyword">this</span>.options.details),
-        attribute = <span class="hljs-keyword">this</span>.options.detailsAttribute,
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.options.detailsScope) {
+        <span class="hljs-keyword">var</span> $details = $(<span class="hljs-keyword">this</span>.input).parents(<span class="hljs-keyword">this</span>.options.detailsScope).find(<span class="hljs-keyword">this</span>.options.details);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> $details = $(<span class="hljs-keyword">this</span>.options.details);
+      }
+
+      <span class="hljs-keyword">var</span> attribute = <span class="hljs-keyword">this</span>.options.detailsAttribute,
         details = {};
 
       <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setDetail</span><span class="hljs-params">(value)</span></span>{
@@ -453,11 +582,11 @@ corresponding elements.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Set the initial location of the plugin if the <code>location</code> options was set.
 This method will care about converting the value into the right format.</p>
@@ -487,16 +616,30 @@ This method will care about converting the value into the right format.</p>
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map){ <span class="hljs-keyword">this</span>.map.setCenter(latLng); }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.marker){ <span class="hljs-keyword">this</span>.marker.setPosition(latLng); }
       }
+    },
+
+    destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map) {
+        google.maps.event.clearInstanceListeners(<span class="hljs-keyword">this</span>.map);
+        google.maps.event.clearInstanceListeners(<span class="hljs-keyword">this</span>.marker);
+      }
+
+      <span class="hljs-keyword">this</span>.autocomplete.unbindAll();
+      google.maps.event.clearInstanceListeners(<span class="hljs-keyword">this</span>.autocomplete);
+      google.maps.event.clearInstanceListeners(<span class="hljs-keyword">this</span>.input);
+      <span class="hljs-keyword">this</span>.$input.removeData();
+      <span class="hljs-keyword">this</span>.$input.off(<span class="hljs-keyword">this</span>._name);
+      <span class="hljs-keyword">this</span>.$input.unbind(<span class="hljs-string">'.'</span> + <span class="hljs-keyword">this</span>._name);
     },</pre></div></div>
             
         </li>
         
         
-        <li id="section-19">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Look up a given address. If no <code>address</code> was specified it uses
 the current value of the input.</p>
@@ -512,18 +655,35 @@ the current value of the input.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Requests details about a given location.
 Additionally it will bias the requests to the provided bounds.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    geocode: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request)</span></span>{
+            <div class="content"><div class='highlight'><pre>    geocode: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request)</span></span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Don’t geocode if the requested address is empty</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!request.address) {
+        <span class="hljs-keyword">return</span>;
+      }
       <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bounds &amp;&amp; !request.bounds){
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bounds === <span class="hljs-literal">true</span>){
           request.bounds = <span class="hljs-keyword">this</span>.map &amp;&amp; <span class="hljs-keyword">this</span>.map.getBounds();
@@ -542,11 +702,11 @@ Additionally it will bias the requests to the provided bounds.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Get the selected result. If no result is selected on the list, then get
 the first result from the list.</p>
@@ -558,11 +718,11 @@ the first result from the list.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>$(“.pac-container”).hide();</p>
 
@@ -574,11 +734,11 @@ the first result from the list.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Check if any result is selected.</p>
 
@@ -591,27 +751,27 @@ the first result from the list.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Get the first suggestion’s text.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> $span1 = $(<span class="hljs-string">".pac-container .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(2)"</span>).text();
-      <span class="hljs-keyword">var</span> $span2 = $(<span class="hljs-string">".pac-container .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(3)"</span>).text();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> $span1 = $(<span class="hljs-string">".pac-container:visible .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(2)"</span>).text();
+      <span class="hljs-keyword">var</span> $span2 = $(<span class="hljs-string">".pac-container:visible .pac-item"</span> + selected + <span class="hljs-string">":first span:nth-child(3)"</span>).text();</pre></div></div>
             
         </li>
         
         
-        <li id="section-25">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Adds the additional information, if available.</p>
 
@@ -630,11 +790,28 @@ the first result from the list.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Restores the input value using the previous value if it exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    restoreLastValue: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.lastInputVal){ <span class="hljs-keyword">this</span>.$input.val(<span class="hljs-keyword">this</span>.lastInputVal); }
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Handles the geocode response. If more than one results was found
 it triggers the “geocode:multiple” events. If there was an error
@@ -660,11 +837,11 @@ the “geocode:error” event is fired.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Triggers a given <code>event</code> with optional <code>arguments</code> on the input.</p>
 
@@ -677,11 +854,11 @@ the “geocode:error” event is fired.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Set the map to a new center by passing a <code>geometry</code>.
 If the geometry has a viewport, the map zooms out to fit the bounds.
@@ -690,7 +867,6 @@ Additionally it updates the marker position.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    center: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(geometry)</span></span>{
-
       <span class="hljs-keyword">if</span> (geometry.viewport){
         <span class="hljs-keyword">this</span>.map.fitBounds(geometry.viewport);
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.map.getZoom() &gt; <span class="hljs-keyword">this</span>.options.maxZoom){
@@ -710,13 +886,13 @@ Additionally it updates the marker position.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <p>Update the elements based on a single places or geoocoding response
+              <p>Update the elements based on a single places or geocoding response
 and trigger the “geocode:result” event on the input.</p>
 
             </div>
@@ -737,11 +913,11 @@ and trigger the “geocode:result” event on the input.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Populate the provided elements with new <code>result</code> data.
 This will lookup all elements that has an attribute with the given
@@ -759,11 +935,11 @@ component type.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Create a simplified version of the address components.</p>
 
@@ -781,11 +957,11 @@ component type.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Add properties of the places details.</p>
 
@@ -798,11 +974,11 @@ component type.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Add infos about the address and geometry.</p>
 
@@ -821,11 +997,11 @@ component type.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Set the values for all details.</p>
 
@@ -842,11 +1018,11 @@ component type.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Assign a given <code>value</code> to a single <code>$element</code>.
 If the element is an input, the value is set, otherwise it updates
@@ -872,11 +1048,11 @@ the text content.</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Fire the “geocode:dragged” event and pass the new position.</p>
 
@@ -888,6 +1064,40 @@ the text content.</p>
 
     mapClicked: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
         <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:click"</span>, event.latLng);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Fire the “geocode:mapdragged” event and pass the current position of the map center.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    mapDragged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:mapdragged"</span>, <span class="hljs-keyword">this</span>.map.getCenter());
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Fire the “geocode:idle” event and pass the current position of the map center.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    mapIdle: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"geocode:idle"</span>, <span class="hljs-keyword">this</span>.map.getCenter());
     },
 
     mapZoomed: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
@@ -897,13 +1107,13 @@ the text content.</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
-              <p>Restore the old position of the marker to the last now location.</p>
+              <p>Restore the old position of the marker to the last knwon location.</p>
 
             </div>
             
@@ -916,11 +1126,11 @@ the text content.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Update the plugin after the user has selected an autocomplete entry.
 If the place has no geometry it passes it to the geocoder.</p>
@@ -929,18 +1139,19 @@ If the place has no geometry it passes it to the geocoder.</p>
             
             <div class="content"><div class='highlight'><pre>    placeChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
       <span class="hljs-keyword">var</span> place = <span class="hljs-keyword">this</span>.autocomplete.getPlace();
+      <span class="hljs-keyword">this</span>.selected = <span class="hljs-literal">true</span>;
 
-      <span class="hljs-keyword">if</span> (!place || !place.geometry){
+      <span class="hljs-keyword">if</span> (!place.geometry){
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.autoselect) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-39">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Automatically selects the highlighted item or the first item from the
 suggestions list.</p>
@@ -955,11 +1166,11 @@ suggestions list.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Use the input text if it already gives geometry.</p>
 
@@ -973,11 +1184,11 @@ suggestions list.</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <p>A plugin wrapper around the constructor.
 Pass <code>options</code> with all settings that are different from the default.
@@ -992,11 +1203,11 @@ The attribute is used to prevent multiple instantiations of the plugin.</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>If you call <code>.geocomplete()</code> with a string as the first parameter
 it returns the corresponding property or calls the method with the
@@ -1024,11 +1235,11 @@ following arguments.</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Prevent against multiple instantiations.</p>
 
