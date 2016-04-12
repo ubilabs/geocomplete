@@ -1,3 +1,7 @@
+Version 1.7
+
+* Merged pull requests
+
 Version 1.6
 
 * Cycle through subtypes in address components.

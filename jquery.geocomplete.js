@@ -1,8 +1,8 @@
 /**
- * jQuery Geocoding and Places Autocomplete Plugin - V 1.6.5
+ * jQuery Geocoding and Places Autocomplete Plugin - V 1.7.0
  *
- * @author Martin Kleppe <kleppe@ubilabs.net>, 2014
- * @author Ubilabs http://ubilabs.net, 2014
+ * @author Martin Kleppe <kleppe@ubilabs.net>, 2016
+ * @author Ubilabs http://ubilabs.net, 2016
  * @license MIT License <http://www.opensource.org/licenses/mit-license.php>
  */
 
@@ -89,7 +89,7 @@
     if (options && options.types) {
       this.options.types = options.types;
     }
-    
+
     this.input = input;
     this.$input = $(input);
 
