@@ -46,6 +46,7 @@
     detailsScope: null,
     autoselect: true,
     location: false,
+    dataProcess: null,
 
     mapOptions: {
       zoom: 14,
@@ -454,12 +455,15 @@
       // Create a simplified version of the address components.
       $.each(result.address_components, function(index, object){
         var name = object.types[0];
-
         $.each(object.types, function(index, name){
           data[name] = object.long_name;
           data[name + "_short"] = object.short_name;
         });
       });
+
+      if (this.options.dataProcess) {
+        this.options.dataProcess(data);
+      }
 
       // Add properties of the places details.
       $.each(placesDetails, function(index, key){
