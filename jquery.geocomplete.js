@@ -556,10 +556,9 @@
           autoCompleteService.getPlacePredictions({
             input: this.$input.val().split(',')[0]
           }, $.proxy(this.placePredictionChange, this))
-        } else {
-          // Use the input text if it already gives geometry.
-          this.update(place);
         }
+      } else {
+        this.update(place);
       }
     },
 
