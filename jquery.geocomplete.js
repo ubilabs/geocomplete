@@ -180,8 +180,7 @@
 
       var options = {
         types: this.options.types,
-        bounds: this.options.bounds === true ? null : this.options.bounds,
-        componentRestrictions: this.options.componentRestrictions
+        bounds: this.options.bounds === true ? null : this.options.bounds
       };
 
       if (this.options.country){
@@ -330,11 +329,17 @@
       });
     },
 
+    findById: function(placeId){
+      this.geocode({
+        placeId: placeId
+      });
+    },
+
     // Requests details about a given location.
     // Additionally it will bias the requests to the provided bounds.
     geocode: function(request){
       // Don't geocode if the requested address is empty
-      if (!request.address) {
+      if (!request.address && !request.placeId) {
         return;
       }
       if (this.options.bounds && !request.bounds){
@@ -373,7 +378,11 @@
         firstResult += " - " + $span2;
       }
 
-      this.$input.val(firstResult);
+      if(!!firstResult) {
+        this.$input.val(firstResult);
+      } else {
+        firstResult = this.$input.val();
+      }
 
       return firstResult;
     },
@@ -536,20 +545,37 @@
 
     // Update the plugin after the user has selected an autocomplete entry.
     // If the place has no geometry it passes it to the geocoder.
-    placeChanged: function(){
+    placeChanged: function() {
       var place = this.autocomplete.getPlace();
       this.selected = true;
 
-      if (!place.geometry){
+      if (!place.geometry) {
         if (this.options.autoselect) {
-          // Automatically selects the highlighted item or the first item from the
-          // suggestions list.
-          var autoSelection = this.selectFirstResult();
-          this.find(autoSelection);
+          var autoCompleteService = this.getAutoCompleteService();
+          autoCompleteService.getPlacePredictions({
+            input: this.$input.val().split(',')[0]
+          }, $.proxy(this.placePredictionChange, this))
         }
       } else {
-        // Use the input text if it already gives geometry.
         this.update(place);
+      }
+    },
+
+    placePredictionChange: function(result, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if(result.length > 0) {
+          this.findById(result[0].place_id);
+        }
+      } else {
+        this.trigger("geocode:error", status);
+      }
+    },
+
+    getAutoCompleteService: function() {
+      if (!this.autocompleteService) {
+        return this.autocompleteService = new google.maps.places.AutocompleteService();
+      } else {
+        return this.autocompleteService;
       }
     }
   });
