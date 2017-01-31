@@ -180,9 +180,12 @@
 
       var options = {
         types: this.options.types,
-        bounds: this.options.bounds === true ? null : this.options.bounds,
-        componentRestrictions: this.options.componentRestrictions
+        bounds: this.options.bounds === true ? null : this.options.bounds
       };
+
+      if(this.options.componentRestrictions){
+          options.componentRestrictions = this.options.componentRestrictions;
+      }
 
       if (this.options.country){
         options.componentRestrictions = {country: this.options.country};
