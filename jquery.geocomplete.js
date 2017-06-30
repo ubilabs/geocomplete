@@ -39,6 +39,7 @@
 
   var defaults = {
     bounds: true,
+    strictBounds: false,
     country: null,
     map: false,
     details: false,
@@ -181,7 +182,8 @@
       var options = {
         types: this.options.types,
         bounds: this.options.bounds === true ? null : this.options.bounds,
-        componentRestrictions: this.options.componentRestrictions
+        componentRestrictions: this.options.componentRestrictions,
+        strictBounds: this.options.strictBounds
       };
 
       if (this.options.country){
