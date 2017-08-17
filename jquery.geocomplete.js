@@ -372,7 +372,7 @@
       // Adds the additional information, if available.
       var firstResult = $span1;
       if ($span2) {
-        firstResult += " - " + $span2;
+        firstResult += ", " + $span2;
       }
 
       this.$input.val(firstResult);
