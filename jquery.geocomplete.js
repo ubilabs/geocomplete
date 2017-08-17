@@ -245,7 +245,8 @@
           if (this.options.restoreValueAfterBlur === true && this.selected === true) {
             setTimeout($.proxy(this.restoreLastValue, this), 0);
           } else {
-            this.find();
+            var autoSelection = this.selectFirstResult();
+            this.find(autoSelection);
           }
         }, this));
       }
@@ -391,7 +392,6 @@
     handleGeocode: function(results, status){
       if (status === google.maps.GeocoderStatus.OK) {
         var result = results[0];
-        this.$input.val(result.formatted_address);
         this.update(result);
 
         if (results.length > 1){
