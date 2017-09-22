@@ -194,6 +194,8 @@
         this.input, options
       );
 
+      this.autocomplete.setTypes(options.types);
+
       this.geocoder = new google.maps.Geocoder();
 
       // Bind autocomplete to map bounds but only if there is a map
