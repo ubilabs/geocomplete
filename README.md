@@ -156,7 +156,7 @@ $("#my_input").geocomplete({
 
 You can subscribe to events of the geocode plugin by using the default jQuery syntax:
 
-````javascript
+```javascript
 $("input")
   .geocomplete()
   .bind("geocode:result", function(event, result){
@@ -180,7 +180,7 @@ You can access all properties and methods of the plugin from outside. Simply add
 
 Example:
 
-````javascript
+```javascript
 // Initialize the plugin.
 $("input").geocomplete({ map: ".map_canvas" });
 
