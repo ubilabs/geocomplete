@@ -9,7 +9,7 @@ View the [annotated source](http://ubilabs.github.com/geocomplete/docs/).
 
 _Please note:_ **This project is not maintained anymore. We do not use jQuery in production and switched to React about two years ago. Feel free to discuss issues here but please do not expect new features or changes in the default behavior.**
 
-For a new and way more flexible sollution, see our [React Geosuggest](http://ubilabs.github.io/react-geosuggest/) plugin.
+For a new and way more flexible solution, see our [React Geosuggest](http://ubilabs.github.io/react-geosuggest/) plugin.
 
 If you would like to take over the project, please let us! There are many people out there who would be happy to have new supporters.
 
