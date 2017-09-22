@@ -11,7 +11,7 @@ _Please note:_ **This project is not maintained anymore. We do not use jQuery in
 
 For a new and way more flexible solution, see our [React Geosuggest](http://ubilabs.github.io/react-geosuggest/) plugin.
 
-If you would like to take over the project, please let us! There are many people out there who would be happy to have new supporters.
+If you would like to take over the project, please let us know! There are many people out there who would be happy to have new supporters.
 
 ## Basic Usage
 
