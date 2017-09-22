@@ -31,7 +31,7 @@ Here is a list of basic uses:
 
 Make sure you include the Google Maps API with the Places Library before loading this plugin as described [here](https://developers.google.com/maps/documentation/javascript/places#loading_the_library).
 
-````html
+```html
 <script src="http://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 <script src="jquery.geocomplete.js"></script>
 ```
@@ -42,7 +42,7 @@ If you use the plugin without showing a map you must display the "[powered by Go
 
 To trigger a geocoding request from outside (eg. when hitting the "find" button), simply trigger the "geocode" event on the element.
 
-````javascript
+```javascript
 $("input").geocomplete();
 
 // Trigger geocoding request.
